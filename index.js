@@ -1,11 +1,11 @@
-var http = require('http');
+var express = require('express');
 
-http.createServer(function(req, res) {
-  res.writeHead(200, {
-    'Content-Type': 'text/plain'
-  });
-  res.end('hello world');
-})
-.listen(3000, '127.0.0.1');
+var app = express();
 
-console.log("server running ...");
+app.get('/', function(req, res) {
+  res.send('hello world');
+});
+
+var server = app.listen(3000, function() {
+  console.log("server running ...");
+});
