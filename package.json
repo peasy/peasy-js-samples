@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/peasy/peasy-js-samples/issues"
   },
-  "homepage": "https://github.com/peasy/peasy-js-samples#readme"
+  "homepage": "https://github.com/peasy/peasy-js-samples#readme",
+  "dependencies": {
+    "express": "4.14.0"
+  }
 }
