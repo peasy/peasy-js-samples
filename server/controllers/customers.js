@@ -17,7 +17,7 @@ module.exports = function(app) {
   });
 
   app.get('/customers/:id', (req, res) => {
-    res.send(customers.map(c => c.id === req.params.id)[0]);
+    res.send(customers.filter(c => c.id === parseInt(req.params.id, 10))[0]);
   });
 
   // UPDATE
@@ -30,6 +30,7 @@ module.exports = function(app) {
 
   // DELETE
   app.delete('/customers/:id', (req, res) => {
+    console.log(typeof req.params.id);
     var index = customers.findIndex(c => c.id === req.params.id);
     customers.splice(index, 1);
     res.json("ok");
