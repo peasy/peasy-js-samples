@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-var customers = require('./server/controllers/customers.js')(app);
+var customers = require('./controllers/customers.js')(app);
 
 app.get('/', function(req, res) {
   //res.send('hello world');
