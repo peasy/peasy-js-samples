@@ -8,12 +8,17 @@ module.exports = function(app) {
   var OK = 200;
   var CREATED = 201;
   var NO_CONTENT = 204;
+  var BAD_REQUEST = 400;
 
   // CREATE
   app.post('/customers', function(req, res) {
     var command = customerService.insertCommand(req.body);
     command.execute((err, result) => {
-      res.status(CREATED).json(result.value);
+      if (result.success) {
+        res.status(CREATED).json(result.value);
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
     });
   });
 
@@ -21,7 +26,11 @@ module.exports = function(app) {
   app.get('/customers', (req, res) => {
     var command = customerService.getAllCommand();
     command.execute((err, result) => {
-      res.status(OK).json(result.value);
+      if (result.success) {
+        res.status(OK).json(result.value);
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
     });
   });
 
@@ -29,7 +38,11 @@ module.exports = function(app) {
     var id = parseInt(req.params.id, 10);
     var command = customerService.getByIdCommand(id);
     command.execute((err, result) => {
-      res.status(OK).json(result.value);
+      if (result.success) {
+        res.status(OK).json(result.value);
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
     });
   });
 
@@ -39,7 +52,11 @@ module.exports = function(app) {
     customer.id = parseInt(req.params.id, 10);
     var command = customerService.updateCommand(customer);
     command.execute((err, result) => {
-      res.status(OK).json(result.value);
+      if (result.success) {
+        res.status(OK).json(result.value);
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
     });
   });
 
@@ -48,7 +65,11 @@ module.exports = function(app) {
     var id = parseInt(req.params.id, 10);
     var command = customerService.destroyCommand(id);
     command.execute((err, result) => {
-      res.status(NO_CONTENT).send("");
+      if (result.success) {
+        res.status(NO_CONTENT).send("");
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
     });
   });
 };
