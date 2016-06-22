@@ -21,6 +21,7 @@
     "body-parser": "1.15.2",
     "express": "4.14.0",
     "lodash": "4.13.1",
+    "mongodb": "2.1.18",
     "peasy-js": "0.9.4"
   }
 }
