@@ -24,7 +24,6 @@ InMemoryDataProxy.prototype.update = function(data, done) {
   var existing = this._findBy(data.id);
   var index = this._store.indexOf(existing);
   this._store.splice(index, 1, data);
-  console.log("DATA", this._store);
   done(null, data);
 }
 
