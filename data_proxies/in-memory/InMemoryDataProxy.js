@@ -1,5 +1,7 @@
+var _ = require('lodash');
+
 var InMemoryDataProxy = function() {
-  this._store = [];
+  this._store = [{id: 1, name: "Aaron Hanusa"}];
 };
 
 InMemoryDataProxy.prototype.getById = function(id, done) {
@@ -22,9 +24,8 @@ InMemoryDataProxy.prototype.insert = function(data, done) {
 
 InMemoryDataProxy.prototype.update = function(data, done) {
   var existing = this._findBy(data.id);
-  var index = this._store.indexOf(existing);
-  this._store.splice(index, 1, data);
-  done(null, data);
+  _.merge(existing, data);
+  done(null, Object.assign({}, existing));
 }
 
 InMemoryDataProxy.prototype.destroy = function(id, done) {

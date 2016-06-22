@@ -1,48 +1,53 @@
-var _ = require('lodash');
 var InMemoryDataProxy = require('../../data_proxies/in-memory/InMemoryDataProxy');
+var CustomerService = require('../../business_logic/services/customerService');
 
 module.exports = function(app) {
 
-  var customers = new InMemoryDataProxy();
+  var dataProxy = new InMemoryDataProxy();
+  var customerService = new CustomerService(dataProxy);
   var OK = 200;
   var CREATED = 201;
   var NO_CONTENT = 204;
 
   // CREATE
   app.post('/customers', function(req, res) {
-    customers.insert(req.body, function(err, customer) {
-      res.status(CREATED).json(customer);
+    var command = customerService.insertCommand(req.body);
+    command.execute((err, result) => {
+      res.status(CREATED).json(result.value);
     });
   });
 
   // RETRIEVE
   app.get('/customers', (req, res) => {
-    customers.getAll((err, result) => {
-      res.status(OK).send(result);
+    var command = customerService.getAllCommand();
+    command.execute((err, result) => {
+      res.status(OK).json(result.value);
     });
   });
 
   app.get('/customers/:id', (req, res) => {
     var id = parseInt(req.params.id, 10);
-    customers.getById(id, (err, customer) => {
-      res.status(OK).send(customer);
+    var command = customerService.getByIdCommand(id);
+    command.execute((err, result) => {
+      res.status(OK).json(result.value);
     });
   });
 
   // UPDATE
   app.put('/customers/:id', (req, res) => {
-    var id = parseInt(req.params.id, 10);
-    customers.getById(id, (err, customer) => {
-      _.merge(customer, req.body);
-      customers.update(customer, (err, result) => {
-        res.status(OK).json(result);
-      });
+    var customer = req.body;
+    customer.id = parseInt(req.params.id, 10);
+    var command = customerService.updateCommand(customer);
+    command.execute((err, result) => {
+      res.status(OK).json(result.value);
     });
   });
 
   // DELETE
   app.delete('/customers/:id', (req, res) => {
-    customers.destroy(req.params.id, (err) => {
+    var id = parseInt(req.params.id, 10);
+    var command = customerService.destroyCommand(id);
+    command.execute((err, result) => {
       res.status(NO_CONTENT).send("");
     });
   });
