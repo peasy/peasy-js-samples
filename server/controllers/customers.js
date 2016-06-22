@@ -10,19 +10,7 @@ module.exports = function(app) {
   var NO_CONTENT = 204;
   var BAD_REQUEST = 400;
 
-  // CREATE
-  app.post('/customers', function(req, res) {
-    var command = customerService.insertCommand(req.body);
-    command.execute((err, result) => {
-      if (result.success) {
-        res.status(CREATED).json(result.value);
-      } else {
-        res.status(BAD_REQUEST).json(result.errors);
-      }
-    });
-  });
-
-  // RETRIEVE
+  // GET
   app.get('/customers', (req, res) => {
     var command = customerService.getAllCommand();
     command.execute((err, result) => {
@@ -46,7 +34,19 @@ module.exports = function(app) {
     });
   });
 
-  // UPDATE
+  // POST
+  app.post('/customers', function(req, res) {
+    var command = customerService.insertCommand(req.body);
+    command.execute((err, result) => {
+      if (result.success) {
+        res.status(CREATED).json(result.value);
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
+    });
+  });
+
+  // PUT
   app.put('/customers/:id', (req, res) => {
     var customer = req.body;
     customer.id = parseInt(req.params.id, 10);
