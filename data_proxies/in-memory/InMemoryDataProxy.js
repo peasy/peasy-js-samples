@@ -21,8 +21,10 @@ InMemoryDataProxy.prototype.insert = function(data, done) {
 }
 
 InMemoryDataProxy.prototype.update = function(data, done) {
-  var person = this._findBy(data.id);
-  person.name = data.name;
+  var existing = this._findBy(data.id);
+  var index = this._store.indexOf(existing);
+  this._store.splice(index, 1, data);
+  console.log("DATA", this._store);
   done(null, data);
 }
 
@@ -38,4 +40,8 @@ InMemoryDataProxy.prototype._findBy = function(id) {
     return p.id === id;
   }))[0];
   return data;
+}
+
+if (module) {
+  module.exports = InMemoryDataProxy;
 }

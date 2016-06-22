@@ -1,38 +1,46 @@
 var _ = require('lodash');
+var InMemoryDataProxy = require('../../data_proxies/in-memory/InMemoryDataProxy');
 
 module.exports = function(app) {
 
-  var customers = [{id: 1, name: 'aaron hanusa'}];
+  var customers = new InMemoryDataProxy();
 
   // CREATE
   app.post('/customers', function(req, res) {
-    customers.push(req.body);
-    req.body.foo = "new";
-    res.json(req.body);
+    customers.insert(req.body, function(err, customer) {
+      res.json(customer);
+    });
   });
 
   // RETRIEVE
   app.get('/customers', (req, res) => {
-    res.send(customers);
+    customers.getAll((err, result) => {
+      res.send(result);
+    });
   });
 
   app.get('/customers/:id', (req, res) => {
-    res.send(customers.filter(c => c.id === parseInt(req.params.id, 10))[0]);
+    var id = parseInt(req.params.id, 10);
+    customers.getById(id, (err, customer) => {
+      res.send(customer);
+    });
   });
 
   // UPDATE
   app.put('/customers/:id', (req, res) => {
-    var index = customers.findIndex(c => c.id === req.params.id);
-    var customer = customers[index];
-    var result = _.merge(customer, req.body);
-    res.json(result);
+    var id = parseInt(req.params.id, 10);
+    customers.getById(id, (err, customer) => {
+      _.merge(customer, req.body);
+      customers.update(customer, (err, result) => {
+        res.json(result);
+      });
+    });
   });
 
   // DELETE
   app.delete('/customers/:id', (req, res) => {
-    console.log(typeof req.params.id);
-    var index = customers.findIndex(c => c.id === req.params.id);
-    customers.splice(index, 1);
-    res.json("ok");
+    customers.destroy(req.params.id, (err) => {
+      res.json("ok");
+    });
   });
 };
