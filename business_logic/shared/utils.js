@@ -1,5 +1,6 @@
 
 function stripAllFieldsFrom(entity) {
+  entity = entity || {};
   return {
     except: function(allowableFields) {
       if (!Array.isArray(allowableFields)) {
