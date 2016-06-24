@@ -1,4 +1,5 @@
 var BusinessService = require('peasy-js').BusinessService;
+var FieldRequiredRule = require('../rules/fieldRequiredRule');
 
 function stripValues(category) {
   var allowableFields = ['name'];
@@ -15,10 +16,16 @@ var CategoryService = BusinessService.extend({
       stripValues(category);
       done();
     },
+    _getRulesForInsert: function(category, context, done) {
+      done(null, new FieldRequiredRule("name", category));
+    },
     _onUpdateCommandInitialization: function(category, context, done) {
       stripValues(category);
       done();
-    }
+    },
+    _getRulesForUpdate: function(category, context, done) {
+      done(null, new FieldRequiredRule("name", category));
+    },
   }
 }).service;
 
