@@ -1,6 +1,6 @@
 var BusinessService = require('peasy-js').BusinessService;
 
-function stripValues(customer) {
+function stripValues(category) {
   var allowableFields = ['name'];
   Object.keys(category).forEach(function(field) {
     if (allowableFields.indexOf(field) === -1) {

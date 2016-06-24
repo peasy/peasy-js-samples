@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var InMemoryDataProxy = require('../data_proxies/in-memory/InMemoryDataProxy.js');
 var CustomerDataProxy = require('../data_proxies/mongo/customerDataProxy');
 var CustomerService = require('../business_logic/services/customerService');
+var CategoryDataProxy = require('../data_proxies/mongo/categoryDataProxy');
+var CategoryService = require('../business_logic/services/categoryService');
 var createController = require('./controllers/createController');
 
 // MIDDLEWARE
@@ -12,9 +14,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-//var customers = require('./controllers/customers.js')(app);
-var service = new CustomerService(new CustomerDataProxy());
-createController('/customers', app, service);
+createController('/customers', app, new CustomerService(new CustomerDataProxy()));
+createController('/categories', app, new CategoryService(new CategoryDataProxy()));
 
 //app.get('/', function(req, res) {
   ////res.send('hello world');
