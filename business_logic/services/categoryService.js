@@ -17,7 +17,7 @@ var CategoryService = BusinessService.extend({
     },
     _getRulesForUpdate: function(category, context, done) {
       done(null, new FieldRequiredRule("name", category));
-    },
+    }
   }
 }).service;
 
