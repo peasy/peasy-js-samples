@@ -38,7 +38,7 @@ MongoDataProxy.prototype.insert = function(data, done) {
     var collection = db.collection(self.collectionName);
     collection.insert(data, function(err, data) {
       db.close();
-      done(err, data);
+      done(err, data.ops[0]);
     });
   });
 };
@@ -48,7 +48,7 @@ MongoDataProxy.prototype.update = function(data, done) {
   mongodb.connect(self.connectionString, function(err, db) {
     if (err) { done(err); }
     var collection = db.collection(self.collectionName);
-    collection.update({_id: objectId(data._id)}, data, function(err, data) {
+    collection.update({_id: objectId(data._id)}, data, function(err, result) {
       db.close();
       done(err, data);
     });
