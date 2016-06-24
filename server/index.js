@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var InMemoryDataProxy = require('../data_proxies/in-memory/InMemoryDataProxy.js');
+var CustomerDataProxy = require('../data_proxies/mongo/customerDataProxy');
 var CustomerService = require('../business_logic/services/customerService');
 var createController = require('./controllers/createController');
 
@@ -12,7 +13,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 //var customers = require('./controllers/customers.js')(app);
-var service = new CustomerService(new InMemoryDataProxy());
+var service = new CustomerService(new CustomerDataProxy());
 createController('/customers', app, service);
 
 //app.get('/', function(req, res) {
