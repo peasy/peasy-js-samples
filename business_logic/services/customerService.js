@@ -1,22 +1,14 @@
 var BusinessService = require('peasy-js').BusinessService;
-
-function stripValues(customer) {
-  var allowableFields = ['name', 'street'];
-  Object.keys(customer).forEach(function(field) {
-    if (allowableFields.indexOf(field) === -1) {
-      delete customer[field];
-    }
-  });
-}
+var utils = require('../shared/utils');
 
 var CustomerService = BusinessService.extend({
   functions: {
     _onInsertCommandInitialization: function(customer, context, done) {
-      stripValues(customer);
+      utils.stripAllFieldsFrom(customer).except('name');
       done();
     },
     _onUpdateCommandInitialization: function(customer, context, done) {
-      stripValues(customer);
+      utils.stripAllFieldsFrom(customer).except(['id', 'name']);
       done();
     }
   }
