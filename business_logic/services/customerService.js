@@ -1,5 +1,6 @@
 var BusinessService = require('peasy-js').BusinessService;
 var FieldRequiredRule = require('../rules/fieldRequiredRule');
+var FieldLengthRule = require('../rules/fieldLengthRule');
 var utils = require('../shared/utils');
 
 var CustomerService = BusinessService.extend({
@@ -10,7 +11,10 @@ var CustomerService = BusinessService.extend({
       done();
     },
     _getRulesForInsert: function(customer, context, done) {
-      done(null, new FieldRequiredRule("name", customer));
+      done(null, [
+        new FieldRequiredRule("name", customer),
+        new FieldLengthRule("name", customer.name, 50)
+      ]);
     },
     _onUpdateCommandInitialization: function(customer, context, done) {
       utils.stripAllFieldsFrom(customer).except(['id', 'name', 'address']);
