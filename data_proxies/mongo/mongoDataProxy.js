@@ -12,6 +12,10 @@ MongoDataProxy.prototype.getAll = function(done) {
     if (err) { done(err); }
     var collection = db.collection(self.collectionName);
     collection.find({}).toArray(function(err, data) {
+      data.forEach((item) => {
+        item.id = item._id;
+        delete item._id;
+      });
       db.close();
       done(err, data);
     });
@@ -25,6 +29,8 @@ MongoDataProxy.prototype.getById = function(id, done) {
     var collection = db.collection(self.collectionName);
     var oId = new objectId(id);
     collection.findOne({_id: oId}, function(err, data) {
+      data.id = data._id;
+      delete data._id;
       db.close();
       done(err, data);
     });
@@ -36,9 +42,12 @@ MongoDataProxy.prototype.insert = function(data, done) {
   mongodb.connect(self.connectionString, function(err, db) {
     if (err) { done(err); }
     var collection = db.collection(self.collectionName);
-    collection.insert(data, function(err, data) {
+    collection.insert(data, function(err, result) {
+      var entity = result.ops[0];
+      entity.id = entity._id;
+      delete entity._id;
       db.close();
-      done(err, data.ops[0]);
+      done(err, entity);
     });
   });
 };
@@ -48,7 +57,7 @@ MongoDataProxy.prototype.update = function(data, done) {
   mongodb.connect(self.connectionString, function(err, db) {
     if (err) { done(err); }
     var collection = db.collection(self.collectionName);
-    collection.update({_id: objectId(data._id)}, data, function(err, result) {
+    collection.update({_id: objectId(data.id)}, data, function(err, result) {
       db.close();
       done(err, data);
     });
