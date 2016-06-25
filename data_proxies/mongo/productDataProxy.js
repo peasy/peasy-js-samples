@@ -1,7 +1,7 @@
 var MongoDataProxy = require('./mongoDataProxy');
 
 var ProductDataProxy = function() {
-  ProductDataProxy.call(this, "products");
+  MongoDataProxy.call(this, "products");
 };
 
 ProductDataProxy.prototype = new MongoDataProxy();
