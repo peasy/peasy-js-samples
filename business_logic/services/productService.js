@@ -7,28 +7,28 @@ var utils = require('../shared/utils');
 var ProductService = BusinessService.extend({
   functions: {
     _onInsertCommandInitialization: function(product, context, done) {
-      utils.stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryid']);
+      utils.stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
       done();
     },
     _getRulesForInsert: function(product, context, done) {
       done(null, [
         new FieldRequiredRule("name", product)
-              .ifValidThenValidate(new FieldLengthRule("name", product.name, 50)),
+             .ifValidThenValidate(new FieldLengthRule("name", product.name, 50)),
         new FieldRequiredRule("price", product)
              .ifValidThenValidate(new FieldTypeRule("price", product.price, "number")),
-        new FieldRequiredRule("categoryid", product)
-             .ifValidThenValidate(new FieldTypeRule("categoryid", product.categoryid, "number")),
+        new FieldRequiredRule("categoryId", product)
+             .ifValidThenValidate(new FieldTypeRule("categoryId", product.categoryId, "number")),
       ]);
     },
     _onUpdateCommandInitialization: function(product, context, done) {
-      utils.stripAllFieldsFrom(product).except(['id', 'name', 'description', 'price', 'categoryid']);
+      utils.stripAllFieldsFrom(product).except(['id', 'name', 'description', 'price', 'categoryId']);
       done();
     },
     _getRulesForUpdate: function(product, context, done) {
       done([
         new FieldLengthRule("name", product.name, 50),
         new FieldTypeRule("price", product.price, "number"),
-        new FieldTypeRule("categoryid", product.categoryid, "number")
+        new FieldTypeRule("categoryId", product.categoryId, "number")
       ]);
     }
   }
