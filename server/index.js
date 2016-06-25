@@ -9,6 +9,12 @@ var CategoryService = require('../business_logic/services/categoryService');
 var createController = require('./controllers/createController');
 
 // MIDDLEWARE
+app.use(function(req, res, next) {
+  for (var key in req.query) {
+    req.query[key.toLowerCase()] = req.query[key];
+  }
+  next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -16,6 +22,14 @@ app.use(bodyParser.urlencoded({
 
 createController('/customers', app, new CustomerService(new CustomerDataProxy()));
 createController('/categories', app, new CategoryService(new CategoryDataProxy()));
+
+app.get('/customers/:id/addresses', function(req, res) {
+  res.json({'hi':req.params.id});
+});
+
+app.get('/inventoryItems?:productId', function(req, res) {
+  res.json({'items':req.query.productid});
+});
 
 //app.get('/', function(req, res) {
   ////res.send('hello world');
