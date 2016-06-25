@@ -6,7 +6,7 @@ var FieldTypeRule = Rule.extend({
     _onValidate: function(done) {
       if (typeof this.value !== this.type) {
         this.association = this.field;
-        this._invalidate("Invalid type supplied for ${this.field}. Expected ${this.type}");
+        this._invalidate(`Invalid type supplied for ${this.field}, expected ${this.type}`);
       }
       done();
     }
