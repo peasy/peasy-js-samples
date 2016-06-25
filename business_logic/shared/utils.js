@@ -6,8 +6,11 @@ function stripAllFieldsFrom(entity) {
       if (!Array.isArray(allowableFields)) {
         allowableFields = [allowableFields];
       }
+      allowableFields.forEach(field => {
+        field.toLowerCase();
+      });
       Object.keys(entity).forEach(function(field) {
-        if (allowableFields.indexOf(field) === -1) {
+        if (allowableFields.indexOf(field.toLowerCase()) === -1) {
           delete entity[field];
         }
       });
