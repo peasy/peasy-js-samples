@@ -17,7 +17,6 @@ var ProductService = BusinessService.extend({
         new FieldRequiredRule("price", product)
              .ifValidThenValidate(new FieldTypeRule("price", product.price, "number")),
         new FieldRequiredRule("categoryId", product)
-             .ifValidThenValidate(new FieldTypeRule("categoryId", product.categoryId, "number")),
       ]);
     },
     _onUpdateCommandInitialization: function(product, context, done) {
@@ -32,6 +31,17 @@ var ProductService = BusinessService.extend({
       ]);
     }
   }
+}).createCommand({
+  name: 'getByCategoryCommand',
+  params: ['categoryId'],
+  functions: {
+    _onValidationSuccess: function(context, done) {
+      this.dataProxy.getByCategory(this.categoryId, function(err, result) {
+        done(null, result);
+      });
+    }
+  }
 }).service;
+
 
 module.exports = ProductService;
