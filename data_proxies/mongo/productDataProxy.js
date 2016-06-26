@@ -12,11 +12,11 @@ ProductDataProxy.prototype.getByCategory = function(categoryId, done) {
   self._mongodb.connect(self.connectionString, function(err, db) {
     if (err) { done(err); }
     var collection = db.collection(self.collectionName);
-    collection.findOne({categoryId: categoryId}, function(err, data) {
-      if (data) {
-        data.id = data._id;
-        delete data._id;
-      }
+    collection.find({categoryId: categoryId}).toArray(function(err, data) {
+      data.forEach((item) => {
+        item.id = item._id;
+        delete item._id;
+      });
       db.close();
       done(err, data);
     });
