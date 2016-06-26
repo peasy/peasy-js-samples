@@ -9,7 +9,6 @@ var CategoryDataProxy = require('../data_proxies/mongo/categoryDataProxy');
 var CategoryService = require('../business_logic/services/categoryService');
 var ProductDataProxy = require('../data_proxies/mongo/productDataProxy');
 var ProductService = require('../business_logic/services/productService');
-var createController = require('./controllers/createController');
 
 // MIDDLEWARE
 app.use(function(req, res, next) {
@@ -23,31 +22,15 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-var OK = 200;
-var BAD_REQUEST = 400;
-var NOT_FOUND = 404;
-
 utils.createController('/customers', app, new CustomerService(new CustomerDataProxy()));
 utils.createController('/categories', app, new CategoryService(new CategoryDataProxy()));
-utils.addRouteHandler(() => {
-  app.get('/products', (req, res) => {
-    var service = new ProductService(new ProductDataProxy());
-    var command = service.getAllCommand();
-    if (req.query.categoryid) {
-      command = service.getByCategoryCommand(req.query.categoryid);
-    }
-    command.execute((err, result) => {
-      if (result.success) {
-        if (result.value) {
-          res.status(OK).json(result.value);
-        } else {
-          res.status(NOT_FOUND).send("");
-        }
-      } else {
-        res.status(BAD_REQUEST).json(result.errors);
-      }
-    });
-  });
+utils.addGetRouteHandler(app, '/products', function(request) {
+  var service = new ProductService(new ProductDataProxy());
+  var command = service.getAllCommand();
+  if (request.query.categoryid) {
+    command = service.getByCategoryCommand(request.query.categoryid);
+  }
+  return command;
 });
 utils.createController('/products', app, new ProductService(new ProductDataProxy()));
 

@@ -88,14 +88,35 @@ function createController(route, app, service) {
 
 };
 
+function addGetRouteHandler(app, route, commandFactory) {
+  app.get(route, (req, res) => {
+    var command = commandFactory(req);
+    command.execute((err, result) => {
+      if (err) {
+        // LOG ERROR
+        res.status(BAD_REQUEST).json(err.message);
+      }
+      if (result.success) {
+        if (result.value) {
+          res.status(OK).json(result.value);
+        } else {
+          res.status(NOT_FOUND).send("");
+        }
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
+    });
+  });
+}
+
 function addRouteHandler(func) {
   func();
   return {
-    addRouteHandler: addRouteHandler
+    addGetRouteHandler: addGetRouteHandler
   };
 }
 
 module.exports = {
   createController: createController,
-  addRouteHandler: addRouteHandler
+  addGetRouteHandler: addGetRouteHandler
 };
