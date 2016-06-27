@@ -25,6 +25,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 // ROUTES AND CONTROLLERS
+app.get('/version', (req, res) => {
+  var data = { version: 1.345 };
+  res.json(data);
+});
 utils.createController('/customers', app, new CustomerService(new CustomerDataProxy()));
 utils.createController('/categories', app, new CategoryService(new CategoryDataProxy()));
 utils.addGetRouteHandler(app, '/products', function(request) {

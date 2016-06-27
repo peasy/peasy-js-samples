@@ -39,10 +39,24 @@ function createController(route, app, service) {
   app.put(`${route}/:id`, (req, res) => {
     var command = service.getByIdCommand(req.params.id);
     command.execute((err, result) => {
+      if (err) {
+        // LOG ERROR
+        return res.status(BAD_REQUEST).json(err.message);
+      }
       if (result.success) {
         if (result.value) {
           var entity = _.merge(result.value, req.body);
+
+          if (req.body.version) {
+            entity.version = req.body.version;
+          }
+
+          console.log("ENTITY", entity);
           service.updateCommand(entity).execute((err, result) => {
+            if (err) {
+              // LOG ERROR
+              return res.status(BAD_REQUEST).json(err.message);
+            }
             if (result.success) {
               res.status(OK).json(result.value);
             } else {
@@ -50,7 +64,7 @@ function createController(route, app, service) {
             }
           });
         } else {
-          res.status(NOT_FOUND).send("");
+          res.status(NOT_FOUND).end();
         }
       } else {
         res.status(BAD_REQUEST).json(result.errors);
@@ -63,7 +77,7 @@ function createController(route, app, service) {
     var command = service.destroyCommand(req.params.id);
     command.execute((err, result) => {
       if (result.success) {
-        res.status(NO_CONTENT).send("");
+        res.status(NO_CONTENT).end();
       } else {
         res.status(BAD_REQUEST).json(result.errors);
       }
@@ -84,7 +98,7 @@ function addGetRouteHandler(app, route, commandFactory) {
         if (result.value) {
           res.status(OK).json(result.value);
         } else {
-          res.status(NOT_FOUND).send("");
+          res.status(NOT_FOUND).end();
         }
       } else {
         res.status(BAD_REQUEST).json(result.errors);

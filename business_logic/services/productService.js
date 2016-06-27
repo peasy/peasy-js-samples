@@ -24,7 +24,7 @@ var ProductService = BusinessService.extend({
       done();
     },
     _getRulesForUpdate: function(product, context, done) {
-      done([
+      done(null, [
         new FieldLengthRule("name", product.name, 50),
         new FieldTypeRule("price", product.price, "number"),
         new FieldTypeRule("categoryId", product.categoryId, "number")
