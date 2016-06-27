@@ -31,7 +31,6 @@ MongoDataProxy.prototype.getById = function(id, done) {
     try {
       var oId = new objectId(id);
     } catch(ex) {
-      return done(new Error("Invalid id supplied"));
     }
     collection.findOne({_id: oId}, function(err, data) {
       if (data) {

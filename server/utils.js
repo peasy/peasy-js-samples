@@ -19,24 +19,8 @@ function createController(route, app, service) {
     });
   });
 
-  app.get(`${route}/:id`, (req, res) => {
-    var command = service.getByIdCommand(req.params.id);
-    command.execute((err, result) => {
-      if (err) {
-        // LOG ERROR
-         return res.status(BAD_REQUEST).json(err.message);
-      }
-      console.log("ERRRR", err);
-      if (result.success) {
-        if (result.value) {
-          res.status(OK).json(result.value);
-        } else {
-          res.status(NOT_FOUND).send("");
-        }
-      } else {
-        res.status(BAD_REQUEST).json(result.errors);
-      }
-    });
+  addGetRouteHandler(app, `${route}/:id`, function(request) {
+    return service.getByIdCommand(request.params.id);
   });
 
   // POST
@@ -107,13 +91,6 @@ function addGetRouteHandler(app, route, commandFactory) {
       }
     });
   });
-}
-
-function addRouteHandler(func) {
-  func();
-  return {
-    addGetRouteHandler: addGetRouteHandler
-  };
 }
 
 module.exports = {
