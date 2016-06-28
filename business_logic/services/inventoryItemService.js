@@ -8,7 +8,7 @@ var InventoryItemService = BusinessService.extend({
   functions: {
     _onInsertCommandInitialization: function(item, context, done) {
       utils.stripAllFieldsFrom(item).except(['quantityOnHand', 'productId']);
-      //item.version = 1;
+      item.version = 1;
       done();
     },
     _getRulesForInsert: function(item, context, done) {
