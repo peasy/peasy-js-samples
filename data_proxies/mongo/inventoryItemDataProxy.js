@@ -12,7 +12,6 @@ InventoryItemDataProxy.prototype.insert = function(data, done) {
   self._mongodb.connect(self.connectionString, function(err, db) {
     if (err) { done(err); }
     var collection = db.collection(self.collectionName);
-    data.version = 1;
     collection.insert(data, function(err, result) {
       var entity = result.ops[0];
       entity.id = entity._id;

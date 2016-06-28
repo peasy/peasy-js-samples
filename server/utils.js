@@ -51,7 +51,6 @@ function createController(route, app, service) {
             entity.version = req.body.version;
           }
 
-          console.log("ENTITY", entity);
           service.updateCommand(entity).execute((err, result) => {
             if (err) {
               // LOG ERROR
