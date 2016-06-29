@@ -29,10 +29,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 // ROUTES AND CONTROLLERS
-app.get('/version', (req, res) => {
-  var data = { version: 1.345 };
-  res.json(data);
-});
 utils.createController('/customers', app, new CustomerService(new CustomerDataProxy()));
 utils.createController('/categories', app, new CategoryService(new CategoryDataProxy()));
 utils.addGetRouteHandler(app, '/products', function(request) {
@@ -66,18 +62,10 @@ utils.addGetRouteHandler(app, '/orders', function(request) {
 });
 utils.createController('/orders', app, new OrderService(new OrderDataProxy()));
 utils.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
-  var service = new OrderItemService(new OrderItemDataProxy());
+  var service = new OrderItemService(new OrderItemDataProxy(), new ProductDataProxy());
   return service.submitCommand(request.params.id);
 });
-//utils.addGetRouteHandler(app, '/orderItems/:id/submit', function(request) {
-  //var service = new InventoryItemService(new InventoryItemDataProxy());
-  //var command = service.getAllCommand();
-  //if (request.query.productId) {
-    //command = service.getByProductCommand(request.query.productId);
-  //}
-  //return command;
-//});
-utils.createController('/orderItems', app, new OrderItemService(new OrderItemDataProxy()));
+utils.createController('/orderItems', app, new OrderItemService(new OrderItemDataProxy(), new ProductDataProxy()));
 
 
 //app.get('/', function(req, res) {

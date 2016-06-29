@@ -1,11 +1,13 @@
 var BusinessService = require('peasy-js').BusinessService;
 var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
+var OrderItemPriceValidityRule = require('../rules/orderItemPriceValidityRule');
 var CanSubmitOrderItemRule = require('../rules/canSubmitOrderItemRule');
 var utils = require('../shared/utils');
 var NotFoundError = require('../shared/notFoundError');
 
 var OrderItemService = BusinessService.extend({
+  params: ['dataProxy', 'productDataProxy'],
   functions: {
     _onInsertCommandInitialization: function(item, context, done) {
       utils.stripAllFieldsFrom(item).except(['orderId', 'productId', 'quantity', 'amount', 'price']);
@@ -55,9 +57,6 @@ var OrderItemService = BusinessService.extend({
       var orderItem = context.orderItem;
       orderItem.status = "SUBMITTED";
       orderItem.submittedOn = new Date();
-      //this.dataProxy.submit(orderItem, function(err, result) {
-        //done(null, result);
-      //});
       this.dataProxy.update(orderItem, function(err, result) {
         done(null, result);
       });
