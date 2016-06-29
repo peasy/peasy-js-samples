@@ -13,6 +13,8 @@ var InventoryItemDataProxy = require('../data_proxies/mongo/inventoryItemDataPro
 var InventoryItemService = require('../business_logic/services/inventoryItemService');
 var OrderDataProxy = require('../data_proxies/mongo/orderDataProxy.js');
 var OrderService = require('../business_logic/services/orderService.js');
+var OrderItemDataProxy = require('../data_proxies/mongo/orderItemDataProxy.js');
+var OrderItemService = require('../business_logic/services/orderItemService.js');
 
 // MIDDLEWARE
 app.use(function(req, res, next) {
@@ -63,6 +65,19 @@ utils.addGetRouteHandler(app, '/orders', function(request) {
   return command;
 });
 utils.createController('/orders', app, new OrderService(new OrderDataProxy()));
+utils.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
+  var service = new OrderItemService(new OrderItemDataProxy());
+  return service.submitCommand(request.params.id);
+});
+//utils.addGetRouteHandler(app, '/orderItems/:id/submit', function(request) {
+  //var service = new InventoryItemService(new InventoryItemDataProxy());
+  //var command = service.getAllCommand();
+  //if (request.query.productId) {
+    //command = service.getByProductCommand(request.query.productId);
+  //}
+  //return command;
+//});
+utils.createController('/orderItems', app, new OrderItemService(new OrderItemDataProxy()));
 
 
 //app.get('/', function(req, res) {

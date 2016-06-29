@@ -15,7 +15,7 @@ var OrderService = BusinessService.extend({
       done(null, new FieldRequiredRule("customerId", customer));
     },
     _onUpdateCommandInitialization: function(customer, context, done) {
-      utils.stripAllFieldsFrom(customer).except('customerId');
+      utils.stripAllFieldsFrom(customer).except('id', 'customerId');
       done();
     }
   }
