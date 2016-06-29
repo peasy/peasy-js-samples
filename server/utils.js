@@ -1,3 +1,4 @@
+var NotFoundError = require("../business_logic/shared/notFoundError");
 var _ = require('lodash');
 var OK = 200;
 var CREATED = 201;
@@ -24,15 +25,8 @@ function createController(route, app, service) {
   });
 
   // POST
-  app.post(`${route}`, function(req, res) {
-    var command = service.insertCommand(req.body);
-    command.execute((err, result) => {
-      if (result.success) {
-        res.status(CREATED).json(result.value);
-      } else {
-        res.status(BAD_REQUEST).json(result.errors);
-      }
-    });
+  addPostRouteHandler(app, `${route}`, function(request) {
+    return service.insertCommand(request.body);
   });
 
   // PUT
@@ -91,7 +85,7 @@ function addGetRouteHandler(app, route, commandFactory) {
     command.execute((err, result) => {
       if (err) {
         // LOG ERROR
-        res.status(BAD_REQUEST).json(err.message);
+        return res.status(BAD_REQUEST).json(err.message);
       }
       if (result.success) {
         if (result.value) {
@@ -106,7 +100,28 @@ function addGetRouteHandler(app, route, commandFactory) {
   });
 }
 
+function addPostRouteHandler(app, route, commandFactory) {
+  app.post(route, (req, res) => {
+    var command = commandFactory(req);
+    command.execute((err, result) => {
+      if (err) {
+        if (err instanceof NotFoundError) {
+          return res.status(NOT_FOUND).json(err.message)
+        }
+        // LOG ERROR
+        return res.status(BAD_REQUEST).json(err.message);
+      }
+      if (result.success) {
+        res.status(CREATED).json(result.value);
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
+    });
+  });
+}
+
 module.exports = {
   createController: createController,
-  addGetRouteHandler: addGetRouteHandler
+  addGetRouteHandler: addGetRouteHandler,
+  addPostRouteHandler: addPostRouteHandler
 };
