@@ -2,10 +2,10 @@ var Command = require('peasy-js').Command;
 var CanShipOrderItemRule = require('../rules/canShipOrderItemRule');
 
 var ShipOrderItemCommand = Command.extend({
-  params: ['orderItemId', 'orderItemService', 'inventoryItemService'],
+  params: ['orderItemId', 'orderItemDataProxy', 'inventoryItemService'],
   functions: {
     _getRules: function(context, done) {
-      this.orderItemService.getByIdCommand(this.orderItemId).execute(function(err, result) {
+      this.orderItemDataProxy.getById(this.orderItemId, function(err, result) {
         if (err) { return done(err) ;}
         context.currentOrderItem = result.value;
         done(null, new CanShipOrderItemRule(result.value));
@@ -14,7 +14,7 @@ var ShipOrderItemCommand = Command.extend({
     _onValidationSuccess: function(context, done) {
       var currentOrderItem = context.currentOrderItem;
       var inventoryItemService = this.inventoryItemService;
-      var orderItemService = this.orderItemService;
+      var orderItemDataProxy = this.orderItemDataProxy;
 
       inventoryItemService.getByProductCommand(currentOrderItem.productId).execute(function(err, result) {
         if (err) { return done(err); }
@@ -35,7 +35,7 @@ var ShipOrderItemCommand = Command.extend({
       });
 
       function saveOrderItem(item, done) {
-        orderItemService.updateCommand(item).execute(function(err, result) {
+        orderItemDataProxy.update(item, function(err, result) {
           if (err) { return done(err); }
           done(null, result.value);
         });
