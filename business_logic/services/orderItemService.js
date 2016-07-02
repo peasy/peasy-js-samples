@@ -3,6 +3,7 @@ var Rule = require('peasy-js').Rule;
 var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var OrderItemPriceValidityRule = require('../rules/orderItemPriceValidityRule');
+var OrderItemAmountValidityRule = require('../rules/orderItemAmountValidityRule');
 var CanSubmitOrderItemRule = require('../rules/canSubmitOrderItemRule');
 var utils = require('../shared/utils');
 var NotFoundError = require('../shared/notFoundError');
@@ -32,8 +33,10 @@ var OrderItemService = BusinessService.extend({
         ]).thenGetRules(function(done) {
           productService.getByIdCommand(item.productId).execute(function(err, result) {
             if (err) { return done(err); }
+            var product = result.value;
             done(null, [
-              new OrderItemPriceValidityRule(item, result.value)
+              new OrderItemPriceValidityRule(item, product),
+              new OrderItemAmountValidityRule(item, product)
             ]);
           });
         })
