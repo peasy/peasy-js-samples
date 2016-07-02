@@ -6,12 +6,14 @@ var utils = require('../shared/utils');
 
 var InventoryItemService = BusinessService.extend({
   functions: {
-    _onInsertCommandInitialization: function(item, context, done) {
+    _onInsertCommandInitialization: function(context, done) {
+      var item = this.data;
       utils.stripAllFieldsFrom(item).except(['quantityOnHand', 'productId']);
       item.version = 1;
       done();
     },
-    _getRulesForInsert: function(item, context, done) {
+    _getRulesForInsertCommand: function(context, done) {
+      var item = this.data;
       done(null, [
         new FieldRequiredRule("quantityOnHand", item)
              .ifValidThenValidate(new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number")),
@@ -19,11 +21,13 @@ var InventoryItemService = BusinessService.extend({
         new FieldLengthRule("version", item)
       ]);
     },
-    _onUpdateCommandInitialization: function(item, context, done) {
+    _onUpdateCommandInitialization: function(context, done) {
+      var item = this.data;
       utils.stripAllFieldsFrom(item).except(['id', 'quantityOnHand', 'productId', 'version']);
       done();
     },
-    _getRulesForUpdate: function(item, context, done) {
+    _getRulesForUpdateCommand: function(context, done) {
+      var item = this.data;
       done(null, [
         new FieldRequiredRule("quantityOnHand", item)
              .ifValidThenValidate(new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number")),

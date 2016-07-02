@@ -6,11 +6,13 @@ var utils = require('../shared/utils');
 
 var ProductService = BusinessService.extend({
   functions: {
-    _onInsertCommandInitialization: function(product, context, done) {
+    _onInsertCommandInitialization: function(context, done) {
+      var product = this.data;
       utils.stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
       done();
     },
-    _getRulesForInsert: function(product, context, done) {
+    _getRulesForInsertCommand: function(context, done) {
+      var product = this.data;
       done(null, [
         new FieldRequiredRule("name", product)
              .ifValidThenValidate(new FieldLengthRule("name", product.name, 50)),
@@ -19,11 +21,13 @@ var ProductService = BusinessService.extend({
         new FieldRequiredRule("categoryId", product)
       ]);
     },
-    _onUpdateCommandInitialization: function(product, context, done) {
+    _onUpdateCommandInitialization: function(context, done) {
+      var product = this.data;
       utils.stripAllFieldsFrom(product).except(['id', 'name', 'description', 'price', 'categoryId']);
       done();
     },
-    _getRulesForUpdate: function(product, context, done) {
+    _getRulesForUpdateCommand: function(context, done) {
+      var product = this.data;
       done(null, [
         new FieldLengthRule("name", product.name, 50),
         new FieldTypeRule("price", product.price, "number"),

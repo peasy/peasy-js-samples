@@ -6,15 +6,18 @@ var utils = require('../shared/utils');
 
 var OrderService = BusinessService.extend({
   functions: {
-    _onInsertCommandInitialization: function(customer, context, done) {
+    _onInsertCommandInitialization: function(context, done) {
+      var customer = this.data;
       utils.stripAllFieldsFrom(customer).except('customerId');
       customer.orderDate = new Date();
       done();
     },
-    _getRulesForInsert: function(customer, context, done) {
+    _getRulesForInsertCommand: function(context, done) {
+      var customer = this.data;
       done(null, new FieldRequiredRule("customerId", customer));
     },
-    _onUpdateCommandInitialization: function(customer, context, done) {
+    _onUpdateCommandInitialization: function(context, done) {
+      var customer = this.data;
       utils.stripAllFieldsFrom(customer).except('id', 'customerId');
       done();
     }

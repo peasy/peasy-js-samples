@@ -4,18 +4,22 @@ var utils = require('../shared/utils');
 
 var CategoryService = BusinessService.extend({
   functions: {
-    _onInsertCommandInitialization: function(category, context, done) {
+    _onInsertCommandInitialization: function(context, done) {
+      var category = this.data;
       utils.stripAllFieldsFrom(category).except(['name', 'parentid']);
       done();
     },
-    _getRulesForInsert: function(category, context, done) {
+    _getRulesForInsertCommand: function(context, done) {
+      var category = this.data;
       done(null, new FieldRequiredRule("name", category));
     },
-    _onUpdateCommandInitialization: function(category, context, done) {
+    _onUpdateCommandInitialization: function(context, done) {
+      var category = this.data;
       utils.stripAllFieldsFrom(category).except(['id', 'name', 'parentid']);
       done();
     },
-    _getRulesForUpdate: function(category, context, done) {
+    _getRulesForUpdateCommand: function(context, done) {
+      var category = this.data;
       done(null, new FieldRequiredRule("name", category));
     }
   }

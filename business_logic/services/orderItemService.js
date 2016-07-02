@@ -9,12 +9,14 @@ var NotFoundError = require('../shared/notFoundError');
 var OrderItemService = BusinessService.extend({
   params: ['dataProxy', 'productDataProxy'],
   functions: {
-    _onInsertCommandInitialization: function(item, context, done) {
+    _onInsertCommandInitialization: function(context, done) {
+      var item = this.data;
       utils.stripAllFieldsFrom(item).except(['orderId', 'productId', 'quantity', 'amount', 'price']);
       item.status = "PENDING";
       done();
     },
-    _getRulesForInsert: function(item, context, done) {
+    _getRulesForInsertCommand: function(context, done) {
+      var item = this.data;
       done(null, [
         new FieldRequiredRule("quantity", item)
              .ifValidThenValidate(new FieldTypeRule("quantity", item.quantity, "number")),
@@ -26,11 +28,13 @@ var OrderItemService = BusinessService.extend({
         new FieldRequiredRule("orderId", item)
       ]);
     },
-    _onUpdateCommandInitialization: function(item, context, done) {
+    _onUpdateCommandInitialization: function(context, done) {
+      var item = this.data;
       utils.stripAllFieldsFrom(item).except(['id', 'quantity', 'amount', 'price']);
       done();
     },
-    _getRulesForUpdate: function(item, context, done) {
+    _getRulesForUpdateCommand: function(context, done) {
+      var item = this.data;
       done(null, [
         new FieldRequiredRule("quantity", item)
              .ifValidThenValidate(new FieldTypeRule("quantity", item.quantity, "number")),
