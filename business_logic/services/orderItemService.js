@@ -4,6 +4,7 @@ var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var OrderItemPriceValidityRule = require('../rules/orderItemPriceValidityRule');
 var OrderItemAmountValidityRule = require('../rules/orderItemAmountValidityRule');
+var ValidOrderItemStatusForUpdateRule = require('../rules/validOrderItemStatusForUpdateRule');
 var CanSubmitOrderItemRule = require('../rules/canSubmitOrderItemRule');
 var utils = require('../shared/utils');
 var NotFoundError = require('../shared/notFoundError');
@@ -49,13 +50,27 @@ var OrderItemService = BusinessService.extend({
     },
     _getRulesForUpdateCommand: function(context, done) {
       var item = this.data;
-      done(null, [
-        new FieldRequiredRule("quantity", item)
-             .ifValidThenValidate(new FieldTypeRule("quantity", item.quantity, "number")),
-        new FieldRequiredRule("amount", item)
-             .ifValidThenValidate(new FieldTypeRule("amount", item.amount, "number")),
-        new FieldRequiredRule("price", item)
-      ]);
+      var productService = this.productService;
+      done(null,
+        Rule.ifAllValid([
+          new FieldRequiredRule("quantity", item)
+               .ifValidThenValidate(new FieldTypeRule("quantity", item.quantity, "number")),
+          new FieldRequiredRule("amount", item)
+               .ifValidThenValidate(new FieldTypeRule("amount", item.amount, "number")),
+          new FieldRequiredRule("price", item)
+        ]).thenGetRules(function(done) {
+          productService.getByIdCommand(item.productId).execute(function(err, result) {
+            if (err) { return done(err); }
+            var product = result.value;
+            done(null, new ValidOrderItemStatusForUpdateRule(product)
+                            .ifValidThenValidate([
+                              new OrderItemPriceValidityRule(item, product),
+                              new OrderItemAmountValidityRule(item, product)
+                            ])
+            );
+          });
+        })
+      );
     }
   }
 }).createCommand({
