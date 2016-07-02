@@ -62,10 +62,10 @@ utils.addGetRouteHandler(app, '/orders', function(request) {
 });
 utils.createController('/orders', app, new OrderService(new OrderDataProxy()));
 utils.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
-  var service = new OrderItemService(new OrderItemDataProxy(), new ProductDataProxy());
+  var service = new OrderItemService(new OrderItemDataProxy(), new ProductService(new ProductDataProxy()));
   return service.submitCommand(request.params.id);
 });
-utils.createController('/orderItems', app, new OrderItemService(new OrderItemDataProxy(), new ProductDataProxy()));
+utils.createController('/orderItems', app, new OrderItemService(new OrderItemDataProxy(), new ProductService(new ProductDataProxy())));
 
 
 //app.get('/', function(req, res) {

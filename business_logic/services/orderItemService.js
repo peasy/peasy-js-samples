@@ -1,4 +1,5 @@
 var BusinessService = require('peasy-js').BusinessService;
+var Rule = require('peasy-js').Rule;
 var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var OrderItemPriceValidityRule = require('../rules/orderItemPriceValidityRule');
@@ -7,7 +8,7 @@ var utils = require('../shared/utils');
 var NotFoundError = require('../shared/notFoundError');
 
 var OrderItemService = BusinessService.extend({
-  params: ['dataProxy', 'productDataProxy'],
+  params: ['dataProxy', 'productService'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
@@ -17,15 +18,25 @@ var OrderItemService = BusinessService.extend({
     },
     _getRulesForInsertCommand: function(context, done) {
       var item = this.data;
+      var productService = this.productService;
       done(null, [
-        new FieldRequiredRule("quantity", item)
-             .ifValidThenValidate(new FieldTypeRule("quantity", item.quantity, "number")),
-        new FieldRequiredRule("amount", item)
-             .ifValidThenValidate(new FieldTypeRule("amount", item.amount, "number")),
-        new FieldRequiredRule("price", item)
-             .ifValidThenValidate(new FieldTypeRule("price", item.price, "number")),
-        new FieldRequiredRule("productId", item),
-        new FieldRequiredRule("orderId", item)
+        Rule.ifAllValid([
+          new FieldRequiredRule("quantity", item)
+               .ifValidThenValidate(new FieldTypeRule("quantity", item.quantity, "number")),
+          new FieldRequiredRule("amount", item)
+               .ifValidThenValidate(new FieldTypeRule("amount", item.amount, "number")),
+          new FieldRequiredRule("price", item)
+               .ifValidThenValidate(new FieldTypeRule("price", item.price, "number")),
+          new FieldRequiredRule("productId", item),
+          new FieldRequiredRule("orderId", item)
+        ]).thenGetRules(function(done) {
+          productService.getByIdCommand(item.productId).execute(function(err, result) {
+            if (err) { return done(err); }
+            done(null, [
+              new OrderItemPriceValidityRule(item, result.value)
+            ]);
+          });
+        })
       ]);
     },
     _onUpdateCommandInitialization: function(context, done) {
