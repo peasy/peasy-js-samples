@@ -8,9 +8,10 @@ var ValidOrderItemStatusForUpdateRule = require('../rules/validOrderItemStatusFo
 var CanSubmitOrderItemRule = require('../rules/canSubmitOrderItemRule');
 var utils = require('../shared/utils');
 var NotFoundError = require('../shared/notFoundError');
+var ShipOrderItemCommand = require('../commands/shipOrderItemCommand');
 
 var OrderItemService = BusinessService.extend({
-  params: ['dataProxy', 'productService'],
+  params: ['dataProxy', 'productService', 'inventoryItemService'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
@@ -95,16 +96,10 @@ var OrderItemService = BusinessService.extend({
       });
     }
   }
-}).createCommand({
-  name: 'shipCommand',
-  params: ['orderItemId'],
-  functions: {
-    _onValidationSuccess: function(context, done) {
-      this.dataProxy.getByProduct(this.productId, function(err, result) {
-        done(null, result);
-      });
-    }
-  }
 }).service;
+
+OrderItemService.prototype.shipCommand = function(orderItemId) {
+  return new ShipOrderItemCommand(orderItemId, this.dataProxy, this.inventoryItemService);
+}
 
 module.exports = OrderItemService;
