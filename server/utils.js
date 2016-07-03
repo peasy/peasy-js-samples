@@ -1,10 +1,12 @@
 var NotFoundError = require("../business_logic/shared/notFoundError");
+var ConcurrencyError = require("../business_logic/shared/concurrencyError.js");
 var _ = require('lodash');
 var OK = 200;
 var CREATED = 201;
 var NO_CONTENT = 204;
 var BAD_REQUEST = 400;
 var NOT_FOUND = 404;
+var CONFLICT = 409;
 
 function createController(route, app, service) {
 
@@ -36,6 +38,9 @@ function createController(route, app, service) {
       if (err) {
         if (err instanceof NotFoundError) {
           return res.status(NOT_FOUND).json(err.message)
+        }
+        if (err instanceof ConcurrencyError) {
+          return res.status(CONFLICT).json(err.message)
         }
         // LOG ERROR
         return res.status(BAD_REQUEST).json(err.message);

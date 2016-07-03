@@ -1,5 +1,6 @@
 var MongoDataProxy = require('./mongoDataProxy');
 var objectId = require('mongodb').ObjectID;
+var ConcurrencyError = require('../../business_logic/shared/concurrencyError');
 
 var InventoryItemDataProxy = function() {
   MongoDataProxy.call(this, "inventoryItems");
@@ -32,7 +33,7 @@ InventoryItemDataProxy.prototype.update = function(data, done) {
     var result = collection.update({ '_id' : objectId(data.id), 'version' : currentVersion }, data, function(err, result) {
       db.close();
       if (result.result.nModified !== 1) {
-        return done(new Error("This item has been modified, please try again with new version"));
+        return done(new ConcurrencyError("This item has been modified, please try again with new version"));
       }
       done(err, data);
     });
