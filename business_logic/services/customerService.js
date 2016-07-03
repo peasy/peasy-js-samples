@@ -2,8 +2,9 @@ var BusinessService = require('peasy-js').BusinessService;
 var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var utils = require('../shared/utils');
+var BaseService = require('../services/baseService');
 
-var CustomerService = BusinessService.extend({
+var CustomerService = BusinessService.extendService(BaseService, {
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var customer = this.data;

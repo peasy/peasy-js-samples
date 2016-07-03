@@ -31,34 +31,17 @@ function createController(route, app, service) {
 
   // PUT
   app.put(`${route}/:id`, (req, res) => {
-    var command = service.getByIdCommand(req.params.id);
-    command.execute((err, result) => {
+    req.body.id = req.params.id;
+    var command = service.updateCommand(req.body).execute((err, result) => {
       if (err) {
+        if (err instanceof NotFoundError) {
+          return res.status(NOT_FOUND).json(err.message)
+        }
         // LOG ERROR
         return res.status(BAD_REQUEST).json(err.message);
       }
       if (result.success) {
-        if (result.value) {
-          var entity = _.merge(result.value, req.body);
-
-          if (req.body.version) {
-            entity.version = req.body.version;
-          }
-
-          service.updateCommand(entity).execute((err, result) => {
-            if (err) {
-              // LOG ERROR
-              return res.status(BAD_REQUEST).json(err.message);
-            }
-            if (result.success) {
-              res.status(OK).json(result.value);
-            } else {
-              res.status(BAD_REQUEST).json(result.errors);
-            }
-          });
-        } else {
-          res.status(NOT_FOUND).end();
-        }
+        res.status(OK).json(result.value);
       } else {
         res.status(BAD_REQUEST).json(result.errors);
       }
