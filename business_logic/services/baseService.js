@@ -13,13 +13,6 @@ var BaseService = BusinessService.extend({
         if (err) { return done(err); }
         if (!result) { return done(new NotFoundError(`item ${data.id} not found`)); }
         var entity = _.merge(result, data);
-        console.log("MERGE");
-        console.log("RESULT", result);
-        console.log("DATA", data);
-        console.log("ENTITY", entity);
-        if (data.version) {
-          entity.version = data.version;
-        }
         dataProxy.update(entity, function(err, result) {
           if (err) { return done(err); }
           done(null, result);
