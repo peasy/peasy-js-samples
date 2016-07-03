@@ -5,10 +5,10 @@ var ShipOrderItemCommand = Command.extend({
   params: ['orderItemId', 'orderItemDataProxy', 'inventoryItemService'],
   functions: {
     _getRules: function(context, done) {
-      this.orderItemDataProxy.getById(this.orderItemId, function(err, result) {
-        if (err) { return done(err) ;}
-        context.currentOrderItem = result.value;
-        done(null, new CanShipOrderItemRule(result.value));
+      this.orderItemDataProxy.getById(this.orderItemId, function(err, orderItem) {
+        if (err) { return done(err); }
+        context.currentOrderItem = orderItem;
+        done(null, new CanShipOrderItemRule(orderItem));
       });
     },
     _onValidationSuccess: function(context, done) {
@@ -35,12 +35,13 @@ var ShipOrderItemCommand = Command.extend({
       });
 
       function saveOrderItem(item, done) {
-        orderItemDataProxy.update(item, function(err, result) {
+        orderItemDataProxy.update(item, function(err, orderItem) {
           if (err) { return done(err); }
-          done(null, result.value);
+          done(null, orderItem);
         });
       }
     }
   }
 });
 
+module.exports = ShipOrderItemCommand;

@@ -46,12 +46,13 @@ var OrderItemService = BusinessService.extend({
     },
     _onUpdateCommandInitialization: function(context, done) {
       var item = this.data;
-      utils.stripAllFieldsFrom(item).except(['id', 'quantity', 'amount', 'price']);
+      utils.stripAllFieldsFrom(item).except(['id', 'quantity', 'amount', 'price', 'productId', 'orderId']);
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {
       var item = this.data;
       var productService = this.productService;
+      var orderItemDataProxy = this.dataProxy;
       done(null,
         Rule.ifAllValid([
           new FieldRequiredRule("quantity", item)
@@ -60,15 +61,19 @@ var OrderItemService = BusinessService.extend({
                .ifValidThenValidate(new FieldTypeRule("amount", item.amount, "number")),
           new FieldRequiredRule("price", item)
         ]).thenGetRules(function(done) {
-          productService.getByIdCommand(item.productId).execute(function(err, result) {
+          orderItemDataProxy.getById(item.id, function(err, result) {
             if (err) { return done(err); }
-            var product = result.value;
-            done(null, new ValidOrderItemStatusForUpdateRule(product)
-                            .ifValidThenValidate([
-                              new OrderItemPriceValidityRule(item, product),
-                              new OrderItemAmountValidityRule(item, product)
-                            ])
-            );
+            var savedItem = result;
+            productService.getByIdCommand(item.productId).execute(function(err, result) {
+              if (err) { return done(err); }
+              var product = result.value;
+              done(null, new ValidOrderItemStatusForUpdateRule(savedItem)
+                              .ifValidThenValidate([
+                                new OrderItemPriceValidityRule(item, product),
+                                new OrderItemAmountValidityRule(item, product)
+                              ])
+              );
+            });
           });
         })
       );
