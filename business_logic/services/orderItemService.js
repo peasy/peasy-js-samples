@@ -9,8 +9,9 @@ var CanSubmitOrderItemRule = require('../rules/canSubmitOrderItemRule');
 var utils = require('../shared/utils');
 var NotFoundError = require('../shared/notFoundError');
 var ShipOrderItemCommand = require('../commands/shipOrderItemCommand');
+var BaseService = require('../services/baseService');
 
-var OrderItemService = BusinessService.extend({
+var OrderItemService = BusinessService.extendService(BaseService, {
   params: ['dataProxy', 'productService', 'inventoryItemService'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
