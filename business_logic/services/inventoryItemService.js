@@ -3,8 +3,9 @@ var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
+var BaseService = require('../services/baseService');
 
-var InventoryItemService = BusinessService.extend({
+var InventoryItemService = BusinessService.extendService(BaseService, {
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
@@ -31,7 +32,9 @@ var InventoryItemService = BusinessService.extend({
       done(null, [
         new FieldRequiredRule("quantityOnHand", item)
              .ifValidThenValidate(new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number")),
-        new FieldRequiredRule("productId", item)
+        new FieldRequiredRule("productId", item),
+        new FieldRequiredRule("version", item)
+             .ifValidThenValidate(new FieldTypeRule("version", item.version, "number")),
       ]);
     }
   }
