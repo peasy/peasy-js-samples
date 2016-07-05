@@ -30,7 +30,12 @@ app.use(bodyParser.urlencoded({
 
 // ROUTES AND CONTROLLERS
 utils.createController('/customers', app, new CustomerService(new CustomerDataProxy()));
-utils.createController('/categories', app, new CategoryService(new CategoryDataProxy()));
+
+utils.createController('/categories', app, new CategoryService(
+  new CategoryDataProxy(),
+  new ProductService(new ProductDataProxy())
+));
+
 utils.addGetRouteHandler(app, '/products', function(request) {
   var service = new ProductService(new ProductDataProxy());
   var command = service.getAllCommand();
@@ -40,6 +45,7 @@ utils.addGetRouteHandler(app, '/products', function(request) {
   return command;
 });
 utils.createController('/products', app, new ProductService(new ProductDataProxy()));
+
 utils.addGetRouteHandler(app, '/inventoryItems', function(request) {
   var service = new InventoryItemService(new InventoryItemDataProxy());
   var command = service.getAllCommand();
@@ -49,6 +55,7 @@ utils.addGetRouteHandler(app, '/inventoryItems', function(request) {
   return command;
 });
 utils.createController('/inventoryItems', app, new InventoryItemService(new InventoryItemDataProxy()));
+
 utils.addGetRouteHandler(app, '/orders', function(request) {
   var service = new OrderService(new OrderDataProxy());
   var command = service.getAllCommand();
@@ -61,6 +68,7 @@ utils.addGetRouteHandler(app, '/orders', function(request) {
   return command;
 });
 utils.createController('/orders', app, new OrderService(new OrderDataProxy()));
+
 function newOrderItemService() {
   return new OrderItemService(
     new OrderItemDataProxy(),
