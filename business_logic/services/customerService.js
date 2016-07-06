@@ -3,8 +3,10 @@ var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var utils = require('../shared/utils');
 var BaseService = require('../services/baseService');
+var CanDeleteCustomerRule = require('../rules/canDeleteCustomerRule');
 
 var CustomerService = BusinessService.extendService(BaseService, {
+  params: ['dataProxy', 'orderService'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var customer = this.data;
@@ -27,6 +29,10 @@ var CustomerService = BusinessService.extendService(BaseService, {
     _getRulesForUpdateCommand: function(context, done) {
       var customer = this.data;
       done(null, new FieldRequiredRule("name", customer));
+    },
+    _getRulesForDestroyCommand: function(context, done) {
+      var customerId = this.id;
+      done(null, new CanDeleteCustomerRule(customerId, this.orderService));
     }
   }
 }).service;

@@ -29,7 +29,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 // ROUTES AND CONTROLLERS
-utils.createController('/customers', app, new CustomerService(new CustomerDataProxy()));
+utils.createController('/customers', app, new CustomerService(
+  new CustomerDataProxy(),
+  new OrderService(new OrderDataProxy())
+));
 
 utils.createController('/categories', app, new CategoryService(
   new CategoryDataProxy(),
