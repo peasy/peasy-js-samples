@@ -5,6 +5,7 @@ var FieldTypeRule = require('../rules/fieldTypeRule');
 var OrderItemPriceValidityRule = require('../rules/orderItemPriceValidityRule');
 var OrderItemAmountValidityRule = require('../rules/orderItemAmountValidityRule');
 var ValidOrderItemStatusForUpdateRule = require('../rules/validOrderItemStatusForUpdateRule');
+var ValidOrderItemStatusForDeleteRule = require('../rules/validOrderItemStatusForDeleteRule');
 var CanSubmitOrderItemRule = require('../rules/canSubmitOrderItemRule');
 var utils = require('../shared/utils');
 var NotFoundError = require('../shared/notFoundError');
@@ -78,6 +79,14 @@ var OrderItemService = BusinessService.extendService(BaseService, {
           });
         })
       );
+    },
+    _getRulesForDestroyCommand: function(context, done) {
+      var orderItemDataProxy = this.dataProxy;
+      orderItemDataProxy.getById(this.id, function(err, result) {
+        if (err) { return done(err); }
+        var savedItem = result;
+        done(null, new ValidOrderItemStatusForUpdateRule(savedItem));
+      });
     }
   }
 }).createCommand({
