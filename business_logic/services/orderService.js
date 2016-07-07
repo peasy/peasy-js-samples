@@ -4,23 +4,29 @@ var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
 var BaseService = require('../services/baseService');
+var ValidOrderStatusForUpdateRule = require('../rules/validOrderStatusForUpdateRule');
 
 var OrderService = BusinessService.extendService(BaseService, {
+  params: ['dataProxy', 'orderItemService'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
-      var customer = this.data;
-      utils.stripAllFieldsFrom(customer).except('customerId');
-      customer.orderDate = new Date();
+      var order = this.data;
+      utils.stripAllFieldsFrom(order).except('customerId');
+      order.orderDate = new Date();
       done();
     },
     _getRulesForInsertCommand: function(context, done) {
-      var customer = this.data;
-      done(null, new FieldRequiredRule("customerId", customer));
+      var order = this.data;
+      done(null, new FieldRequiredRule("customerId", order));
     },
     _onUpdateCommandInitialization: function(context, done) {
-      var customer = this.data;
-      utils.stripAllFieldsFrom(customer).except('id', 'customerId');
+      var order = this.data;
+      utils.stripAllFieldsFrom(order).except('id', 'customerId');
       done();
+    },
+    _getRulesForUpdateCommand: function(context, done) {
+      var order = this.data;
+      done(null, new ValidOrderStatusForUpdateRule(order.id, this.orderItemService));
     }
   }
 }).createCommand({

@@ -90,6 +90,17 @@ var OrderItemService = BusinessService.extendService(BaseService, {
     }
   }
 }).createCommand({
+  name: 'getByOrderCommand',
+  params: ['orderId'],
+  functions: {
+    _onValidationSuccess: function(context, done) {
+      this.dataProxy.getByOrder(this.orderId, function(err, result) {
+        if (err) { return done(err); }
+        done(null, result);
+      });
+    }
+  }
+}).createCommand({
   name: 'submitCommand',
   params: ['orderItemId'],
   functions: {

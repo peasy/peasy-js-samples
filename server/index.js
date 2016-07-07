@@ -70,7 +70,10 @@ utils.addGetRouteHandler(app, '/orders', function(request) {
   }
   return command;
 });
-utils.createController('/orders', app, new OrderService(new OrderDataProxy()));
+utils.createController('/orders', app, new OrderService(
+  new OrderDataProxy(),
+  new OrderItemService(new OrderItemDataProxy())
+));
 
 function newOrderItemService() {
   return new OrderItemService(
