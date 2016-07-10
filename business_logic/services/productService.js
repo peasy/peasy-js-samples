@@ -5,26 +5,11 @@ var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
 var BaseService = require('../services/baseService');
 var DeleteProductCommand = require('../commands/deleteProductCommand');
+var CreateProductCommand = require('../commands/createProductCommand');
 
 var ProductService = BusinessService.extendService(BaseService, {
   params: ['dataProxy', 'orderService', 'inventoryItemService'],
   functions: {
-    _onInsertCommandInitialization: function(context, done) {
-      var product = this.data;
-      utils.stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
-      done();
-    },
-    _getRulesForInsertCommand: function(context, done) {
-      var product = this.data;
-      var orderService = this.productService;
-      done(null, [
-        new FieldRequiredRule("name", product)
-             .ifValidThenValidate(new FieldLengthRule("name", product.name, 50)),
-        new FieldRequiredRule("price", product)
-             .ifValidThenValidate(new FieldTypeRule("price", product.price, "number")),
-        new FieldRequiredRule("categoryId", product)
-      ]);
-    },
     _onUpdateCommandInitialization: function(context, done) {
       var product = this.data;
       utils.stripAllFieldsFrom(product).except(['id', 'name', 'description', 'price', 'categoryId']);
@@ -49,6 +34,10 @@ var ProductService = BusinessService.extendService(BaseService, {
     }
   }
 }).service;
+
+ProductService.prototype.insertCommand = function(product) {
+  return new CreateProductCommand(product, this.dataProxy, this.inventoryItemService);
+};
 
 ProductService.prototype.destroyCommand = function(productId) {
   return new DeleteProductCommand(productId, this.dataProxy, this.orderService, this.inventoryItemService);

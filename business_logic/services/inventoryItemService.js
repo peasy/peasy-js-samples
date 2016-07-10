@@ -16,10 +16,10 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
     _getRulesForInsertCommand: function(context, done) {
       var item = this.data;
       done(null, [
-        new FieldRequiredRule("quantityOnHand", item)
-             .ifValidThenValidate(new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number")),
+        new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number"),
         new FieldRequiredRule("productId", item),
-        new FieldLengthRule("version", item)
+        new FieldRequiredRule("version", item)
+             .ifValidThenValidate(new FieldTypeRule("version", item.version, "number")),
       ]);
     },
     _onUpdateCommandInitialization: function(context, done) {
@@ -30,8 +30,7 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
     _getRulesForUpdateCommand: function(context, done) {
       var item = this.data;
       done(null, [
-        new FieldRequiredRule("quantityOnHand", item)
-             .ifValidThenValidate(new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number")),
+        new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number"),
         new FieldRequiredRule("productId", item),
         new FieldRequiredRule("version", item)
              .ifValidThenValidate(new FieldTypeRule("version", item.version, "number")),
