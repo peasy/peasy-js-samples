@@ -4,8 +4,10 @@ var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
 var BaseService = require('../services/baseService');
+var DeleteProductCommand = require('../commands/deleteProductCommand');
 
 var ProductService = BusinessService.extendService(BaseService, {
+  params: ['dataProxy', 'orderService', 'inventoryItemService'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var product = this.data;
@@ -14,6 +16,7 @@ var ProductService = BusinessService.extendService(BaseService, {
     },
     _getRulesForInsertCommand: function(context, done) {
       var product = this.data;
+      var orderService = this.productService;
       done(null, [
         new FieldRequiredRule("name", product)
              .ifValidThenValidate(new FieldLengthRule("name", product.name, 50)),
@@ -31,8 +34,7 @@ var ProductService = BusinessService.extendService(BaseService, {
       var product = this.data;
       done(null, [
         new FieldLengthRule("name", product.name, 50),
-        new FieldTypeRule("price", product.price, "number"),
-        new FieldTypeRule("categoryId", product.categoryId, "number")
+        new FieldTypeRule("price", product.price, "number")
       ]);
     }
   }
@@ -48,5 +50,8 @@ var ProductService = BusinessService.extendService(BaseService, {
   }
 }).service;
 
+ProductService.prototype.destroyCommand = function(productId) {
+  return new DeleteProductCommand(productId, this.dataProxy, this.orderService, this.inventoryItemService);
+};
 
 module.exports = ProductService;

@@ -47,7 +47,11 @@ utils.addGetRouteHandler(app, '/products', function(request) {
   }
   return command;
 });
-utils.createController('/products', app, new ProductService(new ProductDataProxy()));
+utils.createController('/products', app, new ProductService(
+  new ProductDataProxy(),
+  new OrderService(new OrderDataProxy()),
+  new InventoryItemService(new InventoryItemDataProxy())
+));
 
 utils.addGetRouteHandler(app, '/inventoryItems', function(request) {
   var service = new InventoryItemService(new InventoryItemDataProxy());

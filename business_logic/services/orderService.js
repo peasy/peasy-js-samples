@@ -43,6 +43,9 @@ var OrderService = BusinessService.extendService(BaseService, {
   name: 'getByProductCommand',
   params: ['productId'],
   functions: {
+    _getRules: function(context, done) {
+      done(null, []);
+    },
     _onValidationSuccess: function(context, done) {
       this.dataProxy.getByProduct(this.productId, function(err, result) {
         done(null, result);

@@ -28,13 +28,24 @@ OrderDataProxy.prototype.getByProduct = function(productId, done) {
   self._mongodb.connect(self.connectionString, function(err, db) {
     if (err) { done(err); }
     var collection = db.collection(self.collectionName);
-    collection.findOne({productId: productId}, function(err, data) {
-      if (data) {
-        data.id = data._id;
-        delete data._id;
+    var orderItemsCollection = db.collection("orderItems");
+    orderItemsCollection.find({productId: productId}).toArray(function(err, data) {
+      var orderIds = data.map((i) => new objectId(i.orderId));
+      if (orderIds.length > 0) {
+        collection.find({_id: { $in: orderIds }}).toArray(function(err, data) {
+          if (data) {
+            data.forEach((item) => {
+              item.id = item._id;
+              delete item._id;
+            });
+            db.close();
+          }
+          done(err, data);
+        });
       }
-      db.close();
-      done(err, data);
+      else {
+        done(null, []);
+      }
     });
   });
 };

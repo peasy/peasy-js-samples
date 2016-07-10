@@ -5,7 +5,6 @@ var CanDeleteCustomerRule = Rule.extend({
   functions: {
     _onValidate: function(done) {
       var self = this;
-      console.log("MEH", this.orderService);
       this.orderService.getByCustomerCommand(this.customerId).execute(function(err, result) {
         if (err) { return done(err); }
         if (result.value && result.value.length > 0) {
