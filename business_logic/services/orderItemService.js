@@ -85,7 +85,7 @@ var OrderItemService = BusinessService.extendService(BaseService, {
       orderItemDataProxy.getById(this.id, function(err, result) {
         if (err) { return done(err); }
         var savedItem = result;
-        done(null, new ValidOrderItemStatusForUpdateRule(savedItem));
+        done(null, new ValidOrderItemStatusForDeleteRule(savedItem));
       });
     }
   }

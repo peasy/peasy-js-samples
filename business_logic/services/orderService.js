@@ -5,6 +5,7 @@ var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
 var BaseService = require('../services/baseService');
 var ValidOrderStatusForUpdateRule = require('../rules/validOrderStatusForUpdateRule');
+var DeleteOrderCommand = require('../commands/deleteOrderCommand');
 
 var OrderService = BusinessService.extendService(BaseService, {
   params: ['dataProxy', 'orderItemService'],
@@ -53,5 +54,9 @@ var OrderService = BusinessService.extendService(BaseService, {
     }
   }
 }).service;
+
+OrderService.prototype.destroyCommand = function(orderId) {
+  return new DeleteOrderCommand(orderId, this.dataProxy, this.orderItemService);
+};
 
 module.exports = OrderService;
