@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
-var InMemoryDataProxy = function() {
-  this._store = [{id: 1, name: "Aaron Hanusa"}];
+var InMemoryDataProxy = function(data) {
+  this._store = data || [];
 };
 
 InMemoryDataProxy.prototype.getById = function(id, done) {

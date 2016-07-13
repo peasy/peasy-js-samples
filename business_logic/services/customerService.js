@@ -28,7 +28,7 @@ var CustomerService = BusinessService.extendService(BaseService, {
     },
     _getRulesForUpdateCommand: function(context, done) {
       var customer = this.data;
-      done(null, new FieldRequiredRule("name", customer));
+      done(null, new FieldLengthRule("name", customer.name, 50));
     },
     _getRulesForDestroyCommand: function(context, done) {
       var customerId = this.id;
