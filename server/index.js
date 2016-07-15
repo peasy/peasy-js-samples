@@ -25,12 +25,12 @@ var InventoryItemDataProxy = require('../data_proxies/in-memory/inventoryItemDat
 var OrderDataProxy = require('../data_proxies/in-memory/orderDataProxy.js');
 var OrderItemDataProxy = require('../data_proxies/in-memory/orderItemDataProxy.js');
 
-var categoryDataProxy = new CategoryDataProxy();
-var customerDataProxy = new CustomerDataProxy();
-var productDataProxy = new ProductDataProxy();
-var inventoryItemDataProxy = new InventoryItemService();
-var orderItemDataProxy = new OrderItemDataProxy();
-var orderDataProxy = new OrderDataProxy(orderItemDataProxy);
+var categoryDataProxy = new CategoryDataProxy([{id: 1, name: "Musical Equipment"}, {id: 2, name: "Art Supplies"}]);
+var customerDataProxy = new CustomerDataProxy([{id: 1, name: "Jimi Hendrix"}]);
+var productDataProxy = new ProductDataProxy([{id: 1, name: "PRS Hollow II", categoryId: 1, price: 2250}, {id: 2, name: "Pastelles", categoryId: 2, price: 10.5}]);
+var inventoryItemDataProxy = new InventoryItemDataProxy([{id: 1, productId: 1, quantityOnHand: 1, version: 1}]);
+var orderItemDataProxy = new OrderItemDataProxy([{"quantity": 2, "amount": 5000, "price": 2250, "productId": 1, "orderId": 1, "status": "PENDING", "id": 1 }]);
+var orderDataProxy = new OrderDataProxy(orderItemDataProxy, [{id: 1, customerId: 1}]);
 
 // MIDDLEWARE
 app.use(function(req, res, next) {
@@ -44,11 +44,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-var orderItemService = new OrderItemService(orderItemDataProxy);
-var orderService = new OrderService(orderDataProxy, orderItemService);
-var customerService = new CustomerService(customerDataProxy, orderService);
 var inventoryItemService = new InventoryItemService(inventoryItemDataProxy);
+var orderItemService = new OrderItemService(orderItemDataProxy, productDataProxy, inventoryItemService);
+var orderService = new OrderService(orderDataProxy, orderItemService);
 var productService = new ProductService(productDataProxy, orderService, inventoryItemService);
+var customerService = new CustomerService(customerDataProxy, orderService);
 var categoryService = new CategoryService(categoryDataProxy, productService);
 
 // ROUTES AND CONTROLLERS
@@ -89,22 +89,13 @@ utils.addGetRouteHandler(app, '/orders', function(request) {
 });
 utils.createController('/orders', app, orderService);
 
-function newOrderItemService() {
-  return new OrderItemService(
-    new OrderItemDataProxy(),
-    new ProductService(new ProductDataProxy()),
-    new InventoryItemService(new InventoryItemDataProxy())
-  );
-}
 utils.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
-  var service = newOrderItemService();
-  return service.submitCommand(request.params.id);
+  return orderItemService.submitCommand(request.params.id);
 });
 utils.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
-  var service = newOrderItemService();
-  return service.shipCommand(request.params.id);
+  return orderItemService.shipCommand(request.params.id);
 });
-utils.createController('/orderItems', app, newOrderItemService());
+utils.createController('/orderItems', app, orderItemService);
 
 
 //app.get('/', function(req, res) {

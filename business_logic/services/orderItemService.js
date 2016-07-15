@@ -13,7 +13,7 @@ var ShipOrderItemCommand = require('../commands/shipOrderItemCommand');
 var BaseService = require('../services/baseService');
 
 var OrderItemService = BusinessService.extendService(BaseService, {
-  params: ['dataProxy', 'productService', 'inventoryItemService'],
+  params: ['dataProxy', 'productDataProxy', 'inventoryItemService'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
@@ -23,7 +23,7 @@ var OrderItemService = BusinessService.extendService(BaseService, {
     },
     _getRulesForInsertCommand: function(context, done) {
       var item = this.data;
-      var productService = this.productService;
+      var productDataProxy = this.productDataProxy;
       done(null, [
         Rule.ifAllValid([
           new FieldRequiredRule("quantity", item)
@@ -35,9 +35,8 @@ var OrderItemService = BusinessService.extendService(BaseService, {
           new FieldRequiredRule("productId", item),
           new FieldRequiredRule("orderId", item)
         ]).thenGetRules(function(done) {
-          productService.getByIdCommand(item.productId).execute(function(err, result) {
+          productDataProxy.getById(item.productId, function(err, product) {
             if (err) { return done(err); }
-            var product = result.value;
             done(null, [
               new OrderItemPriceValidityRule(item, product),
               new OrderItemAmountValidityRule(item, product)
@@ -53,7 +52,7 @@ var OrderItemService = BusinessService.extendService(BaseService, {
     },
     _getRulesForUpdateCommand: function(context, done) {
       var item = this.data;
-      var productService = this.productService;
+      var productDataProxy = this.productDataProxy;
       var orderItemDataProxy = this.dataProxy;
       done(null,
         Rule.ifAllValid([
@@ -66,9 +65,8 @@ var OrderItemService = BusinessService.extendService(BaseService, {
           orderItemDataProxy.getById(item.id, function(err, result) {
             if (err) { return done(err); }
             var savedItem = result;
-            productService.getByIdCommand(item.productId).execute(function(err, result) {
+            productDataProxy.getById(item.productId, function(err, product) {
               if (err) { return done(err); }
-              var product = result.value;
               done(null, new ValidOrderItemStatusForUpdateRule(savedItem)
                               .ifValidThenValidate([
                                 new OrderItemPriceValidityRule(item, product),

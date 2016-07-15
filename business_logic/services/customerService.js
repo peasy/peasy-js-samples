@@ -17,8 +17,8 @@ var CustomerService = BusinessService.extendService(BaseService, {
     _getRulesForInsertCommand: function(context, done) {
       var customer = this.data;
       done(null, [
-        new FieldRequiredRule("name", customer),
-        new FieldLengthRule("name", customer.name, 50)
+        new FieldRequiredRule("name", customer)
+              .ifValidThenValidate(new FieldLengthRule("name", customer.name, 50))
       ]);
     },
     _onUpdateCommandInitialization: function(context, done) {

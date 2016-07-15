@@ -4,8 +4,8 @@ var CanShipOrderItemRule = Rule.extend({
   params: ['orderItem'],
   functions: {
     _onValidate: function(done) {
-      if (this.orderItem.status !== "SUBMITTED") {
-        this._invalidate(`Order item ${this.orderItem.id} must be in a submitted state to be shipped`);
+      if (this.orderItem.status !== "SUBMITTED" && this.orderItem.status !== "BACKORDERED") {
+        this._invalidate(`Order item ${this.orderItem.id} is not in a shippable state`);
       }
       done();
     }

@@ -37,7 +37,7 @@ InMemoryDataProxy.prototype.destroy = function(id, done) {
 
 InMemoryDataProxy.prototype._findBy = function(id) {
   var data = this._store.filter((function(p) {
-    return p.id === id;
+    return p.id == id;
   }))[0];
   return data;
 }
