@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/jasmine/bin/jasmine.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "dependencies": {
     "body-parser": "1.15.2",
     "express": "4.14.0",
+    "jasmine": "2.4.1",
     "lodash": "4.13.1",
     "mongodb": "2.1.18",
     "peasy-js": "1.3.2"
