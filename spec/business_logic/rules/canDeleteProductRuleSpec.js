@@ -7,7 +7,7 @@ describe("CanDeleteProductRule", function() {
       getByProductCommand: function(prodId) {
         return {
           execute: function(done) {
-            done(null, { value: ['red'] });
+            done(null, { value: [{orderId: 1}] });
           }
         }
       }
@@ -18,7 +18,7 @@ describe("CanDeleteProductRule", function() {
     });
   });
 
-  it("does not invalidate products associated with no association with orders", () => {
+  it("does not invalidate products without associated orders", () => {
     var productId = 1;
     var orderService = {
       getByProductCommand: function(prodId) {
@@ -35,7 +35,7 @@ describe("CanDeleteProductRule", function() {
     });
   });
 
-  it("does not invalidate products associated with no association with orders (empty array) ", () => {
+  it("does not invalidate products without associated orders (empty array) ", () => {
     var productId = 1;
     var orderService = {
       getByProductCommand: function(prodId) {
@@ -49,6 +49,23 @@ describe("CanDeleteProductRule", function() {
     var rule = new CanDeleteProductRule(productId, orderService);
     rule.validate(() => {
       expect(rule.valid).toBe(true);
+    });
+  });
+
+  it("exits with an error if an error is received", () => {
+    var productId = 1;
+    var orderService = {
+      getByProductCommand: function(prodId) {
+        return {
+          execute: function(done) {
+            done(new Error());
+          }
+        }
+      }
+    };
+    var rule = new CanDeleteProductRule(productId, orderService);
+    rule.validate((err) => {
+      expect(err).not.toBeNull();
     });
   });
 });
