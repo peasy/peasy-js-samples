@@ -18,15 +18,14 @@ var OrderItemService = require('../business_logic/services/orderItemService');
 //var OrderItemDataProxy = require('../data_proxies/mongo/orderItemDataProxy.js');
 
 //IN-MEMORY DATA PROXIES
-var CategoryDataProxy = require('../data_proxies/in-memory/inMemoryDataProxy');
-var CustomerDataProxy = require('../data_proxies/in-memory/inMemoryDataProxy');
+var InMemoryDataProxy = require('../data_proxies/in-memory/inMemoryDataProxy');
 var ProductDataProxy = require('../data_proxies/in-memory/productDataProxy');
 var InventoryItemDataProxy = require('../data_proxies/in-memory/inventoryItemDataProxy');
 var OrderDataProxy = require('../data_proxies/in-memory/orderDataProxy.js');
 var OrderItemDataProxy = require('../data_proxies/in-memory/orderItemDataProxy.js');
 
-var categoryDataProxy = new CategoryDataProxy([{id: 1, name: "Musical Equipment"}, {id: 2, name: "Art Supplies"}]);
-var customerDataProxy = new CustomerDataProxy([{id: 1, name: "Jimi Hendrix"}]);
+var categoryDataProxy = new InMemoryDataProxy([{id: 1, name: "Musical Equipment"}, {id: 2, name: "Art Supplies"}]);
+var customerDataProxy = new InMemoryDataProxy([{id: 1, name: "Jimi Hendrix"}]);
 var productDataProxy = new ProductDataProxy([{id: 1, name: "PRS Hollow II", categoryId: 1, price: 2250}, {id: 2, name: "Pastelles", categoryId: 2, price: 10.5}]);
 var inventoryItemDataProxy = new InventoryItemDataProxy([{id: 1, productId: 1, quantityOnHand: 1, version: 1}]);
 var orderItemDataProxy = new OrderItemDataProxy([{"quantity": 2, "amount": 5000, "price": 2250, "productId": 1, "orderId": 1, "status": "PENDING", "id": 1 }]);
