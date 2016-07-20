@@ -31,6 +31,8 @@ var inventoryItemDataProxy = new InventoryItemDataProxy([{id: 1, productId: 1, q
 var orderItemDataProxy = new OrderItemDataProxy([{"quantity": 2, "amount": 5000, "price": 2250, "productId": 1, "orderId": 1, "status": "PENDING", "id": 1 }]);
 var orderDataProxy = new OrderDataProxy(orderItemDataProxy, [{id: 1, customerId: 1}]);
 
+app.set('x-powered-by', false);
+
 // MIDDLEWARE
 app.use(function(req, res, next) {
   for (var key in req.query) {
