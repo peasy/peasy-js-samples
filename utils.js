@@ -1,5 +1,5 @@
-var NotFoundError = require("../business_logic/shared/notFoundError");
-var ConcurrencyError = require("../business_logic/shared/concurrencyError.js");
+var NotFoundError = require("./business_logic/shared/notFoundError");
+var ConcurrencyError = require("./business_logic/shared/concurrencyError.js");
 var _ = require('lodash');
 var OK = 200;
 var CREATED = 201;

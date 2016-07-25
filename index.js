@@ -1,13 +1,14 @@
 var express = require('express');
 var app = express();
+var path = require('path');
 var bodyParser = require('body-parser');
 var utils = require('./utils');
-var CustomerService = require('../business_logic/services/customerService');
-var CategoryService = require('../business_logic/services/categoryService');
-var ProductService = require('../business_logic/services/productService');
-var InventoryItemService = require('../business_logic/services/inventoryItemService');
-var OrderService = require('../business_logic/services/orderService');
-var OrderItemService = require('../business_logic/services/orderItemService');
+var CustomerService = require('./business_logic/services/customerService');
+var CategoryService = require('./business_logic/services/categoryService');
+var ProductService = require('./business_logic/services/productService');
+var InventoryItemService = require('./business_logic/services/inventoryItemService');
+var OrderService = require('./business_logic/services/orderService');
+var OrderItemService = require('./business_logic/services/orderItemService');
 
 //MONGO DATA PROXIES
 //var CategoryDataProxy = require('../data_proxies/mongo/categoryDataProxy');
@@ -18,11 +19,11 @@ var OrderItemService = require('../business_logic/services/orderItemService');
 //var OrderItemDataProxy = require('../data_proxies/mongo/orderItemDataProxy.js');
 
 //IN-MEMORY DATA PROXIES
-var InMemoryDataProxy = require('../data_proxies/in-memory/inMemoryDataProxy');
-var ProductDataProxy = require('../data_proxies/in-memory/productDataProxy');
-var InventoryItemDataProxy = require('../data_proxies/in-memory/inventoryItemDataProxy');
-var OrderDataProxy = require('../data_proxies/in-memory/orderDataProxy.js');
-var OrderItemDataProxy = require('../data_proxies/in-memory/orderItemDataProxy.js');
+var InMemoryDataProxy = require('./data_proxies/in-memory/inMemoryDataProxy');
+var ProductDataProxy = require('./data_proxies/in-memory/productDataProxy');
+var InventoryItemDataProxy = require('./data_proxies/in-memory/inventoryItemDataProxy');
+var OrderDataProxy = require('./data_proxies/in-memory/orderDataProxy.js');
+var OrderItemDataProxy = require('./data_proxies/in-memory/orderItemDataProxy.js');
 
 var categoryDataProxy = new InMemoryDataProxy([{id: 1, name: "Musical Equipment"}, {id: 2, name: "Art Supplies"}]);
 var customerDataProxy = new InMemoryDataProxy([{id: 1, name: "Jimi Hendrix"}]);
@@ -32,6 +33,8 @@ var orderItemDataProxy = new OrderItemDataProxy([{"quantity": 2, "amount": 5000,
 var orderDataProxy = new OrderDataProxy(orderItemDataProxy, [{id: 1, customerId: 1}]);
 
 app.set('x-powered-by', false);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // MIDDLEWARE
 app.use(function(req, res, next) {
@@ -97,6 +100,11 @@ utils.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
   return orderItemService.shipCommand(request.params.id);
 });
 utils.createController('/orderItems', app, orderItemService);
+
+app.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
 
 
 //app.get('/', function(req, res) {
