@@ -10,61 +10,25 @@ var CONFLICT = 409;
 
 function createController(route, app, service) {
 
-  // GET
-  app.get(`${route}`, (req, res) => {
-    var command = service.getAllCommand();
-    command.execute((err, result) => {
-      if (result.success) {
-        res.status(OK).json(result.value);
-      } else {
-        res.status(BAD_REQUEST).json(result.errors);
-      }
-    });
+  addGetRouteHandler(app, `${route}`, function(request) {
+    return service.getAllCommand();
   });
 
   addGetRouteHandler(app, `${route}/:id`, function(request) {
     return service.getByIdCommand(request.params.id);
   });
 
-  // POST
   addPostRouteHandler(app, `${route}`, function(request) {
     return service.insertCommand(request.body);
   });
 
-  // PUT
-  app.put(`${route}/:id`, (req, res) => {
-    req.body.id = req.params.id;
-    var command = service.updateCommand(req.body).execute((err, result) => {
-      if (err) {
-        if (err instanceof NotFoundError) {
-          return res.status(NOT_FOUND).json(err.message)
-        }
-        if (err instanceof ConcurrencyError) {
-          return res.status(CONFLICT).json(err.message)
-        }
-        // LOG ERROR
-        return res.status(BAD_REQUEST).json(err.message);
-      }
-      if (result.success) {
-        res.status(OK).json(result.value);
-      } else {
-        res.status(BAD_REQUEST).json(result.errors);
-      }
-    });
+  addPutRouteHandler(app, `${route}/:id`, function(request) {
+    return service.updateCommand(request.body);
   });
 
-  // DELETE
-  app.delete(`${route}/:id`, (req, res) => {
-    var command = service.destroyCommand(req.params.id);
-    command.execute((err, result) => {
-      if (result.success) {
-        res.status(NO_CONTENT).end();
-      } else {
-        res.status(BAD_REQUEST).json(result.errors);
-      }
-    });
+  addDeleteRouteHandler(app, `${route}/:id`, function(request) {
+    return service.destroyCommand(request.params.id);
   });
-
 };
 
 function addGetRouteHandler(app, route, commandFactory) {
@@ -108,8 +72,47 @@ function addPostRouteHandler(app, route, commandFactory) {
   });
 }
 
+function addPutRouteHandler(app, route, commandFactory) {
+  app.put(route, (req, res) => {
+    req.body.id = req.params.id;
+    var command = commandFactory(req);
+    command.execute((err, result) => {
+      if (err) {
+        if (err instanceof NotFoundError) {
+          return res.status(NOT_FOUND).json(err.message)
+        }
+        if (err instanceof ConcurrencyError) {
+          return res.status(CONFLICT).json(err.message)
+        }
+        // LOG ERROR
+        return res.status(BAD_REQUEST).json(err.message);
+      }
+      if (result.success) {
+        res.status(OK).json(result.value);
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
+    });
+  });
+}
+
+function addDeleteRouteHandler(app, route, commandFactory) {
+  app.delete(route, (req, res) => {
+    var command = commandFactory(req);
+    command.execute((err, result) => {
+      if (result.success) {
+        res.status(NO_CONTENT).end();
+      } else {
+        res.status(BAD_REQUEST).json(result.errors);
+      }
+    });
+  });
+}
+
 module.exports = {
   createController: createController,
   addGetRouteHandler: addGetRouteHandler,
-  addPostRouteHandler: addPostRouteHandler
+  addPostRouteHandler: addPostRouteHandler,
+  addPutRouteHandler: addPutRouteHandler,
+  addDeleteRouteHandler: addDeleteRouteHandler
 };

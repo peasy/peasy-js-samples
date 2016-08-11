@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var utils = require('./utils');
+var routeHelper = require('./routeHelper.js');
 var CustomerService = require('./business_logic/services/customerService');
 var CategoryService = require('./business_logic/services/categoryService');
 var ProductService = require('./business_logic/services/productService');
@@ -63,11 +63,11 @@ var customerService = new CustomerService(customerDataProxy, orderService);
 var categoryService = new CategoryService(categoryDataProxy, productService);
 
 // ROUTES AND CONTROLLERS
-utils.createController('/customers', app, customerService);
+routeHelper.createController('/customers', app, customerService);
 
-utils.createController('/categories', app, categoryService);
+routeHelper.createController('/categories', app, categoryService);
 
-utils.addGetRouteHandler(app, '/products', function(request) {
+routeHelper.addGetRouteHandler(app, '/products', function(request) {
   var service = productService;
   var command = service.getAllCommand();
   if (request.query.categoryid) {
@@ -75,9 +75,9 @@ utils.addGetRouteHandler(app, '/products', function(request) {
   }
   return command;
 });
-utils.createController('/products', app, productService);
+routeHelper.createController('/products', app, productService);
 
-utils.addGetRouteHandler(app, '/inventoryItems', function(request) {
+routeHelper.addGetRouteHandler(app, '/inventoryItems', function(request) {
   var service = inventoryItemService;
   var command = service.getAllCommand();
   if (request.query.productId) {
@@ -85,9 +85,9 @@ utils.addGetRouteHandler(app, '/inventoryItems', function(request) {
   }
   return command;
 });
-utils.createController('/inventoryItems', app, inventoryItemService);
+routeHelper.createController('/inventoryItems', app, inventoryItemService);
 
-utils.addGetRouteHandler(app, '/orders', function(request) {
+routeHelper.addGetRouteHandler(app, '/orders', function(request) {
   var service = orderService;
   var command = service.getAllCommand();
   if (request.query.customerId) {
@@ -98,15 +98,23 @@ utils.addGetRouteHandler(app, '/orders', function(request) {
   }
   return command;
 });
-utils.createController('/orders', app, orderService);
+routeHelper.addGetRouteHandler(app, '/orders/:id/orderitems', function(request) {
+  return orderItemService.getByOrderCommand(request.params.id);
+});
+routeHelper.addPostRouteHandler(app, '/orders/:id/orderitems', function(request) {
+  var item = request.body;
+  item.orderId = request.params.id;
+  return orderItemService.insertCommand(item);
+});
+routeHelper.createController('/orders', app, orderService);
 
-utils.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
+routeHelper.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
   return orderItemService.submitCommand(request.params.id);
 });
-utils.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
+routeHelper.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
   return orderItemService.shipCommand(request.params.id);
 });
-utils.createController('/orderItems', app, orderItemService);
+routeHelper.createController('/orderItems', app, orderItemService);
 
 app.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
