@@ -25,7 +25,7 @@ describe("FieldLengthRule", function() {
   it("does not invalidate when the value equals length", () => {
     var rule = new FieldLengthRule("name", "hello", 5);
     rule.validate(() => {
-      expect(rule.valid).toBe(false);
+      expect(rule.valid).toBe(true);
     });
   });
 
