@@ -1,6 +1,13 @@
 describe("FieldRequiredRule", function() {
   var FieldRequiredRule = require('../../../business_logic/rules/fieldRequiredRule');
 
+  it("invalidates as expected", () => {
+    var rule = new FieldRequiredRule("name", { name: "" });
+    rule.validate(() => {
+      expect(rule.valid).toBe(false);
+    });
+  });
+
   it("invalidates with the expected association", () => {
     var rule = new FieldRequiredRule("name");
     rule.validate(() => {
@@ -16,9 +23,9 @@ describe("FieldRequiredRule", function() {
   });
 
   it("does not invalidate when a value is supplied", () => {
-    var rule = new FieldRequiredRule("name", "Jimi Hendrix");
+    var rule = new FieldRequiredRule("name", { name: "Jimi Hendrix" });
     rule.validate(() => {
-      expect(rule.valid).toBe(false);
+      expect(rule.valid).toBe(true);
     });
   });
 });
