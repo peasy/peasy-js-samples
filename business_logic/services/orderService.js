@@ -12,7 +12,7 @@ var OrderService = BusinessService.extendService(BaseService, {
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var order = this.data;
-      utils.stripAllFieldsFrom(order).except('customerId');
+      utils.stripAllFieldsFrom(order).except(['customerId']);
       order.orderDate = new Date();
       done();
     },
@@ -22,7 +22,7 @@ var OrderService = BusinessService.extendService(BaseService, {
     },
     _onUpdateCommandInitialization: function(context, done) {
       var order = this.data;
-      utils.stripAllFieldsFrom(order).except('id', 'customerId');
+      utils.stripAllFieldsFrom(order).except(['id', 'customerId']);
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {

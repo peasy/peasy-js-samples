@@ -27,7 +27,7 @@ describe("ProductService", function() {
     };
   });
 
-  describe("UpdateCommand", () => {
+  describe("updateCommand", () => {
     it("allows only whitelisted object members", () => {
       spyOn(dataProxy, "update").and.callThrough();
       var expectedResult = {
