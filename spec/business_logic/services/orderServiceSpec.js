@@ -1,7 +1,6 @@
 describe("OrderService", function() {
   var OrderService = require('../../../business_logic/services/orderService');
-  var CreateProductCommand = require('../../../business_logic/commands/createProductCommand');
-  var DeleteProductCommand = require('../../../business_logic/commands/deleteProductCommand');
+  var DeleteOrderCommand = require('../../../business_logic/commands/deleteOrderCommand');
   var dataProxy, product;
 
   beforeEach(() => {
@@ -15,6 +14,9 @@ describe("OrderService", function() {
       },
       update: function(data, done) {
         done(null, data);
+      },
+      getByCustomer: function(id, done) {
+        done(null, {});
       }
     };
     order = {
@@ -98,31 +100,23 @@ describe("OrderService", function() {
     });
   });
 
-  //describe("getByCategoryCommand", () => {
-    //it("invokes the correct data proxy method", () => {
-      //spyOn(dataProxy, "getByCategory").and.callThrough();
-      //var service = new OrderService(dataProxy);
-      //var id = 1;
-      //service.getByCategoryCommand(id).execute((err, result) => {
-        //expect(dataProxy.getByCategory).toHaveBeenCalledWith(1, jasmine.any(Function));
-      //});
-    //});
-  //});
+  describe("getByCustomerCommand", () => {
+    it("invokes the correct data proxy method", () => {
+      spyOn(dataProxy, "getByCustomer").and.callThrough();
+      var service = new OrderService(dataProxy);
+      var id = 1;
+      service.getByCustomerCommand(id).execute((err, result) => {
+        expect(dataProxy.getByCustomer).toHaveBeenCalledWith(1, jasmine.any(Function));
+      });
+    });
+  });
 
-  //describe("insertCommand", () => {
-    //it("invocation returns an instance of CreateProductCommand", () => {
-      //var service = new OrderService(dataProxy);
-      //var command = service.insertCommand({});
-      //expect(command instanceof CreateProductCommand).toBe(true);
-    //})
-  //});
-
-  //describe("destroyCommand", () => {
-    //it("invocation returns an instance of DeleteProductCommand", () => {
-      //var service = new OrderService(dataProxy);
-      //var command = service.destroyCommand(1);
-      //expect(command instanceof DeleteProductCommand).toBe(true);
-    //})
-  //});
+  describe("destroyCommand", () => {
+    it("invocation returns an instance of DeleteProductCommand", () => {
+      var service = new OrderService(dataProxy);
+      var command = service.destroyCommand(1);
+      expect(command instanceof DeleteOrderCommand).toBe(true);
+    })
+  });
 
 });
