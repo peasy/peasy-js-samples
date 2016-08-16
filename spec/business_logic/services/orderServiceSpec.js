@@ -78,11 +78,6 @@ describe("OrderService", function() {
 
     describe("rule execution", () => {
       it("ensures the order is in a valid state for update", () => {
-        //spyOn(dataProxy, "update").and.callFake(function(data, done) {
-          //console.log("HELLO");
-          //data.status = "BACKORDERED";
-          //done(null, data);
-        //});
         var orderItemService = {
           getByOrderCommand: function() {
             return {
@@ -116,7 +111,7 @@ describe("OrderService", function() {
       var service = new OrderService(dataProxy);
       var command = service.destroyCommand(1);
       expect(command instanceof DeleteOrderCommand).toBe(true);
-    })
+    });
   });
 
 });
