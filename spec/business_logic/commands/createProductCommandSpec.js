@@ -2,7 +2,7 @@ describe("CreateProductCommand", function() {
   var CreateProductCommand = require('../../../business_logic/commands/createProductCommand');
   var InventoryService = require('../../../business_logic/services/inventoryItemService');
 
-  describe("updateCommand", () => {
+  describe("CreateProductCommand", () => {
 
     describe("rule execution", () => {
       it("ensures all required fields are supplied", () => {
