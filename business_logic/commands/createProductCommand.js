@@ -10,7 +10,7 @@ var CreateProductCommand = Command.extend({
   params: ['product', 'productDataProxy', 'inventoryItemService'],
   functions: {
     _onInitialization: function(context, done) {
-      var product = this.data;
+      var product = this.product;
       utils.stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
       done();
     },
