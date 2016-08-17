@@ -1,6 +1,6 @@
 describe("CustomerService", function() {
   var CustomerService = require('../../../business_logic/services/customerService');
-  var dataProxy, inventoryItem;
+  var dataProxy, customer;
 
   describe("insertCommand", () => {
 
@@ -27,7 +27,7 @@ describe("CustomerService", function() {
           isAdmin: true
         };
       });
-      it("allows only whitelisted object members and assigns a version number", () => {
+      it("allows only whitelisted object members", () => {
         spyOn(dataProxy, "insert").and.callThrough();
         var expectedResult = {
           id: 1,
@@ -92,7 +92,7 @@ describe("CustomerService", function() {
         };
       });
 
-      it("allows only whitelisted object members and assigns a version number", () => {
+      it("allows only whitelisted object members", () => {
         spyOn(dataProxy, "update").and.callThrough();
         var expectedResult = {
           id: 1,
