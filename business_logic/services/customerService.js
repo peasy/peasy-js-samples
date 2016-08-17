@@ -24,6 +24,7 @@ var CustomerService = BusinessService.extendService(BaseService, {
     _onUpdateCommandInitialization: function(context, done) {
       var customer = this.data;
       utils.stripAllFieldsFrom(customer).except(['id', 'name', 'address']);
+      utils.stripAllFieldsFrom(customer.address).except(['street', 'zip']);
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {
