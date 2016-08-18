@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var routeHelper = require('./routeHelper.js');
+var routeHelper = require('./routeHelper');
 var CustomerService = require('./business_logic/services/customerService');
 var CategoryService = require('./business_logic/services/categoryService');
 var ProductService = require('./business_logic/services/productService');
@@ -11,33 +11,17 @@ var OrderService = require('./business_logic/services/orderService');
 var OrderItemService = require('./business_logic/services/orderItemService');
 
 //MONGO DATA PROXIES
-var CategoryDataProxy = require('./data_proxies/mongo/categoryDataProxy');
-var CustomerDataProxy = require('./data_proxies/mongo/customerDataProxy');
-var ProductDataProxy = require('./data_proxies/mongo/productDataProxy');
-var InventoryItemDataProxy = require('./data_proxies/mongo/inventoryItemDataProxy');
-var OrderDataProxy = require('./data_proxies/mongo/orderDataProxy.js');
-var OrderItemDataProxy = require('./data_proxies/mongo/orderItemDataProxy.js');
-
-var categoryDataProxy = new CategoryDataProxy();
-var customerDataProxy = new CustomerDataProxy();
-var productDataProxy = new ProductDataProxy();
-var inventoryItemDataProxy = new InventoryItemDataProxy();
-var orderDataProxy = new OrderDataProxy();
-var orderItemDataProxy = new OrderItemDataProxy();
+//var dataProxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
 
 //IN-MEMORY DATA PROXIES
-//var InMemoryDataProxy = require('./data_proxies/in-memory/inMemoryDataProxy');
-//var ProductDataProxy = require('./data_proxies/in-memory/productDataProxy');
-//var InventoryItemDataProxy = require('./data_proxies/in-memory/inventoryItemDataProxy');
-//var OrderDataProxy = require('./data_proxies/in-memory/orderDataProxy.js');
-//var OrderItemDataProxy = require('./data_proxies/in-memory/orderItemDataProxy.js');
+var dataProxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
 
-//var categoryDataProxy = new InMemoryDataProxy([{id: 1, name: "Musical Equipment"}, {id: 2, name: "Art Supplies"}]);
-//var customerDataProxy = new InMemoryDataProxy([{id: 1, name: "Jimi Hendrix"}]);
-//var productDataProxy = new ProductDataProxy([{id: 1, name: "PRS Hollow II", categoryId: 1, price: 2250}, {id: 2, name: "Pastelles", categoryId: 2, price: 10.5}]);
-//var inventoryItemDataProxy = new InventoryItemDataProxy([{id: 1, productId: 1, quantityOnHand: 1, version: 1}]);
-//var orderItemDataProxy = new OrderItemDataProxy([{"quantity": 2, "amount": 5000, "price": 2250, "productId": 1, "orderId": 1, "status": "PENDING", "id": 1 }]);
-//var orderDataProxy = new OrderDataProxy(orderItemDataProxy, [{id: 1, customerId: 1}]);
+var categoryDataProxy = dataProxyFactory.categoryDataProxy;
+var customerDataProxy = dataProxyFactory.customerDataProxy;
+var productDataProxy = dataProxyFactory.productDataProxy;
+var inventoryItemDataProxy = dataProxyFactory.inventoryItemDataProxy;
+var orderDataProxy = dataProxyFactory.orderDataProxy;
+var orderItemDataProxy = dataProxyFactory.orderItemDataProxy;
 
 app.set('x-powered-by', false);
 app.set('views', path.join(__dirname, 'views'));
