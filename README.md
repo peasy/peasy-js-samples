@@ -50,14 +50,14 @@ var proxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
 ```javascript
 var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
 ```
+<img src="https://www.dropbox.com/s/wi7uskhfhnj23xc/Screen%20Shot%202016-08-18%20at%203.05.52%20PM.png?dl=0&raw=1" width=600 />
 * Restart the application to ensure that the new proxies are consumed
 * Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps 
 
-<img src="https://www.dropbox.com/s/wi7uskhfhnj23xc/Screen%20Shot%202016-08-18%20at%203.05.52%20PM.png?dl=0&raw=1" width=600 />
 
 ### Configurations
 
-Because these clients consume a middle tier written with peasy, they can be configured in different ways to suit your needs.  Below are multiple available configurations that serve to showcase how you might run and/or deploy applications consuming your middle tier written with peasy.
+Below are multiple available configurations that serve to showcase how you might run and/or deploy applications consuming your middle tier written with peasy.
 
 * [WPF &#8594; In Memory](https://github.com/peasy/Samples/wiki/Configuring-WPF-%E2%86%92--In-Memory)
 * [WPF &#8594; SQL Server](https://github.com/peasy/Samples/wiki/Configuring-WPF-%E2%86%92-SQL-Server)
