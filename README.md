@@ -11,7 +11,7 @@ By default, this project is configured to use in-memory implementations of the [
 ### Requirements
 
 1. [nodejs](https://nodejs.org/) - this application is a nodejs application and requires nodejs to be installed
-2. [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools can help to easily hit http endpoints
+2. [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools help to facilitate hitting http endpoints
 3. [mongodb](https://www.mongodb.com/) (optional) - this application by default is configured to work with in-memory data proxies, however, you easily swap data proxies to interact with a mongodb instance if desired.
 
 ### Running the application
@@ -19,6 +19,19 @@ By default, this project is configured to use in-memory implementations of the [
 The sample web api is a nodejs application that consumes middle tier logic written with peasy-js.  
 
 From a command line, navigate to the peasy-js-samples directory and run: ```node index.js```
+
+### Testing out the application
+
+To ensure that the application is up and running, navigate to the following url in your browser of choice:
+
+![browser-test](https://www.dropbox.com/s/0h5z21e8o891cp2/Screen%20Shot%202016-08-18%20at%202.42.53%20PM.png?dl=0&raw=1)
+
+
+### Application Walkthrough
+
+This walkthrough will cover creating a customer, category, product, and placing an order on behalf of the new customer.  Further, you will ship an order and see how it affects inventory as well.
+
+
 
 ### Mongodb Configuration
 
