@@ -11,17 +11,17 @@ var OrderService = require('./business_logic/services/orderService');
 var OrderItemService = require('./business_logic/services/orderItemService');
 
 //MONGO DATA PROXIES
-//var dataProxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
+//var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
 
 //IN-MEMORY DATA PROXIES
-var dataProxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
+var proxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
 
-var categoryDataProxy = dataProxyFactory.categoryDataProxy;
-var customerDataProxy = dataProxyFactory.customerDataProxy;
-var productDataProxy = dataProxyFactory.productDataProxy;
-var inventoryItemDataProxy = dataProxyFactory.inventoryItemDataProxy;
-var orderDataProxy = dataProxyFactory.orderDataProxy;
-var orderItemDataProxy = dataProxyFactory.orderItemDataProxy;
+var inventoryItemService = new InventoryItemService(proxyFactory.inventoryItemDataProxy);
+var orderItemService = new OrderItemService(proxyFactory.orderItemDataProxy, proxyFactory.productDataProxy, inventoryItemService);
+var orderService = new OrderService(proxyFactory.orderDataProxy, orderItemService);
+var productService = new ProductService(proxyFactory.productDataProxy, orderService, inventoryItemService);
+var customerService = new CustomerService(proxyFactory.customerDataProxy, orderService);
+var categoryService = new CategoryService(proxyFactory.categoryDataProxy, productService);
 
 app.set('x-powered-by', false);
 app.set('views', path.join(__dirname, 'views'));
@@ -38,13 +38,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-var inventoryItemService = new InventoryItemService(inventoryItemDataProxy);
-var orderItemService = new OrderItemService(orderItemDataProxy, productDataProxy, inventoryItemService);
-var orderService = new OrderService(orderDataProxy, orderItemService);
-var productService = new ProductService(productDataProxy, orderService, inventoryItemService);
-var customerService = new CustomerService(customerDataProxy, orderService);
-var categoryService = new CategoryService(categoryDataProxy, productService);
 
 // ROUTES AND CONTROLLERS
 routeHelper.createController('/customers', app, customerService);
