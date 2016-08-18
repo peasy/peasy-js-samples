@@ -42,18 +42,18 @@ This walkthrough will cover creating a customer, category, product, and placing 
 
 The sample applications can be configured to interact with a mongodb database.  With mongodb installed, here are the steps to setup the application to interact with one:
 
-1. Open wireUpRoutes.js
-2. Locate and comment out the following line:
+* Open wireUpRoutes.js
+* Locate and comment out the following line:
 ```javascript
 var proxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
 ```
-3. Locate and uncomment the following line:
+* Locate and uncomment the following line:
 ```javascript
 var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
 ```
-4. Test the app according to the steps [here]()
+* Test the app according to the steps [here]()
 
-![sql-setup](https://www.dropbox.com/s/g7x7oss660iz1ms/sql-setup.png?dl=0&raw=1)
+<img src="https://www.dropbox.com/s/wi7uskhfhnj23xc/Screen%20Shot%202016-08-18%20at%203.05.52%20PM.png?dl=0&raw=1" width=300 />
 
 ### Configurations
 
