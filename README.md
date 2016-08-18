@@ -17,7 +17,9 @@ By default, this project is configured to use in-memory implementations of the [
 ### Running the application
 
 From a command line, navigate to the peasy-js-samples directory and run:
+
 1. ``` npm install ```
+
 2. ```node index.js```
 
 ### Testing out the application
