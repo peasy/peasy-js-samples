@@ -10,13 +10,11 @@ By default, this project is configured to use in-memory implementations of the [
 
 ### Requirements
 
-1. [nodejs](https://nodejs.org/) - this application is a nodejs application and requires nodejs to be installed
-2. [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools help to facilitate hitting http endpoints
+1. [nodejs](https://nodejs.org/) - this application is a nodejs application and requires nodejs to be installed.
+2. [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools help to facilitate hitting http endpoints.
 3. [mongodb](https://www.mongodb.com/) (optional) - this application by default is configured to work with in-memory data proxies, however, you can easily swap data proxies to interact with a mongodb instance if desired.
 
 ### Running the application
-
-The sample web api is a nodejs application that consumes middle tier logic written with peasy-js.  
 
 From a command line, navigate to the peasy-js-samples directory and run:
 1. ``` npm install ```
