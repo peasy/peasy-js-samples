@@ -2,7 +2,7 @@
 
 ### Showcases a middle tier built with peasy-js.
 
-A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by nodejs can be found here.  You can clone the repo or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
+A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by nodejs can be found here.  You can clone the repo (```git clone https://github.com/peasy/peasy-js-samples.git```) or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
 
 The sample application is a ficticious order entry / inventory management system web api.  All efforts were made to keep this application as simple as possible to keep the focus on how a middle tier is written with peasy-js and consumed by multiple clients (client and server).
 
@@ -18,7 +18,9 @@ By default, this project is configured to use in-memory implementations of the [
 
 The sample web api is a nodejs application that consumes middle tier logic written with peasy-js.  
 
-From a command line, navigate to the peasy-js-samples directory and run: ```node index.js```
+From a command line, navigate to the peasy-js-samples directory and run:
+1. ``` npm install ```
+2. ```node index.js```
 
 ### Testing out the application
 
@@ -51,6 +53,7 @@ var proxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
 ```javascript
 var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
 ```
+* Restart the application to ensure that the new proxies are consumed
 * Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps 
 
 <img src="https://www.dropbox.com/s/wi7uskhfhnj23xc/Screen%20Shot%202016-08-18%20at%203.05.52%20PM.png?dl=0&raw=1" width=600 />
