@@ -24,18 +24,34 @@ From a command line, navigate to the peasy-js-samples directory and run: ```node
 
 To ensure that the application is up and running, navigate to the following url in your browser of choice:
 
-
 <img src="https://www.dropbox.com/s/0h5z21e8o891cp2/Screen%20Shot%202016-08-18%20at%202.42.53%20PM.png?dl=0&raw=1" width="300">
+
+The above response ensures that the app is operational.  You may also test these end points:
+* http://localhost:3000/orders
+* http://localhost:3000/orderitems
+* http://localhost:3000/products
+* http://localhost:3000/categories
+* http://localhost:3000/inventoryitems
 
 ### Application Walkthrough
 
 This walkthrough will cover creating a customer, category, product, and placing an order on behalf of the new customer.  Further, you will ship an order and see how it affects inventory as well.
 
 
-
 ### Mongodb Configuration
 
-The sample applications can be configured to interact with a mongodb database.  Here are the steps to setup a setup the application to interact with one:
+The sample applications can be configured to interact with a mongodb database.  With mongodb installed, here are the steps to setup the application to interact with one:
+
+1. Open wireUpRoutes.js
+2. Locate and comment out the following line:
+```javascript
+var proxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
+```
+3. Locate and uncomment the following line:
+```javascript
+var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
+```
+4. Test the app according to the steps [here]()
 
 ![sql-setup](https://www.dropbox.com/s/g7x7oss660iz1ms/sql-setup.png?dl=0&raw=1)
 
