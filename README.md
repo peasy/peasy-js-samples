@@ -16,9 +16,11 @@ By default, this project is configured to use in-memory implementations of the [
 
 ### Running the application
 
-The sample web api is a nodejs application that consumes middle tier logic written with peasy-js.  From a command line, run:
+The sample web api is a nodejs application that consumes middle tier logic written with peasy-js.  
 
-```node index.src```
+From a command line, run:
+
+```node index.js```
 
 ### Mongodb Configuration
 
