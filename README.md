@@ -1,14 +1,24 @@
 ![peasy](https://www.dropbox.com/s/2yajr2x9yevvzbm/peasy3.png?dl=0&raw=1)
 
-# Showcases a middle tier built with peasy-js and consumed by multiple client consumers
+### Showcases a middle tier built with peasy-js.
 
-A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and sample consumer clients (WPF, Web API, and ASP.NET MVC) can be found here.  You can clone the repo or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
+A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by nodejs can be found here.  You can clone the repo or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
 
-The sample application is a ficticious order entry / inventory management system and provides a nodejs client.  All efforts were made to keep this application as simple as possible to keep the focus on how a middle tier is written with peasy-js and consumed by multiple clients.
+The sample application is a ficticious order entry / inventory management system web api.  All efforts were made to keep this application as simple as possible to keep the focus on how a middle tier is written with peasy-js and consumed by multiple clients.
 
-The easiest way to get up and running is to set either the WPF project or the ASP.NET MVC project as the startup project and run the application.  By default, these projects are configured to use in-memory implementations of the [data proxies](https://github.com/peasy/Peasy.NET/wiki/Data-Proxy).
+By default, this project is configured to use in-memory implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy).  However, there is a multitude of configuration possibilities.  The [configurations](https://github.com/peasy/Samples#configurations) section provides details on setting up many potential configurations.
 
-However, there is a multitude of configuration possibilities.  The [configurations](https://github.com/peasy/Samples#configurations) section provides details on setting up many potential configurations.
+### Requirements
+
+1.) [nodejs](https://nodejs.org/) - this application is a nodejs application and requires nodejs to be installed
+2.) [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools can help to easily hit http endpoints
+3.) [mongodb](https://www.mongodb.com/) (optional) - this application by default is configured to work with in-memory data proxies, however, you easily swap data proxies to interact with a mongodb instance if desired.
+
+### Running the application
+
+The sample web api is a nodejs application that consumes middle tier logic written with peasy-js.  From a command line, run:
+
+node index.src
 
 ### SQL Server Setup
 
