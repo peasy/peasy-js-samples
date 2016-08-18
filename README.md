@@ -18,9 +18,7 @@ By default, this project is configured to use in-memory implementations of the [
 
 The sample web api is a nodejs application that consumes middle tier logic written with peasy-js.  
 
-From a command line, run:
-
-```node index.js```
+From a command line, navigate to the peasy-js-samples directory and run: ```node index.js```
 
 ### Mongodb Configuration
 
