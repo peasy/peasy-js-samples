@@ -23,11 +23,9 @@ From a command line, navigate to the peasy-js-samples directory and run:
 
 ### Testing out the application
 
-To ensure that the application is up and running, navigate to the following url in your browser of choice:
+With the application up and running you can navigate to the following urls:
 
-<img src="https://www.dropbox.com/s/0h5z21e8o891cp2/Screen%20Shot%202016-08-18%20at%202.42.53%20PM.png?dl=0&raw=1" width="300">
-
-The above response ensures that the app is operational.  You may also test these end points:
+* [http://localhost:3000/customers](http://localhost:3000/customers)
 * [http://localhost:3000/orders](http://localhost:3000/orders)
 * [http://localhost:3000/orderitems](http://localhost:3000/orderitems)
 * [http://localhost:3000/products](http://localhost:3000/products)
