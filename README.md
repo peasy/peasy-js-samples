@@ -10,23 +10,19 @@ By default, this project is configured to use in-memory implementations of the [
 
 ### Requirements
 
-1.) [nodejs](https://nodejs.org/) - this application is a nodejs application and requires nodejs to be installed
-2.) [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools can help to easily hit http endpoints
-3.) [mongodb](https://www.mongodb.com/) (optional) - this application by default is configured to work with in-memory data proxies, however, you easily swap data proxies to interact with a mongodb instance if desired.
+1. [nodejs](https://nodejs.org/) - this application is a nodejs application and requires nodejs to be installed
+2. [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools can help to easily hit http endpoints
+3. [mongodb](https://www.mongodb.com/) (optional) - this application by default is configured to work with in-memory data proxies, however, you easily swap data proxies to interact with a mongodb instance if desired.
 
 ### Running the application
 
 The sample web api is a nodejs application that consumes middle tier logic written with peasy-js.  From a command line, run:
 
-node index.src
+```node index.src```
 
-### SQL Server Setup
+### Mongodb Setup
 
-The sample applications can be configured to interact with a SQL Server database.  Here are the steps to setup a SQL Server database for use by the sample applications:
-
-1.) In package manager console, select ```Orders.com.DAL.EF``` in the Default project drop down list
-
-2.) Execute the following command: ```update-database -verbose```
+The sample applications can be configured to interact with a mongodb database.  Here are the steps to setup a setup the application to interact with one:
 
 ![sql-setup](https://www.dropbox.com/s/g7x7oss660iz1ms/sql-setup.png?dl=0&raw=1)
 
@@ -46,9 +42,7 @@ Because these clients consume a middle tier written with peasy, they can be conf
 
 ### Videos
 
-An application walkthru of the WPF Application can be viewed [here](https://youtu.be/EdBKA6m_HKY).
-
-An application walkthru of the ASP.NET MVC Application can be viewed [here](https://youtu.be/8axAQ-s2rEQ).
+Coming soon ...
 
 ### Solution and Project Structure
 
