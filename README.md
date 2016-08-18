@@ -53,7 +53,7 @@ var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
 ```
 * Test the app according to the steps [here]()
 
-<img src="https://www.dropbox.com/s/wi7uskhfhnj23xc/Screen%20Shot%202016-08-18%20at%203.05.52%20PM.png?dl=0&raw=1" width=300 />
+<img src="https://www.dropbox.com/s/wi7uskhfhnj23xc/Screen%20Shot%202016-08-18%20at%203.05.52%20PM.png?dl=0&raw=1" width=600 />
 
 ### Configurations
 
