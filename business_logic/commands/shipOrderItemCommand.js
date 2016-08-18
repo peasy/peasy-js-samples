@@ -30,8 +30,8 @@ var ShipOrderItemCommand = Command.extend({
         } else {
           currentOrderItem.status = "BACKORDERED";
           currentOrderItem.backorderedOn = new Date();
+          saveOrderItem(currentOrderItem, done);
         }
-        saveOrderItem(currentOrderItem, done);
       });
 
       function saveOrderItem(item, done) {
