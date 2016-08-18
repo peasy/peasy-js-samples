@@ -51,7 +51,7 @@ var proxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
 ```javascript
 var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
 ```
-* Test the app according to the steps [here]()
+* Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps 
 
 <img src="https://www.dropbox.com/s/wi7uskhfhnj23xc/Screen%20Shot%202016-08-18%20at%203.05.52%20PM.png?dl=0&raw=1" width=600 />
 
