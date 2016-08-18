@@ -20,7 +20,7 @@ The sample web api is a nodejs application that consumes middle tier logic writt
 
 ```node index.src```
 
-### Mongodb Setup
+### Mongodb Configuration
 
 The sample applications can be configured to interact with a mongodb database.  Here are the steps to setup a setup the application to interact with one:
 
