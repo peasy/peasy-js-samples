@@ -6,7 +6,7 @@ A full implementation of a middle tier built using the [peasy-js framework](http
 
 The sample application is a ficticious order entry / inventory management system web api.  All efforts were made to keep this application as simple as possible to keep the focus on how a middle tier is written with peasy-js and consumed by multiple clients (client and server).
 
-By default, this project is configured to use in-memory implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy).  However, there is a multitude of configuration possibilities.  The [configurations](https://github.com/peasy/Samples#configurations) section provides details on setting up many potential configurations.
+By default, this project is configured to use in-memory implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy).  However, there is a multitude of configuration possibilities.  The [configurations](https://github.com/peasy/peasy-js-samples#configurations) section provides details on setting up many potential configurations.
 
 ### Requirements
 
@@ -19,7 +19,6 @@ By default, this project is configured to use in-memory implementations of the [
 From a command line, navigate to the peasy-js-samples directory and run:
 
 1. ``` npm install ```
-
 2. ```node index.js```
 
 ### Testing out the application
@@ -42,13 +41,10 @@ This walkthrough will cover creating a customer, category, product, and placing 
 
 ### Mongodb Configuration
 
-The sample applications can be configured to interact with a mongodb database.  With mongodb installed, here are the steps to setup the application to interact with one:
+The sample applications can be configured to interact with a mongodb database.  With mongodb installed and running, here are the steps to setup the application to interact with it:
 
 * Open wireUpRoutes.js
-* Locate and comment out the following line:
-```javascript
-var proxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
-```
+* Locate and comment out the following line: ```javascript var proxyFactory =require('./data_proxies/in-memory/inMemoryDataProxyFactory');```
 * Locate and uncomment the following line:
 ```javascript
 var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
