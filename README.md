@@ -12,7 +12,7 @@ By default, this project is configured to use in-memory implementations of the [
 
 1. [nodejs](https://nodejs.org/) - this application is a nodejs application and requires nodejs to be installed.
 2. [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools help to facilitate hitting http endpoints.
-3. [mongodb](https://www.mongodb.com/) (optional) - this application by default is configured to work with in-memory data proxies, however, you can easily swap data proxies to interact with a mongodb instance if desired.
+3. [mongodb](https://www.mongodb.com/) (optional) - this application by default is configured to work with in-memory data proxies, however, you can easily swap data proxies to interact with a mongodb instance if desired. See [Mongodb Configuration] (https://github.com/peasy/peasy-js-samples/blob/master/README.md#mongodb-configuration) for more details.
 
 ### Running the application
 
