@@ -4,7 +4,7 @@
 
 A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by nodejs can be found here.  You can clone the repo or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
 
-The sample application is a ficticious order entry / inventory management system web api.  All efforts were made to keep this application as simple as possible to keep the focus on how a middle tier is written with peasy-js and consumed by multiple clients.
+The sample application is a ficticious order entry / inventory management system web api.  All efforts were made to keep this application as simple as possible to keep the focus on how a middle tier is written with peasy-js and consumed by multiple clients (client and server).
 
 By default, this project is configured to use in-memory implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy).  However, there is a multitude of configuration possibilities.  The [configurations](https://github.com/peasy/Samples#configurations) section provides details on setting up many potential configurations.
 
