@@ -43,9 +43,12 @@ This walkthrough will cover creating a customer, category, product, and placing 
 
 The sample applications can be configured to interact with a mongodb database.  With mongodb installed and running, here are the steps to setup the application to interact with it:
 
-* Open wireUpRoutes.js
-* Locate and comment out the following line: ```javascript var proxyFactory =require('./data_proxies/in-memory/inMemoryDataProxyFactory');```
-* Locate and uncomment the following line:
+* Navigate to ```wireUpRoutes.js``` in the root of the application
+* Locate and *comment* out the following line: 
+```javascript 
+var proxyFactory = require('./data_proxies/in-memory/inMemoryDataProxyFactory');
+```
+* Locate and *uncomment* the following line:
 ```javascript
 var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
 ```
@@ -74,4 +77,4 @@ Coming soon ...
 
 ### Solution and Project Structure
 
-An overview of the solution and all of the projects can be viewed [here](https://github.com/peasy/Samples/wiki/Solution-and-project-structure).
+An overview of the solution and all of the projects can be viewed [here](https://github.com/peasy/peasy-js-samples/wiki/Solution-and-project-structure).
