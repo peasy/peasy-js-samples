@@ -61,6 +61,8 @@ Here is what you should have:
 
 5.) Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps 
 
+### Running the unit tests
+
 ### Videos
 
 Coming soon ...
