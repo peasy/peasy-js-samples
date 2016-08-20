@@ -34,8 +34,7 @@ With the application up and running you can navigate to the following urls:
 
 ### Application Walkthrough
 
-This walkthrough will cover creating a customer, category, product, and placing an order on behalf of the new customer.  Further, you will ship an order and see how it affects inventory as well.
-
+[This walkthrough](https://github.com/peasy/peasy-js-samples/wiki/Application-Walkthrough) covers creating a customer, category, product, and placing an order on behalf of the new customer.  Further, it will cover submitting and shipping an order to see how it affects inventory.
 
 ### Mongodb Configuration
 
