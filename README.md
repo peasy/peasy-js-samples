@@ -58,8 +58,16 @@ Here is what you should have:
 
 4.) Restart the application to ensure that the new proxies are consumed
 
-5.) Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps or by following along with the application walkthrough [tutorial](https://github.com/peasy/peasy-js-samples/wiki/Application-Walkthrough).
+5.) Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps or by completing the application walkthrough [tutorial](https://github.com/peasy/peasy-js-samples/wiki/Application-Walkthrough).
+
 ### Running the unit tests
+
+[peasy-js]() was designed with unit testing in mind, and as a result, each actor in the application has corresponding unit tests, located in the [*/spec*](https://github.com/peasy/peasy-js-samples/tree/master/spec) directory.
+
+To run the tests, navigate to the */spec* directory from a command line and run the following command:
+
+``` jasmine ```
+
 
 ### Videos
 
