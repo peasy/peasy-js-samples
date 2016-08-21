@@ -1,6 +1,6 @@
 ![peasy](https://www.dropbox.com/s/2yajr2x9yevvzbm/peasy3.png?dl=0&raw=1)
 
-### Showcases a middle tier built with peasy-js.
+### Showcases a middle tier built with [peasy-js](https://github.com/peasy/peasy-js).
 
 A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by nodejs can be found here.  You can clone the repo (```git clone https://github.com/peasy/peasy-js-samples.git```) or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
 
@@ -58,9 +58,16 @@ Here is what you should have:
 
 4.) Restart the application to ensure that the new proxies are consumed
 
-5.) Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps 
+5.) Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps or by completing the application walkthrough [tutorial](https://github.com/peasy/peasy-js-samples/wiki/Application-Walkthrough).
 
 ### Running the unit tests
+
+[peasy-js]() was designed with unit testing in mind, and as a result, each actor in the application has corresponding unit tests, located in the [*/spec*](https://github.com/peasy/peasy-js-samples/tree/master/spec) directory.
+
+To run the tests, navigate to the */spec* directory from a command line and run the following command:
+
+``` jasmine ```
+
 
 ### Videos
 
