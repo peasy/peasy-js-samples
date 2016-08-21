@@ -1,6 +1,6 @@
 ![peasy](https://www.dropbox.com/s/2yajr2x9yevvzbm/peasy3.png?dl=0&raw=1)
 
-### Showcases a middle tier built with peasy-js.
+### Showcases a middle tier built with [peasy-js](https://github.com/peasy/peasy-js).
 
 A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by nodejs can be found here.  You can clone the repo (```git clone https://github.com/peasy/peasy-js-samples.git```) or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
 
