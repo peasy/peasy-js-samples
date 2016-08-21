@@ -101,7 +101,7 @@ describe("CategoryService", function() {
 
   describe("destroyCommand", () => {
     describe("rule execution", () => {
-      it("invalidates a customer with orders", () => {
+      it("invalidates a category with orders", () => {
         var orderService = {
           getByCategoryCommand: function(id) {
             return {
