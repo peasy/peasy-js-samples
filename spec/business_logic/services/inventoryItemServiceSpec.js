@@ -46,7 +46,7 @@ describe("InventoryItemService", function() {
         it ('invalidates all', () => {
           var service = new InventoryItemService(dataProxy);
           service.insertCommand({}).execute((err, result) => {
-            expect(result.errors.length).toEqual(2);
+            expect(result.errors.length).toEqual(1);
           });
         });
 
@@ -95,8 +95,7 @@ describe("InventoryItemService", function() {
         var expectedResult = {
           id: 1,
           version: 1,
-          quantityOnHand: 3,
-          productId: 2
+          quantityOnHand: 3
         };
         var service = new InventoryItemService(dataProxy);
         service.updateCommand(inventoryItem).execute((err, result) => {
@@ -111,7 +110,7 @@ describe("InventoryItemService", function() {
         it ('invalidates all', () => {
           var service = new InventoryItemService(dataProxy);
           service.updateCommand({ quantityOnHand: '223'}).execute((err, result) => {
-            expect(result.errors.length).toEqual(3);
+            expect(result.errors.length).toEqual(2);
           });
         });
 
