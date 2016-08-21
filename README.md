@@ -58,8 +58,7 @@ Here is what you should have:
 
 4.) Restart the application to ensure that the new proxies are consumed
 
-5.) Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps 
-
+5.) Test the app according to [these](https://github.com/peasy/peasy-js-samples/blob/master/README.md#testing-out-the-application) steps or by following along with the application walkthrough [tutorial](https://github.com/peasy/peasy-js-samples/wiki/Application-Walkthrough).
 ### Running the unit tests
 
 ### Videos
