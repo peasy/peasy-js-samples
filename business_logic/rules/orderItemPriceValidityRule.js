@@ -1,6 +1,7 @@
 var Rule = require('peasy-js').Rule;
 
 var OrderItemPriceValidityRule = Rule.extend({
+  association: "price",
   params: ['orderItem', 'product'],
   functions: {
     _onValidate: function(done) {
