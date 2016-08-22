@@ -4,7 +4,7 @@
 
 A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by nodejs can be found here.  You can clone the repo (```git clone https://github.com/peasy/peasy-js-samples.git```) or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
 
-The sample application is a ficticious order entry / inventory management system web api.  All efforts were made to keep this application as simple as possible to focus on how a middle tier is written with peasy-js and consumed by multiple clients (client and server).
+The sample application is a ficticious order entry / inventory management system web api.  All efforts were made to keep this application as simple as possible to focus on how a middle tier can be written with peasy-js and consumed by multiple clients (client and server).
 
 ### Requirements
 
