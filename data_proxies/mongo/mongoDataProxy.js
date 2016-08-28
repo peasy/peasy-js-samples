@@ -10,7 +10,7 @@ var MongoDataProxy = function(collectionName) {
 MongoDataProxy.prototype.getAll = function(done) {
   var self = this;
   self._mongodb.connect(self.connectionString, function(err, db) {
-    if (err) { done(err); }
+    if (err) { return done(err); }
     var collection = db.collection(self.collectionName);
     collection.find({}).toArray(function(err, data) {
       data.forEach((item) => {
@@ -26,7 +26,7 @@ MongoDataProxy.prototype.getAll = function(done) {
 MongoDataProxy.prototype.getById = function(id, done) {
   var self = this;
   self._mongodb.connect(self.connectionString, function(err, db) {
-    if (err) { done(err); }
+    if (err) { return done(err); }
     var collection = db.collection(self.collectionName);
     try {
       var oId = new objectId(id);
@@ -46,7 +46,7 @@ MongoDataProxy.prototype.getById = function(id, done) {
 MongoDataProxy.prototype.insert = function(data, done) {
   var self = this;
   self._mongodb.connect(self.connectionString, function(err, db) {
-    if (err) { done(err); }
+    if (err) { return done(err); }
     var collection = db.collection(self.collectionName);
     collection.insert(data, function(err, result) {
       var entity = result.ops[0];
@@ -61,7 +61,7 @@ MongoDataProxy.prototype.insert = function(data, done) {
 MongoDataProxy.prototype.update = function(data, done) {
   var self = this;
   self._mongodb.connect(self.connectionString, function(err, db) {
-    if (err) { done(err); }
+    if (err) { return done(err); }
     var collection = db.collection(self.collectionName);
     collection.update({_id: objectId(data.id)}, data, function(err, result) {
       db.close();
@@ -73,7 +73,7 @@ MongoDataProxy.prototype.update = function(data, done) {
 MongoDataProxy.prototype.destroy = function(id, done) {
   var self = this;
   self._mongodb.connect(self.connectionString, function(err, db) {
-    if (err) { done(err); }
+    if (err) { return done(err); }
     var collection = db.collection(self.collectionName);
     collection.remove({_id: objectId(id)}, function(err, data) {
       db.close();
