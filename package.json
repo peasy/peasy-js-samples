@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/jasmine/bin/jasmine.js"
+    "test": "node ./node_modules/jasmine/bin/jasmine.js",
+    "build": "babel business_logic -d lib"
   },
   "repository": {
     "type": "git",
