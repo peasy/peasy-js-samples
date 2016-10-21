@@ -25,5 +25,8 @@
     "lodash": "4.13.1",
     "mongodb": "2.1.18",
     "peasy-js": "1.3.4"
+  },
+  "devDependencies": {
+    "babel-cli": "6.16.0"
   }
 }
