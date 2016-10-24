@@ -2,7 +2,7 @@
   "name": "peasy-js-samples",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "node ./node_modules/jasmine/bin/jasmine.js",
     "build": "babel business_logic -d lib"
