@@ -7,13 +7,15 @@ var OrderService = require('../business_logic/services/orderService');
 var ProductService = require('../business_logic/services/productService');
 
 var ordersDotCom = {
-  BaseService,
-  CategoryService,
-  CustomerService,
-  InventoryItemService,
-  OrderItemService,
-  OrderService,
-  ProductService
+  services: {
+    BaseService,
+    CategoryService,
+    CustomerService,
+    InventoryItemService,
+    OrderItemService,
+    OrderService,
+    ProductService
+  }
 };
 
 module.exports = ordersDotCom;
