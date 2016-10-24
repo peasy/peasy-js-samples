@@ -66,7 +66,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var ordersDotCom = {
 	  services: {
-	    BaseService: BaseService,
 	    CategoryService: CategoryService,
 	    CustomerService: CustomerService,
 	    InventoryItemService: InventoryItemService,

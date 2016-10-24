@@ -8,13 +8,14 @@ var ProductService = require('../business_logic/services/productService');
 
 var ordersDotCom = {
   services: {
-    BaseService,
     CategoryService,
     CustomerService,
     InventoryItemService,
     OrderItemService,
     OrderService,
     ProductService
+  },
+  dataProxies: {
   }
 };
 
