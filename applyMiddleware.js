@@ -1,4 +1,5 @@
 var bodyParser = require('body-parser');
+var express = require('express');
 
 var applyMiddleware = function(app) {
   // MIDDLEWARE
@@ -12,6 +13,8 @@ var applyMiddleware = function(app) {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
+  app.use(express.static('public'));
+  app.use(express.static('node_modules'));
 };
 
 module.exports = applyMiddleware;
