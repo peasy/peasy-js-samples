@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("peasy-js"), require("lodash"));
+		module.exports = factory(require("peasy-js"), require("lodash"), require("axios"));
 	else if(typeof define === 'function' && define.amd)
-		define(["peasy-js", "lodash"], factory);
+		define(["peasy-js", "lodash", "axios"], factory);
 	else if(typeof exports === 'object')
-		exports["ordersDotCom"] = factory(require("peasy-js"), require("lodash"));
+		exports["ordersDotCom"] = factory(require("peasy-js"), require("lodash"), require("axios"));
 	else
-		root["ordersDotCom"] = factory(root["peasy"], root["_"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_5__) {
+		root["ordersDotCom"] = factory(root["peasy"], root["_"], root["axios"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_31__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -64,6 +64,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var OrderService = __webpack_require__(22);
 	var ProductService = __webpack_require__(26);
 
+	var CustomerDataProxy = __webpack_require__(29);
+
 	var ordersDotCom = {
 	  services: {
 	    CategoryService: CategoryService,
@@ -72,6 +74,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    OrderItemService: OrderItemService,
 	    OrderService: OrderService,
 	    ProductService: ProductService
+	  },
+	  dataProxies: {
+	    CustomerDataProxy: CustomerDataProxy
 	  }
 	};
 
@@ -1075,6 +1080,99 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	module.exports = CreateProductCommand;
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var HttpDataProxy = __webpack_require__(30);
+	var axious = __webpack_require__(31);
+
+	var CustomerDataProxy = function CustomerDataProxy() {
+	  HttpDataProxy.call(this, 'customers');
+	};
+
+	CustomerDataProxy.prototype = new HttpDataProxy();
+
+	module.exports = CustomerDataProxy;
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var axious = __webpack_require__(31);
+
+	var HttpDataProxy = function HttpDataProxy(entity) {
+	  this._url = "/" + entity;
+	};
+
+	HttpDataProxy.prototype.getAll = function (done) {
+	  axios.get(this._url).then(function (response) {
+	    return done(null, response.data);
+	  }).catch(done);
+	};
+
+	HttpDataProxy.prototype.getById = function (id, done) {
+	  axios.get(this._url + "/" + id).then(function (response) {
+	    return done(null, response.data);
+	  }).catch(done);
+	};
+
+	HttpDataProxy.prototype.insert = function (data, done) {
+	  axios.post(this._url, data).then(function (response) {
+	    return done(null, response.data);
+	  }).catch(function (err) {
+	    if (err.response.status === 400) {
+	      console.log("400 occurred");
+	    }
+	    done(err);
+	  });
+	};
+
+	HttpDataProxy.prototype.update = function (data, done) {
+	  axios.put(this._url + "/" + id, data).then(function (response) {
+	    return done(null, response.data);
+	  }).catch(function (err) {
+	    if (err.response.status === 400) {
+	      console.log("400 occurred");
+	    }
+	    done(err);
+	  });
+	};
+
+	HttpDataProxy.prototype.update = function (data, done) {
+	  axios.put(this._url + "/" + data.id, data).then(function (response) {
+	    return done(null, response.data);
+	  }).catch(function (err) {
+	    if (err.response.status === 400) {
+	      console.log("400 occurred");
+	    }
+	    done(err);
+	  });
+	};
+
+	HttpDataProxy.prototype.destroy = function (id, done) {
+	  axios.delete(this._url + "/" + id).then(function (response) {
+	    return done(null, response.data);
+	  }).catch(function (err) {
+	    if (err.response.status === 400) {
+	      console.log("400 occurred");
+	    }
+	    done(err);
+	  });
+	};
+
+	module.exports = HttpDataProxy;
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_31__;
 
 /***/ }
 /******/ ])

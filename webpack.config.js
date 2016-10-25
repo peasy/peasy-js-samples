@@ -29,6 +29,14 @@ module.exports = {
         commonjs2: "lodash",
         amd: "lodash"
       }
+    },
+    {
+      'axios': {
+        root: "axios",
+        commonjs: "axios",
+        commonjs2: "axios",
+        amd: "axios"
+      }
     }
   ],
   module: {

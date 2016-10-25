@@ -6,6 +6,8 @@ var OrderItemService = require('../business_logic/services/orderItemService');
 var OrderService = require('../business_logic/services/orderService');
 var ProductService = require('../business_logic/services/productService');
 
+var CustomerDataProxy = require('../data_proxies/http/customerDataProxy');
+
 var ordersDotCom = {
   services: {
     CategoryService,
@@ -16,6 +18,7 @@ var ordersDotCom = {
     ProductService
   },
   dataProxies: {
+    CustomerDataProxy
   }
 };
 
