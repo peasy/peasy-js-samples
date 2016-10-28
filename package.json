@@ -30,6 +30,7 @@
   "devDependencies": {
     "babel-cli": "6.16.0",
     "babel-preset-es2015": "6.16.0",
+    "browser-sync": "2.17.5",
     "webpack": "1.13.2"
   }
 }
