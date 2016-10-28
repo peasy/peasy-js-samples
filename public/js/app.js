@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("peasy-js"), require("lodash"), require("axios"));
+		module.exports = factory(require("peasy-js"), require("lodash"), require("axios"), require("React"), require("ReactDOM"));
 	else if(typeof define === 'function' && define.amd)
-		define(["peasy-js", "lodash", "axios"], factory);
+		define(["peasy-js", "lodash", "axios", "React", "ReactDOM"], factory);
 	else if(typeof exports === 'object')
-		exports["ordersDotCom"] = factory(require("peasy-js"), require("lodash"), require("axios"));
+		exports["ordersDotCom"] = factory(require("peasy-js"), require("lodash"), require("axios"), require("React"), require("ReactDOM"));
 	else
-		root["ordersDotCom"] = factory(root["peasy"], root["_"], root["axios"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_31__) {
+		root["ordersDotCom"] = factory(root["peasy"], root["_"], root["axios"], root["React"], root["ReactDOM"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_31__, __WEBPACK_EXTERNAL_MODULE_39__, __WEBPACK_EXTERNAL_MODULE_40__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -71,6 +71,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var OrderItemDataProxy = __webpack_require__(37);
 	var ProductDataProxy = __webpack_require__(38);
 
+	var React = __webpack_require__(39);
+	var ReactDOM = __webpack_require__(40);
+
 	var ordersDotCom = {
 	  services: {
 	    CategoryService: CategoryService,
@@ -91,6 +94,63 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	module.exports = ordersDotCom;
+
+	ReactDOM.render(React.createElement(
+	  'div',
+	  null,
+	  React.createElement(
+	    'p',
+	    null,
+	    'Button'
+	  )
+	), document.getElementById('app'));
+
+	(function (ordersDotCom) {
+
+	  var proxy = new ordersDotCom.dataProxies.CustomerDataProxy();
+	  var service = new ordersDotCom.services.CustomerService(proxy);
+
+	  proxy.insert({}, function (err, done) {
+	    console.log("ERROR", err);
+	    console.log("DONE", done);
+	  });
+
+	  var command = service.getByIdCommand(1);
+	  command.execute(function (err, result) {
+	    console.log("GET BY ID: ERROR: ", err);
+	    console.log("GET BY ID: result: ", result);
+	  });
+
+	  command = service.insertCommand({ name: "Aaron Hanusa" });
+	  command.execute(function (err, result) {
+	    console.log("INSERT:", err);
+	    console.log("INSERT: result: ", result);
+	  });
+
+	  //var customer = { name: "Aaron Hanus" };
+	  //proxy.insert(customer, (err, result) => {
+	  //console.log("INSERT: ERROR: ", err);
+	  //console.log("INSERT: result: ", result);
+	  //proxy.getAll((err, result) => {
+	  //console.log("GET ALL: ERROR: ", err);
+	  //console.log("GET ALL: result: ", result);
+	  //result[1].name = "Aaron Hanusa";
+	  //proxy.update(result[1], (err, r) => {
+	  //console.log("UPDATE: ERROR: ", err);
+	  //console.log("UPDATE: result: ", r);
+	  //proxy.destroy(result.id, (err, result) => {
+	  //console.log("DELETE: ERROR: ", err);
+	  //console.log("DELETE: result: ", result);
+	  //proxy.getAll((err, result) => {
+	  //console.log("GET ALL: ERROR: ", err);
+	  //console.log("GET ALL: result: ", result);
+	  //});
+	  //});
+	  //});
+	  //});
+	  //});
+
+	})(ordersDotCom);
 
 /***/ },
 /* 1 */
@@ -2029,6 +2089,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	ProductDataProxy.prototype.getByCategory = function (categoryId, done) {};
 
 	module.exports = ProductDataProxy;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_39__;
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_40__;
 
 /***/ }
 /******/ ])
