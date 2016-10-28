@@ -17,7 +17,7 @@ The sample application is a ficticious order entry / inventory management system
 From a command line, navigate to the peasy-js-samples directory and run:
 
 1. ``` npm install ```
-2. ```node index.js```
+2. ```node server/index.js```
 
 ### Testing out the application
 
