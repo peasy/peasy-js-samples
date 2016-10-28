@@ -38,7 +38,7 @@ With the application up and running you can navigate to the following urls:
 
 The sample applications can be configured to interact with a mongodb database.  With mongodb installed and running, here are the steps to setup the application to interact with it:
 
-1.) Navigate to server/[```wireUpRoutes.js```](https://github.com/peasy/peasy-js-samples/blob/master/server/wireUpRoutes.js) in the root of the application
+1.) Navigate to [server/```wireUpRoutes.js```](https://github.com/peasy/peasy-js-samples/blob/master/server/wireUpRoutes.js) in the root of the application
 
 2.) Locate and *comment* out the following line: 
 ```javascript 
