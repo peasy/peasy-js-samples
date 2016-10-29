@@ -61,8 +61,8 @@ module.exports = {
       // (except for files in our node_modules folder!).
       {
         test: /\.jsx?$/,
-         exclude: /node_modules/,
          loader: "babel-loader",
+         include: "client/components",
          query: {
            presets: ['es2015', 'react', 'stage-0'],
            compact: false // because I want readable output

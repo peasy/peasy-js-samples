@@ -15,6 +15,7 @@ var ProductDataProxy = require('../data_proxies/http/productDataProxy');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+var CustomersView = require('./components/customersView.jsx');
 
 var ordersDotCom = {
   services: {
@@ -37,9 +38,15 @@ var ordersDotCom = {
 
 module.exports = ordersDotCom;
 
+function content() {
+  return (
+    <div>HELLO</div>
+  );
+}
+
 ReactDOM.render(
   <div>
-    <p>Button</p>
+    <CustomersView />
   </div>,
   document.getElementById('app')
 );
