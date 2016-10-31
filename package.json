@@ -5,7 +5,8 @@
   "main": "server/index.js",
   "scripts": {
     "test": "node ./node_modules/jasmine/bin/jasmine.js",
-    "build": "babel business_logic -d lib"
+    "build": "babel business_logic -d lib",
+    "start": "babel-node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,8 @@
     "css-loader": "0.25.0",
     "extract-text-webpack-plugin": "1.0.1",
     "style-loader": "0.13.1",
-    "webpack": "1.13.2"
+    "webpack": "1.13.2",
+    "webpack-dev-middleware": "1.8.4",
+    "webpack-hot-middleware": "2.13.1"
   }
 }
