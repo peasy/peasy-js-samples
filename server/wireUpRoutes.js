@@ -1,3 +1,4 @@
+var path = require('path');
 var routeHelper = require('./routeHelper');
 var CustomerService = require('../business_logic/services/customerService');
 var CategoryService = require('../business_logic/services/categoryService');
@@ -74,8 +75,12 @@ var wireUpRoutes = function(app) {
   });
   routeHelper.createController('/orderItems', app, orderItemService);
 
-  app.get('/', function(req, res, next) {
-    res.render('../../views/index', { title: 'Orders.com' });
+  //app.get('/', function(req, res, next) {
+    //res.render('../../views/index', { title: 'Orders.com' });
+  //});
+
+  app.get('*', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../client/index.html'));
   });
 };
 
