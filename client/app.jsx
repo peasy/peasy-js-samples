@@ -37,12 +37,12 @@ var ordersDotCom = {
 
 module.exports = ordersDotCom;
 
-ReactDOM.render(
-  <div>
-    <p>Button</p>
-  </div>,
-  document.getElementById('app')
-);
+//ReactDOM.render(
+  //<div>
+    //<p>Button</p>
+  //</div>,
+  //document.getElementById('app')
+//);
 
 
 ( function( ordersDotCom ) {
