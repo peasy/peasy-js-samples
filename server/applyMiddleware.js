@@ -10,6 +10,7 @@ var applyMiddleware = function(app) {
     noInfo: true,
     publicPath: config.output.publicPath
   }));
+
   app.use(require('webpack-hot-middleware')(compiler));
   app.use(function(req, res, next) {
     for (var key in req.query) {

@@ -3,7 +3,7 @@ var app = express();
 var applySettings = require('./applySettings');
 var applyMiddleware = require('./applyMiddleware');
 var wireUpRoutes = require('./wireUpRoutes');
-//var open = require('open');
+var open = require('open');
 
 applySettings(app);
 applyMiddleware(app);
@@ -16,6 +16,6 @@ app.listen(port, function(err) {
     console.log(err);
   } else {
     console.log("server running ...");
-    //open(`http://localhost:${port}`);
+    open(`http://localhost:${port}`);
   }
 });

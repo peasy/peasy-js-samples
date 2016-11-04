@@ -1,7 +1,8 @@
 import webpack from 'webpack';
 import path from 'path';
 
-export default {
+//export default {
+module.exports = {
   debug: true,
   devtool: 'inline-source-map',
   noInfo: false,
@@ -12,8 +13,7 @@ export default {
   ],
   target: 'web',
   output: {
-    //path: __dirname + '/public/js', // Note: Physical files are only output by the production build task `npm run build`.
-    path: __dirname + '/dist', // Note: Physical files are only output by the production build task `npm run build`.
+    path: __dirname + '/public/js', // Note: Physical files are only output by the production build task `npm run build`.
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -35,4 +35,3 @@ export default {
     ]
   }
 };
-
