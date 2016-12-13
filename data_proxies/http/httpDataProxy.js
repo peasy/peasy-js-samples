@@ -1,4 +1,4 @@
-var axious = require('axios');
+var axios = require('axios');
 var ServiceException = require('../../node_modules/peasy-js').ServiceException;
 var ConcurrencyError = require('../../business_logic/shared/concurrencyError');
 var NotFoundError = require('../../business_logic/shared/notFoundError');
