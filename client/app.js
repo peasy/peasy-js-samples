@@ -13,10 +13,6 @@ var OrderDataProxy = require('../data_proxies/http/orderDataProxy');
 var OrderItemDataProxy = require('../data_proxies/http/orderItemDataProxy');
 var ProductDataProxy = require('../data_proxies/http/productDataProxy');
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var CustomersView = require('./components/customersView.jsx');
-
 var ordersDotCom = {
   services: {
     CategoryService,
@@ -37,20 +33,6 @@ var ordersDotCom = {
 };
 
 module.exports = ordersDotCom;
-
-function content() {
-  return (
-    <div>HELLO</div>
-  );
-}
-
-ReactDOM.render(
-  <div>
-    <CustomersView />
-  </div>,
-  document.getElementById('app')
-);
-
 
 ( function( ordersDotCom ) {
 
