@@ -4,7 +4,7 @@ class CustomersView extends React.Component {
 
   render() {
     return (
-      <div>HELLO</div>
+      <div>CUSTOMERS</div>
     );
   }
 }
