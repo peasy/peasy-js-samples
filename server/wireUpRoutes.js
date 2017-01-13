@@ -80,7 +80,7 @@ var wireUpRoutes = function(app) {
   //});
 
   app.get('*', function(req, res, next) {
-    res.sendFile(path.join(__dirname, '../client/index.html'));
+    res.sendFile(path.join(__dirname, '../client/react/index.html'));
   });
 };
 
