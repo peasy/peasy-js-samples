@@ -21,18 +21,21 @@ class CustomersView extends React.Component {
   }
 
   onSave() {
+    console.log("SAVE", this.props.dispatch);
     this.props.dispatch(customerActions.createCustomer(this.state.customer));
     // console.log(`Saving ${this.state.customer.name}`);
   }
 
   customerRow(customer, index) {
-    return <div key={index}>customer.name</div>;
+    return <div key={index}>{customer.name}</div>;
   }
 
   render() {
+    console.log("RENDER!");
     return (
       <div>
         <h1>Customers</h1>
+        {this.props.customers.map(this.customerRow)}
         <h2>Add customer</h2>
         <input 
           type="text"
@@ -56,4 +59,3 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps)(CustomersView);
-// export default CustomersView;
