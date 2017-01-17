@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import * as customerActions from '../actions/customerActions';
 
 class CustomersView extends React.Component {
 
@@ -6,6 +8,7 @@ class CustomersView extends React.Component {
     super(props, context);
     this.onNameChange = this.onNameChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.customerRow = this.customerRow.bind(this);
     this.state = {
       customer: { name: "" }
     };
@@ -18,7 +21,12 @@ class CustomersView extends React.Component {
   }
 
   onSave() {
-    console.log(`Saving ${this.state.customer.name}`);
+    this.props.dispatch(customerActions.createCustomer(this.state.customer));
+    // console.log(`Saving ${this.state.customer.name}`);
+  }
+
+  customerRow(customer, index) {
+    return <div key={index}>customer.name</div>;
   }
 
   render() {
@@ -41,4 +49,11 @@ class CustomersView extends React.Component {
   }
 }
 
-export default CustomersView;
+function mapStateToProps(state, ownProps) {
+  return {
+    customers: state.customers
+  };
+}
+
+export default connect(mapStateToProps)(CustomersView);
+// export default CustomersView;
