@@ -21,9 +21,7 @@ class CustomersView extends React.Component {
   }
 
   onSave() {
-    console.log("SAVE", this.props.dispatch);
     this.props.dispatch(customerActions.createCustomer(this.state.customer));
-    // console.log(`Saving ${this.state.customer.name}`);
   }
 
   customerRow(customer, index) {
@@ -31,7 +29,6 @@ class CustomersView extends React.Component {
   }
 
   render() {
-    console.log("RENDER!");
     return (
       <div>
         <h1>Customers</h1>
