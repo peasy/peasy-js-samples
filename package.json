@@ -23,6 +23,7 @@
     "axios": "0.15.3",
     "babel-polyfill": "6.16.0",
     "body-parser": "1.15.2",
+    "bootstrap": "3.3.7",
     "ejs": "2.4.2",
     "express": "4.14.0",
     "jasmine": "2.4.1",
