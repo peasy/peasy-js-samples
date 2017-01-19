@@ -8,10 +8,10 @@ import './styles/styles.css';
 import configureStore from './store/configureStore';
 // import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import ordersDotCom from '../businessLogic';
+import * as customerActions from './actions/customerActions';
 
 const store = configureStore();
-
-console.log("ORDERS.COM", ordersDotCom);
+store.dispatch(customerActions.loadCustomers());
 
 render(
   <Provider store={store}>
@@ -63,8 +63,5 @@ render(
       //});
     //});
   //});
-
-
-
 
 } )( ordersDotCom );
