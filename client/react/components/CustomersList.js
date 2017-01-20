@@ -1,7 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 function customerRow(customer, index) {
-  return <tr key={index}><td></td><td>{customer.name}</td></tr>;
+  return <tr key={index}>
+           <td></td>
+           <td><Link to={'/customer/' + customer.id }>{customer.name}</Link></td>
+         </tr>;
 }
 
 const CustomersList = ({customers}) => {
