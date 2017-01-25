@@ -85,9 +85,37 @@ describe("CategoryService", function() {
           expect(dataProxy.update).toHaveBeenCalledWith(expectedResult, jasmine.any(Function));
         });
       });
+
+      it("attempts to ensure that the category id is numeric", () => {
+        spyOn(dataProxy, "update").and.callThrough();
+        var expectedResult = {
+          id: 1,
+          name: "books",
+          parentId: 4
+        };
+        var service = new CategoryService(dataProxy);
+        category.id = "1";
+        service.updateCommand(category).execute((err, result) => {
+          expect(dataProxy.update).toHaveBeenCalledWith(expectedResult, jasmine.any(Function));
+        });
+      });
     });
 
     describe("rule execution", () => {
+      describe("id", () => {
+        it("is required", () => {
+          var service = new CategoryService(dataProxy);
+          service.updateCommand({name: 'Instruments'}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+        it("is the correct type", () => {
+          var service = new CategoryService(dataProxy);
+          service.updateCommand({id: "hello", name: 'Instruments'}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+      });
       describe("name", () => {
         it("is required", () => {
           var service = new CategoryService(dataProxy);
