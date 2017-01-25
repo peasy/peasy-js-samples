@@ -10,23 +10,23 @@ var CONFLICT = 409;
 
 function createController(route, app, service) {
 
-  addGetRouteHandler(app, `${route}`, function(request, response) {
+  addGetRouteHandler(app, `${route}`, function(request) {
     return service.getAllCommand();
   });
 
-  addGetRouteHandler(app, `${route}/:id`, function(request, response) {
+  addGetRouteHandler(app, `${route}/:id`, function(request) {
     return service.getByIdCommand(request.params.id);
   });
 
-  addPostRouteHandler(app, `${route}`, function(request, response) {
+  addPostRouteHandler(app, `${route}`, function(request) {
     return service.insertCommand(request.body);
   });
 
-  addPutRouteHandler(app, `${route}/:id`, function(request, response) {
+  addPutRouteHandler(app, `${route}/:id`, function(request) {
     return service.updateCommand(request.body);
   });
 
-  addDeleteRouteHandler(app, `${route}/:id`, function(request, response) {
+  addDeleteRouteHandler(app, `${route}/:id`, function(request) {
     return service.destroyCommand(request.params.id);
   });
 };
@@ -37,7 +37,7 @@ function addGetRouteHandler(app, route, commandFactory) {
       req.params.id = parseInt(req.params.id, 10);
       if (!req.params.id) return res.status(NOT_FOUND).end();
     }
-    var command = commandFactory(req, res);
+    var command = commandFactory(req);
     command.execute((err, result) => {
       if (err) {
         // LOG ERROR
@@ -58,7 +58,7 @@ function addGetRouteHandler(app, route, commandFactory) {
 
 function addPostRouteHandler(app, route, commandFactory) {
   app.post(route, (req, res) => {
-    var command = commandFactory(req, res);
+    var command = commandFactory(req);
     command.execute((err, result) => {
       if (err) {
         if (err instanceof NotFoundError) {
@@ -81,7 +81,7 @@ function addPutRouteHandler(app, route, commandFactory) {
     req.params.id = parseInt(req.params.id, 10);
     if (!req.params.id) return res.status(NOT_FOUND).end();
     req.body.id = req.params.id;
-    var command = commandFactory(req, res);
+    var command = commandFactory(req);
     command.execute((err, result) => {
       if (err) {
         if (err instanceof NotFoundError) {
@@ -106,7 +106,7 @@ function addDeleteRouteHandler(app, route, commandFactory) {
   app.delete(route, (req, res) => {
     req.params.id = parseInt(req.params.id, 10);
     if (!req.params.id) return res.status(NOT_FOUND).end();
-    var command = commandFactory(req, res);
+    var command = commandFactory(req);
     command.execute((err, result) => {
       if (result.success) {
         res.status(NO_CONTENT).end();
