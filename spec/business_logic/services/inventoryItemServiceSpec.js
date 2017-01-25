@@ -25,6 +25,19 @@ describe("InventoryItemService", function() {
           productId: 2
         };
       });
+      it("defaults quantityOnHand to 0 if it is not supplied", () => {
+        var service = new InventoryItemService(dataProxy);
+        delete inventoryItem.quantityOnHand;
+        service.insertCommand(inventoryItem).execute((err, result) => {
+          expect(result.value.quantityOnHand).toEqual(0);
+        });
+      });
+      it("defaults version to 1", () => {
+        var service = new InventoryItemService(dataProxy);
+        service.insertCommand(inventoryItem).execute((err, result) => {
+          expect(result.value.version).toEqual(1);
+        });
+      });
       it("allows only whitelisted object members and assigns a version number", () => {
         spyOn(dataProxy, "insert").and.callThrough();
         var expectedResult = {
@@ -102,28 +115,63 @@ describe("InventoryItemService", function() {
           expect(dataProxy.update).toHaveBeenCalledWith(expectedResult, jasmine.any(Function));
         });
       });
+
+      it("attempts to ensure that the item id is numeric", () => {
+        spyOn(dataProxy, "update").and.callThrough();
+        var expectedResult = {
+          id: 1,
+          version: 1,
+          quantityOnHand: 3
+        };
+        inventoryItem.id = "1";
+        var service = new InventoryItemService(dataProxy);
+        service.updateCommand(inventoryItem).execute((err, result) => {
+          expect(dataProxy.update).toHaveBeenCalledWith(expectedResult, jasmine.any(Function));
+        });
+      });
     });
 
     describe("rule execution", () => {
-      describe("if all valid", () => {
-
-        it ('invalidates all', () => {
+      describe("id", () => {
+        it("is required", () => {
           var service = new InventoryItemService(dataProxy);
-          service.updateCommand({ quantityOnHand: '223'}).execute((err, result) => {
-            expect(result.errors.length).toEqual(2);
-          });
-        });
-
-        it ('invalidates invalid typed version number', () => {
-          inventoryItem = {
-            quantityOnHand: 3,
-            productId: 2,
-            version: "1"
-          };
-          var service = new InventoryItemService(dataProxy);
-          service.updateCommand(inventoryItem).execute((err, result) => {
+          service.updateCommand({version: 1, quantityOnHand: 0}).execute((err, result) => {
             expect(result.errors.length).toEqual(1);
           });
+        });
+        it("is the correct type", () => {
+          var service = new InventoryItemService(dataProxy);
+          service.updateCommand({id: "badvalue", version: 1, quantityOnHand: 0}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+      });
+      describe("quantityOnHand", () => {
+        it("is the correct type", () => {
+          var service = new InventoryItemService(dataProxy);
+          service.updateCommand({id: 1, version: 1, quantityOnHand: "0"}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+      });
+      describe("version", () => {
+        it("is required", () => {
+          var service = new InventoryItemService(dataProxy);
+          service.updateCommand({id: 1, quantityOnHand: 0}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+        it("is the correct type", () => {
+          var service = new InventoryItemService(dataProxy);
+          service.updateCommand({id: 1, version: "1", quantityOnHand: 0}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+      });
+      it ('invalidates all', () => {
+        var service = new InventoryItemService(dataProxy);
+        service.updateCommand({}).execute((err, result) => {
+          expect(result.errors.length).toEqual(2);
         });
       });
     });
