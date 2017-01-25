@@ -110,10 +110,40 @@ describe("CustomerService", function() {
     });
 
     describe("rule execution", () => {
+      it('invalidates all', () => {
+        var service = new CustomerService(dataProxy);
+        service.updateCommand({}).execute((err, result) => {
+          expect(result.errors.length).toEqual(2);
+        });
+      });
+      describe("id", () => {
+        it("is required", () => {
+          var service = new CustomerService(dataProxy);
+          service.updateCommand({name: 'Jimi Hendrix'}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+        it("is the correct type", () => {
+          var service = new CustomerService(dataProxy);
+          service.updateCommand({id: "hello", name: 'Jimi Hendrix'}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+      });
       describe("name", () => {
         it("is required", () => {
           var service = new CustomerService(dataProxy);
-          service.insertCommand({}).execute((err, result) => {
+          service.updateCommand({id: 1}).execute((err, result) => {
+            expect(result.errors.length).toEqual(1);
+          });
+        });
+        it("is the correct length", () => {
+          var service = new CustomerService(dataProxy);
+          var payload = {
+            id: 1, 
+            name:"1234556778812345678901234567890123456789012345678901234567890"
+          };
+          service.updateCommand(payload).execute((err, result) => {
             expect(result.errors.length).toEqual(1);
           });
         });
