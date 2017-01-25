@@ -10,30 +10,34 @@ var CONFLICT = 409;
 
 function createController(route, app, service) {
 
-  addGetRouteHandler(app, `${route}`, function(request) {
+  addGetRouteHandler(app, `${route}`, function(request, response) {
     return service.getAllCommand();
   });
 
-  addGetRouteHandler(app, `${route}/:id`, function(request) {
+  addGetRouteHandler(app, `${route}/:id`, function(request, response) {
     return service.getByIdCommand(request.params.id);
   });
 
-  addPostRouteHandler(app, `${route}`, function(request) {
+  addPostRouteHandler(app, `${route}`, function(request, response) {
     return service.insertCommand(request.body);
   });
 
-  addPutRouteHandler(app, `${route}/:id`, function(request) {
+  addPutRouteHandler(app, `${route}/:id`, function(request, response) {
     return service.updateCommand(request.body);
   });
 
-  addDeleteRouteHandler(app, `${route}/:id`, function(request) {
+  addDeleteRouteHandler(app, `${route}/:id`, function(request, response) {
     return service.destroyCommand(request.params.id);
   });
 };
 
 function addGetRouteHandler(app, route, commandFactory) {
   app.get(route, (req, res) => {
-    var command = commandFactory(req);
+    if (req.params.id) {
+      req.params.id = parseInt(req.params.id, 10);
+      if (!req.params.id) return res.status(NOT_FOUND).end();
+    }
+    var command = commandFactory(req, res);
     command.execute((err, result) => {
       if (err) {
         // LOG ERROR
@@ -54,7 +58,7 @@ function addGetRouteHandler(app, route, commandFactory) {
 
 function addPostRouteHandler(app, route, commandFactory) {
   app.post(route, (req, res) => {
-    var command = commandFactory(req);
+    var command = commandFactory(req, res);
     command.execute((err, result) => {
       if (err) {
         if (err instanceof NotFoundError) {
@@ -74,10 +78,10 @@ function addPostRouteHandler(app, route, commandFactory) {
 
 function addPutRouteHandler(app, route, commandFactory) {
   app.put(route, (req, res) => {
-    // var id = parseInt(req.params.id, 10);
-    // if (!id) return res.status(BAD_REQUEST).json("id must be numeric");
-    // req.body.id = id;
-    var command = commandFactory(req);
+    req.params.id = parseInt(req.params.id, 10);
+    if (!req.params.id) return res.status(NOT_FOUND).end();
+    req.body.id = req.params.id;
+    var command = commandFactory(req, res);
     command.execute((err, result) => {
       if (err) {
         if (err instanceof NotFoundError) {
@@ -100,7 +104,9 @@ function addPutRouteHandler(app, route, commandFactory) {
 
 function addDeleteRouteHandler(app, route, commandFactory) {
   app.delete(route, (req, res) => {
-    var command = commandFactory(req);
+    req.params.id = parseInt(req.params.id, 10);
+    if (!req.params.id) return res.status(NOT_FOUND).end();
+    var command = commandFactory(req, res);
     command.execute((err, result) => {
       if (result.success) {
         res.status(NO_CONTENT).end();
