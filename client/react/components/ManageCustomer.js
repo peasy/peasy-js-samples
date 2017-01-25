@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as customerActions from '../actions/customerActions';
 import CustomerForm from './CustomerForm';
 
-class ManagerCustomer extends React.Component {
+class ManageCustomer extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -12,10 +12,19 @@ class ManagerCustomer extends React.Component {
       errors: {}
     };
     this.change = this.change.bind(this);
+    this.save = this.save.bind(this);
   }
 
-  save() {
-    console.log("SAVE");
+  componentWillReceiveProps(nextProps) {
+    if (this.props.customer.id != nextProps.customer.id) {
+      this.setState({customer: Object.assign({}, nextProps.customer)});
+    }
+  }
+
+  save(event) {
+    event.preventDefault();
+    this.props.actions.saveCustomer(this.state.customer);
+    this.context.router.push('/');
   }
 
   change(event) {
@@ -43,9 +52,23 @@ class ManagerCustomer extends React.Component {
   }
 }
 
+ManageCustomer.contextTypes = {
+  router: PropTypes.object
+};
+
 function mapStateToProps(state, ownProps) {
+  var customer = {};
+
+  if (ownProps.params.id) {
+    var customerId = parseInt(ownProps.params.id, 10);
+    if (state.customers.length > 0) {
+      customer = state.customers.find(c => c.id === customerId)
+    }
+  }
+  console.log("MAP STATE TO PROPS!!!!!!!", customer);
+
   return {
-    customer: { name: "foo jones" }
+    customer: customer 
   };
 }
 
@@ -55,4 +78,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManagerCustomer);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCustomer);

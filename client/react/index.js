@@ -21,25 +21,25 @@ render(
 
 ( function( ordersDotCom ) {
 
-  var proxy = new ordersDotCom.dataProxies.CustomerDataProxy();
-  var service = new ordersDotCom.services.CustomerService(proxy);
+  // var proxy = new ordersDotCom.dataProxies.CustomerDataProxy();
+  // var service = new ordersDotCom.services.CustomerService(proxy);
 
-  proxy.insert({}, (err, done) => {
-    console.log("ERROR", err);
-    console.log("DONE", done);
-  });
+  // proxy.insert({}, (err, done) => {
+  //   console.log("ERROR", err);
+  //   console.log("DONE", done);
+  // });
 
-  var command = service.getByIdCommand(1);
-  command.execute((err, result) => {
-    console.log("GET BY ID: ERROR: ", err);
-    console.log("GET BY ID: result: ", result);
-  });
+  // var command = service.getByIdCommand(1);
+  // command.execute((err, result) => {
+  //   console.log("GET BY ID: ERROR: ", err);
+  //   console.log("GET BY ID: result: ", result);
+  // });
 
-  command = service.insertCommand({ name: "Aaron Hanusa" });
-  command.execute((err, result) => {
-    console.log("INSERT:", err);
-    console.log("INSERT: result: ", result);
-  });
+  // command = service.insertCommand({ name: "Aaron Hanusa" });
+  // command.execute((err, result) => {
+  //   console.log("INSERT:", err);
+  //   console.log("INSERT: result: ", result);
+  // });
 
   //var customer = { name: "Aaron Hanus" };
   //proxy.insert(customer, (err, result) => {

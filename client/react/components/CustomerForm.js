@@ -11,6 +11,12 @@ const CustomerForm = ({customer, onSave, onChange, loading, errors}) => {
         value={customer.name}
         onChange={onChange}
         error={errors.title} />
+      
+      <input
+        type="submit"
+        value={loading ? 'Saving...' : 'Save'}
+        className="btn btn-primary"
+        onClick={onSave} />
     </form>
   );
 };
