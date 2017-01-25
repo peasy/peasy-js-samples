@@ -74,7 +74,9 @@ function addPostRouteHandler(app, route, commandFactory) {
 
 function addPutRouteHandler(app, route, commandFactory) {
   app.put(route, (req, res) => {
-    req.body.id = req.params.id;
+    // var id = parseInt(req.params.id, 10);
+    // if (!id) return res.status(BAD_REQUEST).json("id must be numeric");
+    // req.body.id = id;
     var command = commandFactory(req);
     command.execute((err, result) => {
       if (err) {

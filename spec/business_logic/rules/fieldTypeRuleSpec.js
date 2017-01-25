@@ -8,6 +8,14 @@ describe("FieldTypeRule", function() {
     });
   });
 
+  it("invalidates with the expected message when NaN is supplied", () => {
+    var id = parseInt("somebogusvalue");
+    var rule = new FieldTypeRule("id", id, "number");
+    rule.validate(() => {
+      expect(rule.errors[0].message).toEqual("Invalid type supplied for id, expected number");
+    });
+  });
+
   it("invalidates with the expected message", () => {
     var rule = new FieldTypeRule("name", 5, "string");
     rule.validate(() => {
