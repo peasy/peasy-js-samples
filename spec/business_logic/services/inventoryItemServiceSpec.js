@@ -25,6 +25,13 @@ describe("InventoryItemService", function() {
           productId: 2
         };
       });
+      it("defaults quantityOnHand to 0 if it is not supplied", () => {
+        var service = new InventoryItemService(dataProxy);
+        delete inventoryItem.quantityOnHand;
+        service.insertCommand(inventoryItem).execute((err, result) => {
+          expect(result.value.quantityOnHand).toEqual(0);
+        });
+      });
       it("allows only whitelisted object members and assigns a version number", () => {
         spyOn(dataProxy, "insert").and.callThrough();
         var expectedResult = {

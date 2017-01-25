@@ -10,6 +10,7 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
       utils.stripAllFieldsFrom(item).except(['quantityOnHand', 'productId']);
+      item.quantityOnHand = item.quantityOnHand || 0;
       item.version = 1;
       done();
     },
