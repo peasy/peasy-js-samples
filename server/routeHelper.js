@@ -33,6 +33,10 @@ function createController(route, app, service) {
 
 function addGetRouteHandler(app, route, commandFactory) {
   app.get(route, (req, res) => {
+    if (req.params.id) {
+      req.params.id = parseInt(req.params.id, 10);
+      if (!req.params.id) return res.status(NOT_FOUND).end();
+    }
     var command = commandFactory(req);
     command.execute((err, result) => {
       if (err) {
@@ -74,6 +78,8 @@ function addPostRouteHandler(app, route, commandFactory) {
 
 function addPutRouteHandler(app, route, commandFactory) {
   app.put(route, (req, res) => {
+    req.params.id = parseInt(req.params.id, 10);
+    if (!req.params.id) return res.status(NOT_FOUND).end();
     req.body.id = req.params.id;
     var command = commandFactory(req);
     command.execute((err, result) => {
@@ -98,6 +104,8 @@ function addPutRouteHandler(app, route, commandFactory) {
 
 function addDeleteRouteHandler(app, route, commandFactory) {
   app.delete(route, (req, res) => {
+    req.params.id = parseInt(req.params.id, 10);
+    if (!req.params.id) return res.status(NOT_FOUND).end();
     var command = commandFactory(req);
     command.execute((err, result) => {
       if (result.success) {

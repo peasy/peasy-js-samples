@@ -10,6 +10,7 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
       utils.stripAllFieldsFrom(item).except(['quantityOnHand', 'productId']);
+      item.quantityOnHand = item.quantityOnHand || 0;
       item.version = 1;
       done();
     },
@@ -25,14 +26,17 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
     _onUpdateCommandInitialization: function(context, done) {
       var item = this.data;
       utils.stripAllFieldsFrom(item).except(['id', 'quantityOnHand', 'version']);
+      item.id = parseInt(item.id, 10); // ensure id is numeric
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {
       var item = this.data;
       done(null, [
+        new FieldRequiredRule('id', item)
+          .ifValidThenValidate(new FieldTypeRule('id', item.id, "number")),
         new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number"),
         new FieldRequiredRule("version", item)
-             .ifValidThenValidate(new FieldTypeRule("version", item.version, "number")),
+          .ifValidThenValidate(new FieldTypeRule("version", item.version, "number")),
       ]);
     }
   }
