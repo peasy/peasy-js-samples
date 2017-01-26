@@ -1,5 +1,6 @@
 import constants from '../constants';
 import ordersDotCom from '../../businessLogic';
+import {beginAsyncInvocation} from './asyncStatusActions';
 
 function loadCustomersSuccess(customers) {
   return { type: constants.actions.LOAD_CUSTOMERS_SUCCESS, customers: customers };
@@ -19,6 +20,7 @@ export function loadCustomers() {
     var service = new ordersDotCom.services.CustomerService(proxy);
     var command = service.getAllCommand();
 
+    dispatch(beginAsyncInvocation());
     command.execute((err, result) => {
       if (!err) {
         return dispatch(loadCustomersSuccess(result.value));
@@ -34,11 +36,15 @@ export function saveCustomer(customer) {
     var service = new ordersDotCom.services.CustomerService(proxy);
     var { command, actionFunc } = getFunctionsFor(customer);
 
-    command.execute((err, result) => {
-      if (!err) {
-        return dispatch(actionFunc(result.value));
-      }
-      return dispatch(saveCustomerFailure(err));
+    dispatch(beginAsyncInvocation());
+
+    return new Promise((resolve, reject) => {
+      command.execute((err, result) => {
+        if (!err) {
+          resolve(dispatch(actionFunc(result.value)));
+        }
+        // resolve(dispatch(saveCustomerFailure(err)));
+      });
     });
 
     function getFunctionsFor(customer) {

@@ -9,7 +9,8 @@ class ManageCustomer extends React.Component {
     super(props, context);
     this.state = {
       customer: Object.assign({}, props.customer),
-      errors: {}
+      errors: {},
+      saving: false
     };
     this.change = this.change.bind(this);
     this.save = this.save.bind(this);
@@ -23,8 +24,15 @@ class ManageCustomer extends React.Component {
 
   save(event) {
     event.preventDefault();
-    this.props.actions.saveCustomer(this.state.customer);
-    this.context.router.push('/');
+    this.setState({saving: true});
+    this.props.actions.saveCustomer(this.state.customer)
+      .then(() => {
+        var self = this;
+        setTimeout(function() {
+          self.setState({saving: false});
+          self.context.router.push('/');
+        }, 2000);
+      });
   }
 
   change(event) {
@@ -34,19 +42,16 @@ class ManageCustomer extends React.Component {
     return this.setState({customer: customer});
   };
 
-  getErrors() {
-    return { title: ''};
-  }
-
   render() {
     return (
       <div>
         <h1>Manage Customer</h1>
         <CustomerForm
-          customer={this.state.customer}
-          onSave={this.save}
           onChange={this.change}
-          errors={this.state.errors} />
+          onSave={this.save}
+          customer={this.state.customer}
+          errors={this.state.errors}
+          saving={this.state.saving} />
       </div>
     );
   }
@@ -65,7 +70,6 @@ function mapStateToProps(state, ownProps) {
       customer = state.customers.find(c => c.id === customerId)
     }
   }
-  console.log("MAP STATE TO PROPS!!!!!!!", customer);
 
   return {
     customer: customer 
