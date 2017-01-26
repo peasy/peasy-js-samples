@@ -8,6 +8,7 @@ import configureStore from './store/configureStore';
 import ordersDotCom from '../businessLogic';
 import * as customerActions from './actions/customerActions';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../node_modules/toastr/build/toastr.min.css';
 import '../css/styles.css';
 
 const store = configureStore();

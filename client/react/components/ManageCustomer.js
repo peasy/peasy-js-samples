@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as customerActions from '../actions/customerActions';
 import CustomerForm from './CustomerForm';
+import toastr from 'toastr';
 
 class ManageCustomer extends React.Component {
   constructor(props, context) {
@@ -30,6 +31,7 @@ class ManageCustomer extends React.Component {
         var self = this;
         setTimeout(function() {
           self.setState({saving: false});
+          toastr.success("Customer saved");
           self.context.router.push('/');
         }, 2000);
       });
