@@ -28,12 +28,9 @@ class ManageCustomer extends React.Component {
     this.setState({saving: true});
     this.props.actions.saveCustomer(this.state.customer)
       .then(() => {
-        var self = this;
-        setTimeout(function() {
-          self.setState({saving: false});
-          toastr.success("Customer saved");
-          self.context.router.push('/');
-        }, 2000);
+        this.setState({saving: false});
+        toastr.success("Customer saved");
+        this.context.router.push('/');
       });
   }
 
