@@ -28,10 +28,26 @@ class ManageCustomer extends React.Component {
     this.setState({saving: true});
     this.props.actions.saveCustomer(this.state.customer)
       .then(() => {
-        this.setState({saving: false});
         toastr.success("Customer saved");
+        this.setState({saving: false});
         this.context.router.push('/');
+      })
+      .catch(e => {
+        console.log("ERRRR", e);
+        this.setState({saving: false});
+        this.handleErrors(e);
+        // toastr.error(e);
       });
+      // .finally(() => this.setState({saving: false}));
+  }
+
+  handleErrors(errors) {
+    if (Array.isArray(errors)) {
+      errors = errors.map(e => e.message);
+      errors.forEach(e => toastr.error(e));
+    } else {
+      toastr.error(e);
+    }
   }
 
   change(event) {

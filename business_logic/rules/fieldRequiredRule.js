@@ -6,6 +6,7 @@ var FieldRequiredRule = Rule.extend({
     _onValidate: function(done) {
       this.data = this.data || {};
       if (!this.data[this.field]) {
+        console.log("FOOOOOOOO");
         this.association = this.field;
         this._invalidate(this.field + " is required");
       }
