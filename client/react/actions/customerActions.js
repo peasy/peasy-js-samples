@@ -21,6 +21,7 @@ export function loadCustomers() {
     var command = service.getAllCommand();
 
     dispatch(beginAsyncInvocation());
+    setTimeout(function() {
     command.execute((err, result) => {
       dispatch(endAsyncInvocation());
       if (!err) {
@@ -28,6 +29,7 @@ export function loadCustomers() {
       }
       return dispatch(loadCustomersFailure(err));
     });
+    }, 2000);
   }
 };
 
@@ -40,6 +42,8 @@ export function saveCustomer(customer) {
     dispatch(beginAsyncInvocation());
 
     return new Promise((resolve, reject) => {
+      setTimeout(function() {
+        
       command.execute((err, result) => {
         dispatch(endAsyncInvocation());
         if (!err) {
@@ -50,6 +54,7 @@ export function saveCustomer(customer) {
         }
         reject(err);
       });
+      }, 2000);
     });
 
     function getFunctionsFor(customer) {

@@ -33,7 +33,6 @@ class ManageCustomer extends React.Component {
         this.context.router.push('/');
       })
       .catch(e => {
-        console.log("ERRRR", e);
         this.setState({saving: false});
         this.handleErrors(e);
         // toastr.error(e);
