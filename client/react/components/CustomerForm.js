@@ -3,6 +3,7 @@ import TextInput from './common/TextInput';
 // import SelectInput from './common/SelectInput';
 
 const CustomerForm = ({customer, onSave, onChange, saving, errors}) => {
+  console.log("ERRORS in CustomerForm", errors);
   return (
     <form>
       <TextInput
@@ -10,7 +11,7 @@ const CustomerForm = ({customer, onSave, onChange, saving, errors}) => {
         label="Name"
         value={customer.name}
         onChange={onChange}
-        error={errors.title} />
+        errors={errors} />
       
       <input
         type="submit"

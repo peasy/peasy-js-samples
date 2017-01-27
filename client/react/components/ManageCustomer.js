@@ -10,7 +10,7 @@ class ManageCustomer extends React.Component {
     super(props, context);
     this.state = {
       customer: Object.assign({}, props.customer),
-      errors: {},
+      errors: [],
       saving: false
     };
     this.change = this.change.bind(this);
@@ -42,8 +42,12 @@ class ManageCustomer extends React.Component {
 
   handleErrors(errors) {
     if (Array.isArray(errors)) {
-      errors = errors.map(e => e.message);
-      errors.forEach(e => toastr.error(e));
+      var validationErrors = errors.filter(e => e.association);
+      if (validationErrors.length > 0) {
+        this.setState({errors: validationErrors})
+      }
+      var allOthers = errors.filter(e => !e.association);
+      allOthers.map(e => e.message).forEach(e => toastr.error(e));
     } else {
       toastr.error(e);
     }

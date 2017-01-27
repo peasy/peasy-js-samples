@@ -13,7 +13,6 @@ class App extends React.Component {
       <div className="container-fluid">
         <Header />
         {this.props.children}
-        <div style={this.getStyle()}>DOING STUFF</div>
       </div>
     );
   }

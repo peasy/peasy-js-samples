@@ -42,8 +42,6 @@ export function saveCustomer(customer) {
     dispatch(beginAsyncInvocation());
 
     return new Promise((resolve, reject) => {
-      setTimeout(function() {
-        
       command.execute((err, result) => {
         dispatch(endAsyncInvocation());
         if (!err) {
@@ -54,7 +52,6 @@ export function saveCustomer(customer) {
         }
         reject(err);
       });
-      }, 2000);
     });
 
     function getFunctionsFor(customer) {
