@@ -52,7 +52,10 @@ class ManageCustomer extends React.Component {
     const field = event.target.name;
     let customer = this.state.customer;
     customer[field] = event.target.value;
-    return this.setState({customer: customer});
+    return this.setState({
+      customer: customer,
+      errors: this.state.errors.filter(e => e.association != field) 
+    });
   };
 
   render() {
