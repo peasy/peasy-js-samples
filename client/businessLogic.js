@@ -1,6 +1,4 @@
 var peasy = require('peasy-js');
-var Promise = require('bluebird')
-Promise.promisifyAll(peasy);
 
 var BaseService = require('../business_logic/services/baseService');
 var CategoryService = require('../business_logic/services/categoryService');

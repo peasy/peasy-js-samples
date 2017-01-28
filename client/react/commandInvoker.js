@@ -9,18 +9,16 @@ class CommandInvoker {
 
   invoke(command, successAction) {
     this._dispatch(beginAsyncInvocation());
-    return command.executeAsync()
-      .then(result => {
+    return new Promise((resolve, reject) => {
+      command.execute((err, result) => {
+        if (err) return reject(err);
         this._dispatch(endAsyncInvocation());
         if (result.success) {
           this._dispatch(successAction(result.value));
         }
-        return result;
-      })
-      .catch(e => {
-        this._logger.logError(e);
-        return { success: false, errors: e };
+        resolve(result);
       });
+    });
   }
 }
 
