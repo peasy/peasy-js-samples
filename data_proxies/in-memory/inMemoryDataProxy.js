@@ -20,8 +20,6 @@ InMemoryDataProxy.prototype.getAll = function(done) {
 };
 
 InMemoryDataProxy.prototype.insert = function(data, done) {
-  console.log("WTF?!?!?!?");
-  return done(new Error("BAD DATA"));
   data.id = this._store.length + 1;
   this._store.push(Object.assign({}, data));
   done(null, data);
