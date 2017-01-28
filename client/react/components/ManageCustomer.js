@@ -54,6 +54,7 @@ class ManageCustomer extends React.Component {
     customer[field] = event.target.value;
     return this.setState({
       customer: customer,
+      // clear errors associated with field until validation occurs again
       errors: this.state.errors.filter(e => e.association != field) 
     });
   };

@@ -25,6 +25,12 @@ const TextInput = ({name, label, onChange, placeholder, value, errors}) => {
     return null;
   } 
 
+  function handleFocus(input) {
+    if (input && getError()) {
+      input.focus(); 
+    }
+  }
+
   return (
     <div className={wrapperClass}>
       <label htmlFor={name}>{label}</label>
@@ -36,7 +42,7 @@ const TextInput = ({name, label, onChange, placeholder, value, errors}) => {
           className="form-control"
           placeholder={placeholder}
           onChange={onChange}
-          ref={(input) => { if (input && getError()) { input.focus(); } }} />
+          ref={handleFocus} />
         {errorDisplay()}
       </div>
     </div>
