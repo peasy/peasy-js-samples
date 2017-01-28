@@ -15,6 +15,16 @@ const TextInput = ({name, label, onChange, placeholder, value, errors}) => {
     }
   }
 
+  function errorDisplay() {
+    var error = getError();
+    if (error) {
+      return (
+        <div className="alert alert-danger">{error}</div>
+      );
+    }
+    return null;
+  } 
+
   return (
     <div className={wrapperClass}>
       <label htmlFor={name}>{label}</label>
@@ -25,8 +35,9 @@ const TextInput = ({name, label, onChange, placeholder, value, errors}) => {
           value={value}
           className="form-control"
           placeholder={placeholder}
-          onChange={onChange} />
-        {getError() && <div className="alert alert-danger">{getError()}</div>}
+          onChange={onChange}
+          ref={(input) => { if (input && getError()) { input.focus(); } }} />
+        {errorDisplay()}
       </div>
     </div>
   );
