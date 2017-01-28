@@ -1,28 +1,31 @@
+import {beginAsyncInvocation, endAsyncInvocation} from '../react/actions/asyncStatusActions';
+
 class CommandInvoker {
 
-  constructor(logger = new Logger()) {
+  constructor(dispatch, logger = new Logger()) {
+    this._dispatch = dispatch;
     this._logger = logger;
   }
 
-  invokeCommand(command, successAction) {
-    dispatch(beginAsyncInvocation());
+  invoke(command, successAction) {
+    this._dispatch(beginAsyncInvocation());
     return command.executeAsync()
       .then(result => {
-        dispatch(endAsyncInvocation());
+        this._dispatch(endAsyncInvocation());
         if (result.success) {
-          dispatch(successAction(result.value));
+          this._dispatch(successAction(result.value));
         }
         return result;
       })
       .catch(e => {
-        this._logger.log(e);
+        this._logger.logError(e);
         return { success: false, errors: e };
       });
   }
 }
 
 class Logger {
-  LogError(message) {
+  logError(message) {
     console.log("LOG:ERROR:", message);
   }
 }

@@ -27,17 +27,12 @@ class ManageCustomer extends React.Component {
     event.preventDefault();
     this.setState({saving: true});
     this.props.actions.saveCustomer(this.state.customer)
-      .then(() => {
+      .then((result) => {
+        this.setState({saving: false});
+        if (!result.success) return this.handleErrors(result.errors);
         toastr.success("Customer saved");
-        this.setState({saving: false});
         this.context.router.push('/');
-      })
-      .catch(e => {
-        this.setState({saving: false});
-        this.handleErrors(e);
-        // toastr.error(e);
       });
-      // .finally(() => this.setState({saving: false}));
   }
 
   handleErrors(errors) {
@@ -49,7 +44,7 @@ class ManageCustomer extends React.Component {
       var allOthers = errors.filter(e => !e.association);
       allOthers.map(e => e.message).forEach(e => toastr.error(e));
     } else {
-      toastr.error(e);
+      toastr.error(errors.message);
     }
   }
 

@@ -3,7 +3,6 @@ import TextInput from './common/TextInput';
 // import SelectInput from './common/SelectInput';
 
 const CustomerForm = ({customer, onSave, onChange, saving, errors}) => {
-  console.log("ERRORS in CustomerForm", errors);
   return (
     <form>
       <TextInput
