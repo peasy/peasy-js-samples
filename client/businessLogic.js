@@ -17,12 +17,19 @@ var OrderDataProxy = require('../data_proxies/http/orderDataProxy');
 var OrderItemDataProxy = require('../data_proxies/http/orderItemDataProxy');
 var ProductDataProxy = require('../data_proxies/http/productDataProxy');
 
-var categoryService = new CategoryService(new CategoryDataProxy());
-var customerService = new CustomerService(new CustomerDataProxy());
-var inventoryItemService = new InventoryItemService(new InventoryItemDataProxy());
-var orderItemService = new OrderItemService(new OrderItemDataProxy());
-var orderService = new OrderService(new OrderDataProxy());
-var productService = new ProductService(new ProductDataProxy());
+var categoryDataProxy = new CategoryDataProxy();
+var customerDataProxy = new CustomerDataProxy(); 
+var inventoryItemDataProxy = new InventoryItemDataProxy();
+var orderDataProxy = new OrderDataProxy();
+var orderItemDataProxy = new OrderItemDataProxy();
+var productDataProxy = new ProductDataProxy();
+
+var inventoryItemService = new InventoryItemService(inventoryItemDataProxy);
+var orderItemService = new OrderItemService(orderItemDataProxy, productDataProxy, inventoryItemService);
+var orderService = new OrderService(orderDataProxy, orderItemService);
+var productService = new ProductService(productDataProxy, orderService, inventoryItemService);
+var categoryService = new CategoryService(categoryDataProxy, productService);
+var customerService = new CustomerService(customerDataProxy, orderService);
 
 var ordersDotCom = {
   services: {
