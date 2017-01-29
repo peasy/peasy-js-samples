@@ -11,7 +11,6 @@ OrderDataProxy.prototype.getByCustomer = function(customerId, done) {
   var orders = this._store.filter(function(order) {
     return order.customerId === customerId;
   });
-  console.log("ORDERS in GetBYCustomer", orders);
   done(null, orders);
 };
 
@@ -24,7 +23,7 @@ OrderDataProxy.prototype.getByProduct = function(productId, done) {
       return item.orderId;
     });
     var orders = self._store.filter(function(order) {
-      return orderIds.indexOf(order._id) > -1;
+      return orderIds.indexOf(order.id) > -1;
     });
     done(null, orders);
   });
