@@ -8,11 +8,11 @@ var OrderDataProxy = function() {
 OrderDataProxy.prototype = new HttpDataProxy();
 
 OrderDataProxy.prototype.getByCustomer = function(customerId, done) {
-  this.handleResponseFrom(axios.get(`${this._url}?customerid=${customerId}`), done);
+  this._handleResponseFrom(axios.get(`${this._url}?customerid=${customerId}`), done);
 };
 
 OrderDataProxy.prototype.getByProduct = function(productId, done) {
-  this.handleResponseFrom(axios.get(`${this._url}?productid=${productId}`), done);
+  this._handleResponseFrom(axios.get(`${this._url}?productid=${productId}`), done);
 };
 
 module.exports = OrderDataProxy;

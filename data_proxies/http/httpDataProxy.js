@@ -8,26 +8,26 @@ var HttpDataProxy = function(entity) {
 };
 
 HttpDataProxy.prototype.getAll = function(done) {
-  this.handleResponseFrom(axios.get(this._url), done)
+  this._handleResponseFrom(axios.get(this._url), done)
 };
 
 HttpDataProxy.prototype.getById = function(id, done) {
-  this.handleResponseFrom(axios.get(`${this._url}/${id}`), done);
+  this._handleResponseFrom(axios.get(`${this._url}/${id}`), done);
 };
 
 HttpDataProxy.prototype.insert = function(data, done) {
-  this.handleResponseFrom(axios.post(this._url, data), done);
+  this._handleResponseFrom(axios.post(this._url, data), done);
 };
 
 HttpDataProxy.prototype.update = function(data, done) {
-  this.handleResponseFrom(axios.put(`${this._url}/${data.id}`, data), done);
+  this._handleResponseFrom(axios.put(`${this._url}/${data.id}`, data), done);
 };
 
 HttpDataProxy.prototype.destroy = function(id, done) {
-  this.handleResponseFrom(axios.delete(`${this._url}/${id}`), done);
+  this._handleResponseFrom(axios.delete(`${this._url}/${id}`), done);
 };
 
-HttpDataProxy.prototype.handleResponseFrom = function(promise, done) {
+HttpDataProxy.prototype._handleResponseFrom = function(promise, done) {
   promise.then(response => done(null, response.data))
          .catch((err) => done(getError(err)));
 }
