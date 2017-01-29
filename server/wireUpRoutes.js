@@ -39,8 +39,8 @@ var wireUpRoutes = function(app) {
   routeHelper.addGetRouteHandler(app, '/inventoryItems', function(request) {
     var service = inventoryItemService;
     var command = service.getAllCommand();
-    if (request.query.productId) {
-      command = service.getByProductCommand(request.query.productId);
+    if (request.query.productid) {
+      command = service.getByProductCommand(request.query.productid);
     }
     return command;
   });
