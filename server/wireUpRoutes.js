@@ -49,11 +49,11 @@ var wireUpRoutes = function(app) {
   routeHelper.addGetRouteHandler(app, '/orders', function(request) {
     var service = orderService;
     var command = service.getAllCommand();
-    if (request.query.customerId) {
-      return service.getByCustomerCommand(request.query.customerId);
+    if (request.query.customerid) {
+      return service.getByCustomerCommand(request.query.customerid);
     }
-    if (request.query.productId) {
-      return service.getByProductCommand(request.query.productId);
+    if (request.query.productid) {
+      return service.getByProductCommand(request.query.productid);
     }
     return command;
   });
