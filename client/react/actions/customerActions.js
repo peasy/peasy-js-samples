@@ -2,6 +2,30 @@ import constants from '../constants';
 import ordersDotCom from '../../businessLogic';
 import CommandInvoker from '../commandInvoker';
 
+class ActionsBase {
+  constructor(service) {
+    this._service = service;
+  }
+
+  insertAction() { }
+
+  updateAction() { }
+
+  deleteAction() { }
+
+  loadData() {
+
+  }
+
+  save(data) {
+
+  }
+
+  delete(id) {
+
+  }
+}
+
 export function loadCustomers() {
   return function(dispatch, getState) {
     var command = ordersDotCom.services.customerService.getAllCommand();
@@ -30,6 +54,13 @@ export function saveCustomer(customer) {
   }
 };
 
+export function destroyCustomer(id) {
+  return function(dispatch, getState) {
+    var command = ordersDotCom.services.customerService.destroyCommand(id);
+    return new CommandInvoker(dispatch).invoke(command, destroyCustomerSuccess(id));
+  }
+}
+
 function loadCustomersSuccess(customers) {
   return { type: constants.actions.LOAD_CUSTOMERS_SUCCESS, customers: customers };
 }
@@ -40,4 +71,10 @@ function insertCustomerSuccess(customer) {
 
 function updateCustomerSuccess(customer) {
   return { type: constants.actions.UPDATE_CUSTOMER_SUCCESS, customer: customer };
+}
+
+function destroyCustomerSuccess(id) {
+  return () => {
+    return { type: constants.actions.DESTROY_CUSTOMER_SUCCESS, id: id };
+  }
 }

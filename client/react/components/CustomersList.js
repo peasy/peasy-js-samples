@@ -1,9 +1,50 @@
 import React from 'react';
 import { Link } from 'react-router';
+import {bindActionCreators} from 'redux'
+import {destroyCustomer} from '../actions/customerActions';
+import toastr from 'toastr';
+
+let dispatch = null;
+
+const CustomersList = ({customers, dispatcher}) => {
+
+  dispatch = dispatcher;
+
+  return (
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {customers.map(customerRow)}
+      </tbody>
+    </table>
+  );
+
+};
 
 function destroy(id) {
   return function() {
-    console.log("ID", id);
+    return dispatch(destroyCustomer(id))
+      .then(result => {
+        if (!result.success) handleErrors(result.errors);
+      });
+  }
+}
+
+function handleErrors(errors) {
+  if (Array.isArray(errors)) {
+    var validationErrors = errors.filter(e => e.association);
+    if (validationErrors.length > 0) {
+      this.setState({errors: validationErrors})
+    }
+    var allOthers = errors.filter(e => !e.association);
+    allOthers.map(e => e.message).forEach(e => toastr.error(e));
+  } else {
+    toastr.error(errors.message);
   }
 }
 
@@ -22,21 +63,5 @@ function customerRow(customer, index) {
     </tr>
   );
 }
-
-const CustomersList = ({customers}) => {
-  return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {customers.map(customerRow)}
-      </tbody>
-    </table>
-  );
-};
 
 export default CustomersList;

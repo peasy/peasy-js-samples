@@ -8,6 +8,8 @@ export default function customerReducer(state = [], action) {
       return [...state.filter(customer => customer.id !== action.customer.id), 
         Object.assign({}, action.customer)
       ];
+    case constants.actions.DESTROY_CUSTOMER_SUCCESS:
+      return [...state.filter(customer => customer.id !== action.id)];
     case constants.actions.LOAD_CUSTOMERS_SUCCESS:
       return action.customers;
     default:

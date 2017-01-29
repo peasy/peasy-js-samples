@@ -10,7 +10,10 @@ class CustomersView extends React.Component {
       <div>
         <h1>Customers</h1>
         <Link to="/customer">Create New</Link>
-        <CustomersList customers={this.props.customers} />
+        <CustomersList 
+          customers={this.props.customers} 
+          dispatcher={this.props.dispatch}
+          />
       </div>
     );
   }
