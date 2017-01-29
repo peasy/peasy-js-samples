@@ -44,7 +44,7 @@ function addGetRouteHandler(app, route, commandFactory) {
         return res.status(BAD_REQUEST).json(err.message);
       }
       if (result.success) {
-        if (result.value) {
+        if (result.value && notEmptyArray(result.value)) {
           res.status(OK).json(result.value);
         } else {
           res.status(NOT_FOUND).end();
@@ -115,6 +115,11 @@ function addDeleteRouteHandler(app, route, commandFactory) {
       }
     });
   });
+}
+
+function notEmptyArray(value) {
+  if (!Array.isArray(value)) return true;
+  return value.length > 0;
 }
 
 module.exports = {
