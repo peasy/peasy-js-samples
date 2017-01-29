@@ -34,6 +34,12 @@ var OrderService = BusinessService.extendService(BaseService, {
   name: 'getByCustomerCommand',
   params: ['customerId'],
   functions: {
+    _getRules: function(context, done) {
+      done(null, [
+        new FieldRequiredRule('customerId', { customerId: this.customerId })
+          .ifValidThenValidate(new FieldTypeRule('customerId', this.customerId, "number")),
+      ]);
+    },
     _onValidationSuccess: function(context, done) {
       this.dataProxy.getByCustomer(this.customerId, function(err, result) {
         done(null, result);
@@ -45,7 +51,10 @@ var OrderService = BusinessService.extendService(BaseService, {
   params: ['productId'],
   functions: {
     _getRules: function(context, done) {
-      done(null, []);
+      done(null, [
+        new FieldRequiredRule('productId', { productId: this.productId })
+          .ifValidThenValidate(new FieldTypeRule('productId', this.productId, "number")),
+      ]);
     },
     _onValidationSuccess: function(context, done) {
       this.dataProxy.getByProduct(this.productId, function(err, result) {
