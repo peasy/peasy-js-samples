@@ -8,7 +8,7 @@ OrderItemDataProxy.prototype = new InMemoryDataProxy();
 
 OrderItemDataProxy.prototype.getByOrder = function(orderId, done) {
   var items = this._store.filter(function(item) {
-    return item.orderId == orderId;
+    return item.orderId === orderId;
   });
   done(null, items);
 };

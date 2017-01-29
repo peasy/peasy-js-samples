@@ -20,7 +20,7 @@ InventoryItemDataProxy.prototype.update = function(data, done) {
 
 InventoryItemDataProxy.prototype.getByProduct = function(productId, done) {
   var items = this._store.filter(function(item) {
-    return item.productId == productId;
+    return item.productId === productId;
   })[0];
   done(null, items || []);
 };
