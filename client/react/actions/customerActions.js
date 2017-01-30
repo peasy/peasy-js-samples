@@ -1,80 +1,33 @@
 import constants from '../constants';
 import ordersDotCom from '../../businessLogic';
 import CommandInvoker from '../commandInvoker';
+import ActionsBase from './ActionsBase';
 
-class ActionsBase {
-  constructor(service) {
-    this._service = service;
+class CustomerActions extends ActionsBase {
+
+  constructor() {
+    super();
   }
 
-  insertAction() { }
-
-  updateAction() { }
-
-  deleteAction() { }
-
-  loadData() {
-
+  service() {
+    return ordersDotCom.services.customerService;
   }
 
-  save(data) {
-
+  getAllAction(data) { 
+    return { type: constants.actions.LOAD_CUSTOMERS_SUCCESS, customers: data };
   }
 
-  delete(id) {
-
+  insertAction(data) { 
+    return { type: constants.actions.INSERT_CUSTOMER_SUCCESS, customer: data };
   }
-}
 
-export function loadCustomers() {
-  return function(dispatch, getState) {
-    var command = ordersDotCom.services.customerService.getAllCommand();
-    return new CommandInvoker(dispatch).invoke(command, loadCustomersSuccess);
+  updateAction(data) { 
+    return { type: constants.actions.UPDATE_CUSTOMER_SUCCESS, customer: data };
   }
-};
 
-export function saveCustomer(customer) {
-  return function(dispatch, getState) {
-    var service = ordersDotCom.services.customerService;
-    var { command, actionFunc } = getFunctionsFor(customer);
-    return new CommandInvoker(dispatch).invoke(command, actionFunc);
-
-    function getFunctionsFor(customer) {
-      if (customer.id) {
-        return {
-          command: service.updateCommand(customer),
-          actionFunc: updateCustomerSuccess
-        };
-      }
-      return {
-        command: service.insertCommand(customer),
-        actionFunc: insertCustomerSuccess
-      };
-    }
-  }
-};
-
-export function destroyCustomer(id) {
-  return function(dispatch, getState) {
-    var command = ordersDotCom.services.customerService.destroyCommand(id);
-    return new CommandInvoker(dispatch).invoke(command, destroyCustomerSuccess(id));
-  }
-}
-
-function loadCustomersSuccess(customers) {
-  return { type: constants.actions.LOAD_CUSTOMERS_SUCCESS, customers: customers };
-}
-
-function insertCustomerSuccess(customer) {
-  return { type: constants.actions.INSERT_CUSTOMER_SUCCESS, customer: customer };
-}
-
-function updateCustomerSuccess(customer) {
-  return { type: constants.actions.UPDATE_CUSTOMER_SUCCESS, customer: customer };
-}
-
-function destroyCustomerSuccess(id) {
-  return () => {
+  destroyAction(id) { 
     return { type: constants.actions.DESTROY_CUSTOMER_SUCCESS, id: id };
   }
 }
+
+export default CustomerActions;
