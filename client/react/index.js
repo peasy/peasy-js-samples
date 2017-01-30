@@ -6,13 +6,14 @@ import { Provider } from 'react-redux';
 import routes from './routes';
 import configureStore from './store/configureStore';
 import ordersDotCom from '../businessLogic';
-import * as customerActions from './actions/customerActions';
+import CustomerActions from './actions/customerActions';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/toastr/build/toastr.min.css';
 import '../css/styles.css';
 
 const store = configureStore();
-store.dispatch(customerActions.loadCustomers());
+const customerActions = new CustomerActions();
+store.dispatch(customerActions.loadData());
 
 render(
   <Provider store={store}>
