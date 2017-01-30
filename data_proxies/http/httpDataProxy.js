@@ -29,7 +29,7 @@ HttpDataProxy.prototype.destroy = function(id, done) {
 
 HttpDataProxy.prototype._handleResponseFrom = function(promise, done) {
   promise.then(response => done(null, response.data))
-         .catch((err) => done(getError(err)));
+         .catch((err) => done(this._getError(err)));
 }
 
 var httpStatusCodes = {
@@ -39,7 +39,7 @@ var httpStatusCodes = {
   notImplemented: 501
 }
 
-function getError(err) {
+HttpDataProxy.prototype._getError = function(err) {
   switch (err.response.status) {
     case httpStatusCodes.badRequest:
       var serviceException = new ServiceException(err.message);
