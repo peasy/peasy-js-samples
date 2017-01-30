@@ -7,6 +7,13 @@ var HttpDataProxy = function(entity) {
   this._url = `/${entity}`;
 };
 
+HttpDataProxy.httpStatusCodes = {
+  BAD_REQUEST: 400,
+  CONFLICT: 409,
+  NOT_FOUND: 404,
+  NOT_IMPLEMENTED: 501
+};
+
 HttpDataProxy.prototype.getAll = function(done) {
   this._handleResponseFrom(axios.get(this._url), done)
 };
@@ -32,26 +39,31 @@ HttpDataProxy.prototype._handleResponseFrom = function(promise, done) {
          .catch((err) => done(this._getError(err)));
 }
 
-var httpStatusCodes = {
-  badRequest: 400,
-  conflict: 409,
-  notFound: 404,
-  notImplemented: 501
+HttpDataProxy.prototype._handleGetListByIdFrom = function(promise, done) {
+  promise.then(response => {
+    done(null, response.data);
+  })
+  .catch(err => {
+    if (err.response.status === HttpDataProxy.httpStatusCodes.NOT_FOUND) {
+      return done(null, []);
+    }
+    done(this._getError(err));
+  });
 }
 
 HttpDataProxy.prototype._getError = function(err) {
   switch (err.response.status) {
-    case httpStatusCodes.badRequest:
+    case HttpDataProxy.httpStatusCodes.BAD_REQUEST:
       var serviceException = new ServiceException(err.message);
       if (Array.isArray(err.response.data)) {
         serviceException.errors = err.response.data;
       }
       return serviceException;
 
-    case httpStatusCodes.conflict:
+    case HttpDataProxy.httpStatusCodes.CONFLICT:
       return new ConcurrencyError(err.message);
 
-    case httpStatusCodes.notFound:
+    case HttpDataProxy.httpStatusCodes.NOT_FOUND:
       return new NotFoundError(err.message);
 
     default:

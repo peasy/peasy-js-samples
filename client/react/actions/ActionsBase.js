@@ -49,7 +49,6 @@ class ActionsBase {
     }
 
     function destroyCustomerSuccess(id) {
-      console.log("DESTROY!!!!!");
       return () => {
         return self.destroyAction(id);
       }
