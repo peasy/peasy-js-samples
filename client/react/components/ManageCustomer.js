@@ -1,9 +1,11 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as customerActions from '../actions/customerActions';
+import CustomerActions from '../actions/customerActions';
 import CustomerForm from './CustomerForm';
 import toastr from 'toastr';
+
+let customerActions = new CustomerActions();
 
 class ManageCustomer extends React.Component {
   constructor(props, context) {
@@ -26,7 +28,7 @@ class ManageCustomer extends React.Component {
   save(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.actions.saveCustomer(this.state.customer)
+    this.props.dispatch(customerActions.save(this.state.customer))
       .then((result) => {
         this.setState({saving: false});
         if (!result.success) return this.handleErrors(result.errors);
@@ -93,10 +95,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(customerActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ManageCustomer);
+export default connect(mapStateToProps)(ManageCustomer);
