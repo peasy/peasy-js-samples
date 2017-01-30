@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 import {bindActionCreators} from 'redux'
-import {destroyCustomer} from '../actions/customerActions';
+import CustomerActions from '../actions/customerActions';
 import toastr from 'toastr';
 
 let dispatch = null;
+let customerActions = new CustomerActions();
 
 const CustomersList = ({customers, dispatcher}) => {
 
@@ -28,7 +29,7 @@ const CustomersList = ({customers, dispatcher}) => {
 
 function destroy(id) {
   return function() {
-    return dispatch(destroyCustomer(id))
+    return dispatch(customerActions.destroy(id))
       .then(result => {
         if (!result.success) handleErrors(result.errors);
       });
