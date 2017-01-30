@@ -15,6 +15,7 @@ class ManageCustomer extends React.Component {
       errors: [],
       saving: false
     };
+    this.cancel = this.cancel.bind(this);
     this.change = this.change.bind(this);
     this.save = this.save.bind(this);
   }
@@ -23,6 +24,10 @@ class ManageCustomer extends React.Component {
     if (this.props.customer.id != nextProps.customer.id) {
       this.setState({customer: Object.assign({}, nextProps.customer)});
     }
+  }
+
+  cancel() {
+    this.context.router.push('/');
   }
 
   save(event) {
@@ -66,6 +71,7 @@ class ManageCustomer extends React.Component {
       <div>
         <h1>Manage Customer</h1>
         <CustomerForm
+          onCancel={this.cancel}
           onChange={this.change}
           onSave={this.save}
           customer={this.state.customer}

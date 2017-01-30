@@ -12,3 +12,7 @@ a.active {
 nav {
   padding-top: 20px;
 }
+
+.cancelButton {
+  margin-left: 10px;
+}
