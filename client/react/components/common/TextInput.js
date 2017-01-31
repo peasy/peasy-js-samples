@@ -1,9 +1,9 @@
 import React from 'react';
 
-const TextInput = ({name, label, onChange, placeholder, value, errors, autoFocus=false}) => {
+const TextInput = ({name, label, onChange, placeholder, value, errors) => {
 
   let wrapperClass = 'form-group';
-  if (errors && errors.length > 0) {
+  if (getError()) {
     wrapperClass += ' has-error';
   }
 
@@ -25,14 +25,6 @@ const TextInput = ({name, label, onChange, placeholder, value, errors, autoFocus
     return null;
   } 
 
-  function handleFocus(input) {
-    if (input) {
-      if (getError() || autoFocus) {
-        input.focus(); 
-      }
-    }
-  }
-
   return (
     <div className={wrapperClass}>
       <label htmlFor={name}>{label}</label>
@@ -43,8 +35,7 @@ const TextInput = ({name, label, onChange, placeholder, value, errors, autoFocus
           value={value}
           className="form-control"
           placeholder={placeholder}
-          onChange={onChange}
-          ref={handleFocus} />
+          onChange={onChange} />
         {errorDisplay()}
       </div>
     </div>
