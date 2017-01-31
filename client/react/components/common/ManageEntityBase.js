@@ -8,8 +8,8 @@ import toastr from 'toastr';
 let customerActions = new CustomerActions();
 
 class ManageEntityBase extends React.Component {
+
   constructor(props, context) {
-    console.log("YAY!", props);
     super(props, context);
     this.state = {
       entity: Object.assign({}, props.entity),
@@ -28,24 +28,18 @@ class ManageEntityBase extends React.Component {
   }
 
   cancel() {
-    this.context.router.push(this._redirectUrl());
+    this.context.router.push('/');
   }
 
-  _saveAction(entity) { }
-
-  _redirectUrl() { }
-
   save(event) {
-    var self = this;
     event.preventDefault();
-    self.setState({saving: true});
-    self.props.dispatch(self._saveAction(self.state.entity))
+    this.setState({saving: true});
+    this.props.dispatch(customerActions.save(this.state.entity))
       .then((result) => {
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
-        self.setState({saving: false});
-        if (!result.success) return self.handleErrors(result.errors);
-        toastr.success("Entity saved");
-        self.context.router.push(self._redirectUrl());
+        this.setState({saving: false});
+        if (!result.success) return this.handleErrors(result.errors);
+        toastr.success("Customer saved");
+        this.context.router.push('/');
       });
   }
 
@@ -72,7 +66,6 @@ class ManageEntityBase extends React.Component {
       errors: this.state.errors.filter(e => e.association != field) 
     });
   };
-
 }
 
 
