@@ -2,13 +2,14 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import CustomerActions from '../../actions/customerActions';
-import CustomerForm from './CustomerForm';
+import CustomerForm from '../customer/CustomerForm';
 import toastr from 'toastr';
 
 let customerActions = new CustomerActions();
 
-class ManageCustomer extends React.Component {
+class ManageEntityBase extends React.Component {
   constructor(props, context) {
+    console.log("YAY!", props);
     super(props, context);
     this.state = {
       entity: Object.assign({}, props.entity),
@@ -27,18 +28,24 @@ class ManageCustomer extends React.Component {
   }
 
   cancel() {
-    this.context.router.push('/');
+    this.context.router.push(this._redirectUrl());
   }
 
+  _saveAction(entity) { }
+
+  _redirectUrl() { }
+
   save(event) {
+    var self = this;
     event.preventDefault();
-    this.setState({saving: true});
-    this.props.dispatch(customerActions.save(this.state.entity))
+    self.setState({saving: true});
+    self.props.dispatch(self._saveAction(self.state.entity))
       .then((result) => {
-        this.setState({saving: false});
-        if (!result.success) return this.handleErrors(result.errors);
-        toastr.success("Customer saved");
-        this.context.router.push('/');
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
+        self.setState({saving: false});
+        if (!result.success) return self.handleErrors(result.errors);
+        toastr.success("Entity saved");
+        self.context.router.push(self._redirectUrl());
       });
   }
 
@@ -66,39 +73,8 @@ class ManageCustomer extends React.Component {
     });
   };
 
-  render() {
-    return (
-      <div>
-        <h1>Manage Customer</h1>
-        <CustomerForm
-          onCancel={this.cancel}
-          onChange={this.change}
-          onSave={this.save}
-          customer={this.state.entity}
-          errors={this.state.errors}
-          saving={this.state.saving} />
-      </div>
-    );
-  }
 }
 
-ManageCustomer.contextTypes = {
-  router: PropTypes.object
-};
 
-function mapStateToProps(state, ownProps) {
-  var entity = {};
-
-  if (ownProps.params.id) {
-    var entityId = parseInt(ownProps.params.id, 10);
-    if (state.customers.length > 0) {
-      entity = state.customers.find(c => c.id === entityId)
-    }
-  }
-
-  return {
-    entity: entity 
-  };
-}
-
-export default connect(mapStateToProps)(ManageCustomer);
+export default ManageEntityBase;
+// export default connect(mapStateToProps)(ManageEntityBase);
