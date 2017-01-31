@@ -6,11 +6,34 @@ var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 
+var convert = function(value, prop) {
+  function toFloat() {
+    var parsed = parseFloat(value[prop]);
+    if (parsed) {
+      value[prop] = parsed;
+    } 
+  }
+
+  function toInt() {
+    var parsed = parseInt(value[prop]);
+    if (parsed) {
+      value[prop] = parsed;
+    } 
+  }
+
+  return {
+    toFloat: toFloat,
+    toInt: toInt
+  };
+}
+
 var CreateProductCommand = Command.extend({
   params: ['product', 'productDataProxy', 'inventoryItemService'],
   functions: {
     _onInitialization: function(context, done) {
       var product = this.product;
+      convert(product, "price").toFloat();
+      convert(product, "categoryId").toInt();
       utils.stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
       done();
     },
@@ -22,6 +45,7 @@ var CreateProductCommand = Command.extend({
         new FieldRequiredRule("price", product)
              .ifValidThenValidate(new FieldTypeRule("price", product.price, "number")),
         new FieldRequiredRule("categoryId", product)
+             .ifValidThenValidate(new FieldTypeRule("categoryId", product.categoryId, "number")),
       ]);
     },
     _onValidationSuccess: function(context, done) {
