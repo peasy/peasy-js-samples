@@ -13,6 +13,14 @@ class ManageCustomer extends ManageEntityBase {
     super(props, context);
   }
 
+  _saveAction(entity) { 
+    return customerActions.save(entity);
+   }
+
+  _redirectUri() {
+    return '/';
+  }
+
   render() {
     return (
       <div>
@@ -28,10 +36,6 @@ class ManageCustomer extends ManageEntityBase {
     );
   }
 }
-
-ManageCustomer.contextTypes = {
-  router: PropTypes.object
-};
 
 function mapStateToProps(state, ownProps) {
   var entity = {};

@@ -1,11 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import CustomerActions from '../../actions/customerActions';
-import CustomerForm from '../customer/CustomerForm';
 import toastr from 'toastr';
-
-let customerActions = new CustomerActions();
 
 class ManageEntityBase extends React.Component {
 
@@ -27,19 +22,23 @@ class ManageEntityBase extends React.Component {
     }
   }
 
+  _redirectUri() { }
+
+  _saveAction() { }
+
   cancel() {
-    this.context.router.push('/');
+    this.context.router.push(this._redirectUri());
   }
 
   save(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.dispatch(customerActions.save(this.state.entity))
+    this.props.dispatch(this._saveAction(this.state.entity))
       .then((result) => {
         this.setState({saving: false});
         if (!result.success) return this.handleErrors(result.errors);
-        toastr.success("Customer saved");
-        this.context.router.push('/');
+        toastr.success("Save successful");
+        this.context.router.push(this._redirectUri());
       });
   }
 
@@ -68,6 +67,8 @@ class ManageEntityBase extends React.Component {
   };
 }
 
+ManageEntityBase.contextTypes = {
+  router: PropTypes.object
+};
 
 export default ManageEntityBase;
-// export default connect(mapStateToProps)(ManageEntityBase);
