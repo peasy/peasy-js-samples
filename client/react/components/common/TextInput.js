@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TextInput = ({name, label, onChange, placeholder, value, errors}) => {
+const TextInput = ({name, label, onChange, placeholder, value, errors, autoFocus=false}) => {
 
   let wrapperClass = 'form-group';
   if (errors && errors.length > 0) {
@@ -26,8 +26,10 @@ const TextInput = ({name, label, onChange, placeholder, value, errors}) => {
   } 
 
   function handleFocus(input) {
-    if (input && getError()) {
-      input.focus(); 
+    if (input) {
+      if (getError() || autoFocus) {
+        input.focus(); 
+      }
     }
   }
 

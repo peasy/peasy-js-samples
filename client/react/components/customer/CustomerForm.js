@@ -11,7 +11,8 @@ const CustomerForm = ({customer, onSave, onChange, saving, errors, onCancel}) =>
         label="Name"
         value={customer.name}
         onChange={onChange}
-        errors={errors} />
+        errors={errors}
+        autoFocus={true} />
       
       <input
         type="submit"
