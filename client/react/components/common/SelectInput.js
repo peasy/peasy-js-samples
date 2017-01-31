@@ -1,6 +1,30 @@
 import React from 'react';
 
-const SelectInput = ({name, label, onChange, defaultOption, value, error, options}) => {
+const SelectInput = ({name, label, onChange, defaultOption, value, errors, options}) => {
+
+  let wrapperClass = 'form-group';
+  if (getError()) {
+    wrapperClass += ' has-error';
+  }
+
+  function getError() {
+    if (!errors) return;
+    var error = errors.find(e => e.association === name);
+    if (error) {
+      return error.message;
+    }
+  }
+
+  function errorDisplay() {
+    var error = getError();
+    if (error) {
+      return (
+        <div className="alert alert-danger">{error}</div>
+      );
+    }
+    return null;
+  } 
+
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
@@ -17,7 +41,7 @@ const SelectInput = ({name, label, onChange, defaultOption, value, error, option
             })
           }
         </select>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {errorDisplay()}
       </div>
     </div>
   );
