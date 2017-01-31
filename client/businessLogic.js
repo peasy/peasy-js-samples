@@ -8,6 +8,13 @@ var OrderItemService = require('../business_logic/services/orderItemService');
 var OrderService = require('../business_logic/services/orderService');
 var ProductService = require('../business_logic/services/productService');
 
+ProductService.prototype._onValidationSuccess = function(context, done) {
+  this.productDataProxy.insert(this.product, function(err, result) {
+    if (err) { return done(err); }
+    done(null, result.value);
+  });
+}
+
 var CategoryDataProxy = require('../data_proxies/http/categoryDataProxy');
 var CustomerDataProxy = require('../data_proxies/http/customerDataProxy');
 var InventoryItemDataProxy = require('../data_proxies/http/inventoryItemDataProxy');
@@ -28,6 +35,7 @@ var orderService = new OrderService(orderDataProxy, orderItemService);
 var productService = new ProductService(productDataProxy, orderService, inventoryItemService);
 var categoryService = new CategoryService(categoryDataProxy, productService);
 var customerService = new CustomerService(customerDataProxy, orderService);
+
 
 var ordersDotCom = {
   services: {
