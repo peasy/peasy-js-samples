@@ -11,8 +11,7 @@ const ProductForm = ({product, onSave, onChange, saving, errors, onCancel, categ
         label="Name"
         value={product.name}
         onChange={onChange}
-        errors={errors}
-        autoFocus={true} />
+        errors={errors} />
 
       <TextInput
         name="description"

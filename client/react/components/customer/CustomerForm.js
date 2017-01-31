@@ -10,8 +10,7 @@ const CustomerForm = ({customer, onSave, onChange, saving, errors, onCancel}) =>
         label="Name"
         value={customer.name}
         onChange={onChange}
-        errors={errors}
-        autoFocus={true} />
+        errors={errors} />
       
       <input
         type="submit"

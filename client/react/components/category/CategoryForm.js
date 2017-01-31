@@ -11,8 +11,7 @@ const CategoryForm = ({category, onSave, onChange, saving, errors, onCancel}) =>
         label="Name"
         value={category.name}
         onChange={onChange}
-        errors={errors}
-        autoFocus={true} />
+        errors={errors} />
       
       <input
         type="submit"

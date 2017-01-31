@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TextInput = ({name, label, onChange, placeholder, value, errors) => {
+const TextInput = ({name, label, onChange, placeholder, value, errors }) => {
 
   let wrapperClass = 'form-group';
   if (getError()) {
