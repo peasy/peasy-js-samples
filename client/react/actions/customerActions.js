@@ -1,6 +1,5 @@
 import constants from '../constants';
 import ordersDotCom from '../../businessLogic';
-import CommandInvoker from '../commandInvoker';
 import ActionsBase from './ActionsBase';
 
 class CustomerActions extends ActionsBase {

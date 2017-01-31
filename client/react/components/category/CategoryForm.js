@@ -1,14 +1,15 @@
 import React from 'react';
 import TextInput from '../common/TextInput';
+// import SelectInput from './common/SelectInput';
 import { Link } from 'react-router';
 
-const CustomerForm = ({customer, onSave, onChange, saving, errors, onCancel}) => {
+const CategoryForm = ({category, onSave, onChange, saving, errors, onCancel}) => {
   return (
     <form>
       <TextInput
         name="name"
         label="Name"
-        value={customer.name}
+        value={category.name}
         onChange={onChange}
         errors={errors}
         autoFocus={true} />
@@ -30,4 +31,4 @@ const CustomerForm = ({customer, onSave, onChange, saving, errors, onCancel}) =>
   );
 };
 
-export default CustomerForm;
+export default CategoryForm;
