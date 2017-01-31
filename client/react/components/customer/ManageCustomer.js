@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import CustomerActions from '../actions/customerActions';
+import CustomerActions from '../../actions/customerActions';
 import CustomerForm from './CustomerForm';
 import toastr from 'toastr';
 

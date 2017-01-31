@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import {bindActionCreators} from 'redux'
-import CustomerActions from '../actions/customerActions';
+import CustomerActions from '../../actions/customerActions';
 import toastr from 'toastr';
 
 let dispatch = null;
