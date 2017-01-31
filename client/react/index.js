@@ -8,6 +8,7 @@ import configureStore from './store/configureStore';
 import ordersDotCom from '../businessLogic';
 import CustomerActions from './actions/customerActions';
 import CategoryActions from './actions/categoryActions';
+import ProductActions from './actions/productActions';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/toastr/build/toastr.min.css';
 import '../css/styles.css';
@@ -15,8 +16,11 @@ import '../css/styles.css';
 const store = configureStore();
 const customerActions = new CustomerActions();
 const categoryActions = new CategoryActions();
+const productActions = new ProductActions();
+
 store.dispatch(customerActions.loadData());
 store.dispatch(categoryActions.loadData());
+store.dispatch(productActions.loadData());
 
 render(
   <Provider store={store}>
