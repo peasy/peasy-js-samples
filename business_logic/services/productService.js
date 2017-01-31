@@ -14,7 +14,6 @@ var ProductService = BusinessService.extendService(BaseService, {
       var product = this.data;
       var price = parseFloat(product.price);
       if (price && !isNaN(price)) {
-        console.log("PRICE", price);
         product.price = price;
       } 
       utils.stripAllFieldsFrom(product).except(['id', 'name', 'description', 'price', 'categoryId']);
