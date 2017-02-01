@@ -4,10 +4,6 @@ import ActionsBase from './ActionsBase';
 
 class CustomerActions extends ActionsBase {
 
-  constructor() {
-    super();
-  }
-
   service() {
     return ordersDotCom.services.customerService;
   }
