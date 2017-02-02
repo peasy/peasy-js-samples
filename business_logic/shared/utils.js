@@ -18,8 +18,28 @@ function stripAllFieldsFrom(entity) {
   }
 }
 
-var functions = {
-  stripAllFieldsFrom: stripAllFieldsFrom
+function convert(value, prop) {
+  function toFloat() {
+    var parsed = parseFloat(value[prop]);
+    if (parsed) {
+      value[prop] = parsed;
+    } 
+  }
+
+  function toInt() {
+    var parsed = parseInt(value[prop], 10);
+    if (parsed) {
+      value[prop] = parsed;
+    } 
+  }
+
+  return {
+    toFloat: toFloat,
+    toInt: toInt
+  };
 }
 
-module.exports = functions;
+module.exports = {
+  stripAllFieldsFrom: stripAllFieldsFrom,
+  convert: convert
+}
