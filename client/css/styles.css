@@ -13,6 +13,10 @@ nav {
   padding-top: 20px;
 }
 
+.numericCell {
+  text-align: center
+}
+
 .cancelButton {
   margin-left: 10px;
 }
