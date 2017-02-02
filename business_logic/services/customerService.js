@@ -3,6 +3,8 @@ var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
+var convert = utils.convert;
+var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var BaseService = require('../services/baseService');
 var CanDeleteCustomerRule = require('../rules/canDeleteCustomerRule');
 
@@ -11,8 +13,8 @@ var CustomerService = BusinessService.extendService(BaseService, {
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var customer = this.data;
-      utils.stripAllFieldsFrom(customer).except(['name', 'address']);
-      utils.stripAllFieldsFrom(customer.address).except(['street', 'zip']);
+      stripAllFieldsFrom(customer).except(['name', 'address']);
+      stripAllFieldsFrom(customer.address).except(['street', 'zip']);
       done();
     },
     _getRulesForInsertCommand: function(context, done) {
@@ -24,9 +26,9 @@ var CustomerService = BusinessService.extendService(BaseService, {
     },
     _onUpdateCommandInitialization: function(context, done) {
       var customer = this.data;
-      utils.stripAllFieldsFrom(customer).except(['id', 'name', 'address']);
-      utils.stripAllFieldsFrom(customer.address).except(['street', 'zip']);
-      customer.id = parseInt(customer.id, 10); // ensure id is numeric
+      stripAllFieldsFrom(customer).except(['id', 'name', 'address']);
+      stripAllFieldsFrom(customer.address).except(['street', 'zip']);
+      convert(customer, "id").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {
@@ -34,8 +36,7 @@ var CustomerService = BusinessService.extendService(BaseService, {
       done(null, [
         new FieldRequiredRule('id', customer)
           .ifValidThenValidate(new FieldTypeRule('id', customer.id, "number")),
-        new FieldRequiredRule('name', customer, 50)
-          .ifValidThenValidate(new FieldLengthRule("name", customer.name, 50))
+        new FieldLengthRule("name", customer.name, 50)
       ]); 
     },
     _getRulesForDestroyCommand: function(context, done) {

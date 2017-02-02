@@ -113,7 +113,7 @@ describe("CustomerService", function() {
       it('invalidates all', () => {
         var service = new CustomerService(dataProxy);
         service.updateCommand({}).execute((err, result) => {
-          expect(result.errors.length).toEqual(2);
+          expect(result.errors.length).toEqual(1);
         });
       });
       describe("id", () => {
@@ -131,12 +131,6 @@ describe("CustomerService", function() {
         });
       });
       describe("name", () => {
-        it("is required", () => {
-          var service = new CustomerService(dataProxy);
-          service.updateCommand({id: 1}).execute((err, result) => {
-            expect(result.errors.length).toEqual(1);
-          });
-        });
         it("is the correct length", () => {
           var service = new CustomerService(dataProxy);
           var payload = {

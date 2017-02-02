@@ -2,6 +2,8 @@ var BusinessService = require('peasy-js').BusinessService;
 var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
+var convert = utils.convert;
+var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var BaseService = require('../services/baseService');
 var CanDeleteCategoryRule = require('../rules/canDeleteCategoryRule');
 
@@ -10,7 +12,7 @@ var CategoryService = BusinessService.extendService(BaseService, {
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var category = this.data;
-      utils.stripAllFieldsFrom(category).except(['name', 'parentid']);
+      stripAllFieldsFrom(category).except(['name', 'parentid']);
       done();
     },
     _getRulesForInsertCommand: function(context, done) {
@@ -19,8 +21,8 @@ var CategoryService = BusinessService.extendService(BaseService, {
     },
     _onUpdateCommandInitialization: function(context, done) {
       var category = this.data;
-      utils.stripAllFieldsFrom(category).except(['id', 'name', 'parentid']);
-      category.id = parseInt(category.id, 10); // ensure id is numeric
+      stripAllFieldsFrom(category).except(['id', 'name', 'parentid']);
+      convert(category, "id").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {

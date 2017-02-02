@@ -116,14 +116,16 @@ describe("InventoryItemService", function() {
         });
       });
 
-      it("attempts to ensure that the item id is numeric", () => {
+      it("successfully converts valid stringified values", () => {
         spyOn(dataProxy, "update").and.callThrough();
         var expectedResult = {
           id: 1,
-          version: 1,
-          quantityOnHand: 3
+          version: 2,
+          quantityOnHand: 3.755 
         };
         inventoryItem.id = "1";
+        inventoryItem.version = "2";
+        inventoryItem.quantityOnHand = "3.755";
         var service = new InventoryItemService(dataProxy);
         service.updateCommand(inventoryItem).execute((err, result) => {
           expect(dataProxy.update).toHaveBeenCalledWith(expectedResult, jasmine.any(Function));
@@ -163,7 +165,7 @@ describe("InventoryItemService", function() {
         });
         it("is the correct type", () => {
           var service = new InventoryItemService(dataProxy);
-          service.updateCommand({id: 1, version: "1", quantityOnHand: 0}).execute((err, result) => {
+          service.updateCommand({id: 1, version: "badvalue", quantityOnHand: 0}).execute((err, result) => {
             expect(result.errors.length).toEqual(1);
           });
         });

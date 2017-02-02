@@ -2,30 +2,11 @@ var Command = require('peasy-js').Command;
 var CanShipOrderItemRule = require('../rules/canShipOrderItemRule');
 var CanDeleteProductRule = require('../rules/canDeleteProductRule');
 var utils = require('../shared/utils');
+var convert = utils.convert;
+var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
-
-var convert = function(value, prop) {
-  function toFloat() {
-    var parsed = parseFloat(value[prop]);
-    if (parsed) {
-      value[prop] = parsed;
-    } 
-  }
-
-  function toInt() {
-    var parsed = parseInt(value[prop]);
-    if (parsed) {
-      value[prop] = parsed;
-    } 
-  }
-
-  return {
-    toFloat: toFloat,
-    toInt: toInt
-  };
-}
 
 var CreateProductCommand = Command.extend({
   params: ['product', 'productDataProxy', 'inventoryItemService'],
@@ -34,7 +15,7 @@ var CreateProductCommand = Command.extend({
       var product = this.product;
       convert(product, "price").toFloat();
       convert(product, "categoryId").toInt();
-      utils.stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
+      stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
       done();
     },
     _getRules: function(context, done) {

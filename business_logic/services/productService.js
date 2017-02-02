@@ -3,6 +3,8 @@ var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
+var convert = utils.convert;
+var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var BaseService = require('../services/baseService');
 var DeleteProductCommand = require('../commands/deleteProductCommand');
 var CreateProductCommand = require('../commands/createProductCommand');
@@ -12,11 +14,8 @@ var ProductService = BusinessService.extendService(BaseService, {
   functions: {
     _onUpdateCommandInitialization: function(context, done) {
       var product = this.data;
-      var price = parseFloat(product.price);
-      if (price && !isNaN(price)) {
-        product.price = price;
-      } 
-      utils.stripAllFieldsFrom(product).except(['id', 'name', 'description', 'price', 'categoryId']);
+      stripAllFieldsFrom(product).except(['id', 'name', 'description', 'price', 'categoryId']);
+      convert(product, "price").toFloat();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {

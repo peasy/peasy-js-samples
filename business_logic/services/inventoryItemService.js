@@ -3,13 +3,15 @@ var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
+var convert = utils.convert;
+var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var BaseService = require('../services/baseService');
 
 var InventoryItemService = BusinessService.extendService(BaseService, {
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
-      utils.stripAllFieldsFrom(item).except(['quantityOnHand', 'productId']);
+      stripAllFieldsFrom(item).except(['quantityOnHand', 'productId']);
       item.quantityOnHand = item.quantityOnHand || 0;
       item.version = 1;
       done();
@@ -25,8 +27,10 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
     },
     _onUpdateCommandInitialization: function(context, done) {
       var item = this.data;
-      utils.stripAllFieldsFrom(item).except(['id', 'quantityOnHand', 'version']);
-      item.id = parseInt(item.id, 10); // ensure id is numeric
+      stripAllFieldsFrom(item).except(['id', 'quantityOnHand', 'version']);
+      convert(item, "id").toInt();
+      convert(item, "quantityOnHand").toFloat();
+      convert(item, "version").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {

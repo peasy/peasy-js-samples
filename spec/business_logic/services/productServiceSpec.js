@@ -52,17 +52,17 @@ describe("ProductService", function() {
         });
       });
 
-      it("invalidates price value when it's type is not number", () => {
+      it("does not invalidate price value when it contains a stringified float value", () => {
         product.price = "50.25";
         var service = new ProductService(dataProxy);
         service.updateCommand(product).execute((err, result) => {
-          expect(result.errors.length).toEqual(1);
+          expect(result.success).toEqual(true);
         });
       });
 
       it("invalidates both rules", () => {
         product.name = "123456789012345678901234567890123456789012345678901234567890";
-        product.price = "50.25";
+        product.price = "hello";
         var service = new ProductService(dataProxy);
         service.updateCommand(product).execute((err, result) => {
           expect(result.errors.length).toEqual(2);
