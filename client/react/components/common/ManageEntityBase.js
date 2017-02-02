@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import toastr from 'toastr';
+import ConcurrencyError from '../../../../business_logic/shared/concurrencyError';
 
 class ManageEntityBase extends React.Component {
 
@@ -39,6 +40,10 @@ class ManageEntityBase extends React.Component {
         if (!result.success) return this.handleErrors(result.errors);
         toastr.success("Save successful");
         this.context.router.push(this._redirectUri());
+      })
+      .catch((e) => {
+        this.setState({saving: false});
+        this.handleErrors(e);
       });
   }
 
@@ -51,6 +56,9 @@ class ManageEntityBase extends React.Component {
       var allOthers = errors.filter(e => !e.association);
       allOthers.map(e => e.message).forEach(e => toastr.error(e));
     } else {
+      if (errors instanceof ConcurrencyError) {
+        errors.message = "Please refresh your data and try again";
+      }
       toastr.error(errors.message);
     }
   }
