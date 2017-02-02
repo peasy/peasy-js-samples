@@ -11,8 +11,8 @@ class CommandInvoker {
     this._dispatch(beginAsyncInvocation());
     return new Promise((resolve, reject) => {
       command.execute((err, result) => {
-        if (err) return reject(err);
         this._dispatch(endAsyncInvocation());
+        if (err) return reject(err);
         if (result.success) {
           this._dispatch(successAction(result.value));
         }
