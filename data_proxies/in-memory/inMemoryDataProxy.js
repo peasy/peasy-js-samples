@@ -34,7 +34,9 @@ InMemoryDataProxy.prototype.update = function(data, done) {
 InMemoryDataProxy.prototype.destroy = function(id, done) {
   var data = this._findBy(id);
   var index = this._store.indexOf(data);
-  this._store.splice(index, 1);
+  if (index > -1) {
+    this._store.splice(index, 1);
+  }
   done(null);
 };
 
