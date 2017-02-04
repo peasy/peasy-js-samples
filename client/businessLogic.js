@@ -6,18 +6,7 @@ var CustomerService = require('../business_logic/services/customerService');
 var InventoryItemService = require('../business_logic/services/inventoryItemService')
 var OrderItemService = require('../business_logic/services/orderItemService');
 var OrderService = require('../business_logic/services/orderService');
-var ProductService = require('../business_logic/services/productService');
-
-var ClientProductService = peasy.BusinessService.extend(ProductService, {
-  functions: {
-    _insert: (context, done) => {
-      this.productDataProxy.insert(this.product, function(err, result) {
-        if (err) { return done(err); }
-        done(null, result.value);
-      });
-    }
-  }
-}).service;
+var ProductService = require('../business_logic/services/clientProductService');
 
 var CategoryDataProxy = require('../data_proxies/http/categoryDataProxy');
 var CustomerDataProxy = require('../data_proxies/http/customerDataProxy');
@@ -36,10 +25,9 @@ var productDataProxy = new ProductDataProxy();
 var inventoryItemService = new InventoryItemService(inventoryItemDataProxy);
 var orderItemService = new OrderItemService(orderItemDataProxy, productDataProxy, inventoryItemService);
 var orderService = new OrderService(orderDataProxy, orderItemService);
-var productService = new ClientProductService(productDataProxy, orderService, inventoryItemService);
+var productService = new ProductService(productDataProxy, orderService, inventoryItemService);
 var categoryService = new CategoryService(categoryDataProxy, productService);
 var customerService = new CustomerService(customerDataProxy, orderService);
-
 
 var ordersDotCom = {
   services: {
