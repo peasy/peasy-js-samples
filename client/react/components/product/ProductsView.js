@@ -2,9 +2,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import ProductActions from '../../actions/productActions';
+import InventoryItemActions from '../../actions/inventoryItemActions';
 import toastr from 'toastr';
 
 let productActions = new ProductActions();
+let inventoryItemActions = new InventoryItemActions();
 
 class ProductsView extends React.Component {
 
@@ -60,7 +62,8 @@ class ProductsView extends React.Component {
     return function() {
       return self.props.dispatch(productActions.destroy(id))
         .then(result => {
-          if (!result.success) self.handleErrors(result.errors);
+          if (!result.success) return self.handleErrors(result.errors);
+          return self.props.dispatch(inventoryItemActions.destroy(id));
         });
     }
   }

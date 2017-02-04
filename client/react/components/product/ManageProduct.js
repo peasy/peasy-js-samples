@@ -2,11 +2,13 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ProductActions from '../../actions/productActions';
+import InventoryItemActions from '../../actions/inventoryItemActions';
 import ProductForm from './ProductForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
 
 let productActions = new ProductActions();
+let inventoryItemActions = new InventoryItemActions();
 
 class ManageProduct extends ManageEntityBase {
   constructor(props, context) {
@@ -19,6 +21,16 @@ class ManageProduct extends ManageEntityBase {
 
   _redirectUri() {
     return '/products';
+  }
+
+  save(event) {
+    var self = this;
+    return super.save(event)
+      .then((result) => {
+        if (result && result.success) {
+          return self.props.dispatch(inventoryItemActions.getById(result.value.id));
+        }
+      });
   }
 
   render() {
