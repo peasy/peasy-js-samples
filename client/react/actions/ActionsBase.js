@@ -6,6 +6,8 @@ class ActionsBase {
 
   getAllAction(data) { }
 
+  getByIdAction(id) { }
+
   insertAction(data) { }
 
   updateAction(data) { }
@@ -17,6 +19,14 @@ class ActionsBase {
     return function(dispatch, getState) {
       var command = self.service().getAllCommand();
       return new CommandInvoker(dispatch).invoke(command, self.getAllAction);
+    }
+  }
+
+  getById(id) {
+    var self = this;
+    return function(dispatch, getState) {
+      var command = self.service().getByIdCommand(id);
+      return new CommandInvoker(dispatch).invoke(command, self.getByIdAction);
     }
   }
 
