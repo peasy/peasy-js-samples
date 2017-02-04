@@ -34,12 +34,13 @@ class ManageEntityBase extends React.Component {
   save(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.dispatch(this._saveAction(this.state.entity))
+    return this.props.dispatch(this._saveAction(this.state.entity))
       .then((result) => {
         this.setState({saving: false});
         if (!result.success) return this.handleErrors(result.errors);
         toastr.success("Save successful");
         this.context.router.push(this._redirectUri());
+        return result;
       })
       .catch((e) => {
         this.setState({saving: false});
