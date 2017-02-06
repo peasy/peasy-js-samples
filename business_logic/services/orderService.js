@@ -3,6 +3,8 @@ var FieldRequiredRule = require('../rules/fieldRequiredRule');
 var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
+var convert = utils.convert;
+var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var BaseService = require('../services/baseService');
 var ValidOrderStatusForUpdateRule = require('../rules/validOrderStatusForUpdateRule');
 var DeleteOrderCommand = require('../commands/deleteOrderCommand');
@@ -12,8 +14,9 @@ var OrderService = BusinessService.extendService(BaseService, {
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var order = this.data;
-      utils.stripAllFieldsFrom(order).except(['customerId']);
+      stripAllFieldsFrom(order).except(['customerId']);
       order.orderDate = new Date();
+      convert(order, "customerId").toInt();
       done();
     },
     _getRulesForInsertCommand: function(context, done) {
@@ -22,7 +25,8 @@ var OrderService = BusinessService.extendService(BaseService, {
     },
     _onUpdateCommandInitialization: function(context, done) {
       var order = this.data;
-      utils.stripAllFieldsFrom(order).except(['id', 'customerId']);
+      stripAllFieldsFrom(order).except(['id', 'customerId']);
+      convert(order, "customerId").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {
