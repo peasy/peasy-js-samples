@@ -5,9 +5,10 @@ import CustomersView from './components/customer/CustomersView';
 import CategoriesView from './components/category/CategoriesView';
 import InventoryItemsView from './components/inventory/InventoryItemsView';
 import ProductsView from './components/product/ProductsView';
-import OrdersView from './components/OrdersView';
+import OrdersView from './components/order/OrdersView';
 import ManageCustomer from './components/customer/ManageCustomer';
 import ManageCategory from './components/category/ManageCategory';
+import ManageOrder from './components/order/ManageOrder';
 import ManageProduct from './components/product/ManageProduct';
 import ManageInventoryItem from './components/inventory/ManageInventoryItem';
 import constants from './constants';
@@ -25,6 +26,9 @@ export default (
     <Route path={ routes.CUSTOMER + '/:id' } component={ManageCustomer} />
     <Route path={ routes.INVENTORY_ITEMS } component={InventoryItemsView} />
     <Route path={ routes.INVENTORY_ITEM + '/:id' } component={ManageInventoryItem} />
+    <Route path={ routes.ORDERS } component={OrdersView} />
+    <Route path={ routes.ORDER } component={ManageOrder} />
+    <Route path={ routes.ORDER + '/:id' } component={ManageOrder} />
     <Route path={ routes.PRODUCTS } component={ProductsView} />
     <Route path={ routes.PRODUCT } component={ManageProduct} />
     <Route path={ routes.PRODUCT + '/:id' } component={ManageProduct} />
