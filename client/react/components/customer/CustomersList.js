@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import {bindActionCreators} from 'redux'
 import CustomerActions from '../../actions/customerActions';
 import toastr from 'toastr';
+import constants from '../../constants';
 
 let dispatch = null;
 let customerActions = new CustomerActions();
@@ -53,7 +54,7 @@ function customerRow(customer, index) {
   return (
     <tr key={index}>
       <td>
-        <Link to={'/customer/' + customer.id }>{customer.name}</Link>
+        <Link to={ constants.routes.CUSTOMER + '/' + customer.id }>{customer.name}</Link>
       </td>
       <td>
       <input className="btn btn-default btn-sm" 

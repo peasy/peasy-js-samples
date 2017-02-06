@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import InventoryItemActions from '../../actions/inventoryItemActions';
 import toastr from 'toastr';
+import constants from '../../constants';
 
 let inventoryItemActions = new InventoryItemActions();
 
@@ -42,7 +43,7 @@ class InventoryItemsView extends React.Component {
     return (
       <tr key={index}>
         <td>
-          <Link to={'/inventoryItem/' + inventoryItem.id }>{inventoryItem.name}</Link>
+          <Link to={ constants.routes.INVENTORY_ITEM + '/' + inventoryItem.id }>{inventoryItem.name}</Link>
         </td>
         <td className="numericCell">
           {inventoryItem.quantityOnHand}

@@ -1,6 +1,5 @@
 import React from 'react';
 import TextInput from '../common/TextInput';
-// import SelectInput from './common/SelectInput';
 import { Link } from 'react-router';
 
 const CategoryForm = ({category, onSave, onChange, saving, errors, onCancel}) => {

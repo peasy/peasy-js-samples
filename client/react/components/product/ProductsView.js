@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import ProductActions from '../../actions/productActions';
 import InventoryItemActions from '../../actions/inventoryItemActions';
 import toastr from 'toastr';
+import constants from '../../constants'; 
 
 let productActions = new ProductActions();
 let inventoryItemActions = new InventoryItemActions();
@@ -19,7 +20,7 @@ class ProductsView extends React.Component {
     return (
       <div>
         <h1>Products</h1>
-        <Link to="/product">Create New</Link>
+        <Link to={constants.routes.PRODUCT}>Create New</Link>
         {this.ProductsList()}
       </div>
     );
@@ -45,7 +46,7 @@ class ProductsView extends React.Component {
     return (
       <tr key={index}>
         <td>
-          <Link to={'/product/' + product.id }>{product.name}</Link>
+          <Link to={constants.routes.PRODUCT + '/' + product.id }>{product.name}</Link>
         </td>
         <td>
         <input className="btn btn-default btn-sm" 
@@ -80,9 +81,7 @@ class ProductsView extends React.Component {
       toastr.error(errors.message);
     }
   }
-
 }
-
 
 function mapStateToProps(state, ownProps) {
   return {

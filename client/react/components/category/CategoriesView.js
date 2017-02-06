@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import CategoryActions from '../../actions/categoryActions';
 import toastr from 'toastr';
+import constants from '../../constants';
 
 let categoryActions = new CategoryActions();
 
@@ -17,7 +18,7 @@ class CategoriesView extends React.Component {
     return (
       <div>
         <h1>Categories</h1>
-        <Link to="/category">Create New</Link>
+        <Link to={constants.routes.CATEGORY}>Create New</Link>
         {this.CategoriesList()}
       </div>
     );
@@ -43,7 +44,7 @@ class CategoriesView extends React.Component {
     return (
       <tr key={index}>
         <td>
-          <Link to={'/category/' + category.id }>{category.name}</Link>
+          <Link to={constants.routes.CATEGORY + '/' + category.id }>{category.name}</Link>
         </td>
         <td>
         <input className="btn btn-default btn-sm" 

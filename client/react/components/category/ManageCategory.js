@@ -5,6 +5,7 @@ import CategoryActions from '../../actions/categoryActions';
 import CategoryForm from './CategoryForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
+import constants from '../../constants';
 
 let categoryActions = new CategoryActions();
 
@@ -18,7 +19,7 @@ class ManageCategory extends ManageEntityBase {
    }
 
   _redirectUri() {
-    return '/categories';
+    return constants.routes.CATEGORIES;
   }
 
   render() {

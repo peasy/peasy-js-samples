@@ -75,9 +75,9 @@ var wireUpRoutes = function(app) {
   });
   routeHelper.createController('/orderItems', app, orderItemService);
 
-  //app.get('/', function(req, res, next) {
-    //res.render('../../views/index', { title: 'Orders.com' });
-  //});
+  app.get('/', function(req, res, next) {
+    res.render('../../views/index', { title: 'orders.com' });
+  });
 
   app.get('*', function(req, res, next) {
     res.sendFile(path.join(__dirname, '../client/react/index.html'));

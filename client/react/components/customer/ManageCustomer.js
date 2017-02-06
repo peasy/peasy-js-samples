@@ -5,6 +5,7 @@ import CustomerActions from '../../actions/customerActions';
 import CustomerForm from './CustomerForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
+import constants from '../../constants';
 
 let customerActions = new CustomerActions();
 
@@ -18,7 +19,7 @@ class ManageCustomer extends ManageEntityBase {
    }
 
   _redirectUri() {
-    return '/';
+    return constants.routes.ROOT;
   }
 
   render() {

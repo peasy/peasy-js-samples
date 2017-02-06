@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CustomersList from './CustomersList';
 import {Link} from 'react-router';
+import constants from '../../constants';
 
 class CustomersView extends React.Component {
 
@@ -9,7 +10,7 @@ class CustomersView extends React.Component {
     return (
       <div>
         <h1>Customers</h1>
-        <Link to="/customer">Create New</Link>
+        <Link to={constants.routes.CUSTOMER}>Create New</Link>
         <CustomersList 
           customers={this.props.customers} 
           dispatcher={this.props.dispatch}

@@ -10,20 +10,23 @@ import ManageCustomer from './components/customer/ManageCustomer';
 import ManageCategory from './components/category/ManageCategory';
 import ManageProduct from './components/product/ManageProduct';
 import ManageInventoryItem from './components/inventory/ManageInventoryItem';
+import constants from './constants';
+
+let routes = constants.routes;
 
 export default (
-  <Route path="/" component={App}>
+  <Route path={routes.ROOT} component={App}>
     <IndexRoute component={CustomersView} />
-    <Route path="/orders" component={OrdersView} />
-    <Route path="/categories" component={CategoriesView} />
-    <Route path="/category" component={ManageCategory} />
-    <Route path="/category/:id" component={ManageCategory} />
-    <Route path="/customer" component={ManageCustomer} />
-    <Route path="/customer/:id" component={ManageCustomer} />
-    <Route path="/inventoryItems" component={InventoryItemsView} />
-    <Route path="/inventoryItem/:id" component={ManageInventoryItem} />
-    <Route path="/products" component={ProductsView} />
-    <Route path="/product" component={ManageProduct} />
-    <Route path="/product/:id" component={ManageProduct} />
+    <Route path={ routes.ORDERS } component={OrdersView} />
+    <Route path={ routes.CATEGORIES } component={CategoriesView} />
+    <Route path={ routes.CATEGORY } component={ManageCategory} />
+    <Route path={ routes.CATEGORY + '/:id' } component={ManageCategory} />
+    <Route path={ routes.CUSTOMER } component={ManageCustomer} />
+    <Route path={ routes.CUSTOMER + '/:id' } component={ManageCustomer} />
+    <Route path={ routes.INVENTORY_ITEMS } component={InventoryItemsView} />
+    <Route path={ routes.INVENTORY_ITEM + '/:id' } component={ManageInventoryItem} />
+    <Route path={ routes.PRODUCTS } component={ProductsView} />
+    <Route path={ routes.PRODUCT } component={ManageProduct} />
+    <Route path={ routes.PRODUCT + '/:id' } component={ManageProduct} />
   </Route>
 );

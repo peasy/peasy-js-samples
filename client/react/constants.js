@@ -18,5 +18,17 @@ export default {
     LOAD_INVENTORY_ITEMS_SUCCESS: 'LOAD_INVENTORY_ITEMS_SUCCESS',
     BEGIN_ASYNC_INVOCATION: 'BEGIN_ASYNC_INVOCATION',
     END_ASYNC_INVOCATION: 'END_ASYNC_INVOCATION'
+  },
+  routes: {
+    ROOT: '/react/',
+    ORDERS: '/react/orders',
+    CATEGORIES: '/react/categories',
+    CATEGORY: '/react/category',
+    CUSTOMERS: '/react/customers',
+    CUSTOMER: '/react/customer',
+    INVENTORY_ITEMS: '/react/inventoryItems',
+    INVENTORY_ITEM: '/react/inventoryItem',
+    PRODUCTS: '/react/products',
+    PRODUCT: '/react/product/',
   }
 };

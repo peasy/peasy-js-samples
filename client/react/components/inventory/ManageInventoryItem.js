@@ -5,6 +5,7 @@ import InventoryItemActions from '../../actions/inventoryItemActions';
 import InventoryItemForm from './InventoryItemForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
+import constants from '../../constants';
 
 let inventoryItemActions = new InventoryItemActions();
 
@@ -18,7 +19,7 @@ class ManageInventoryItem extends ManageEntityBase {
    }
 
   _redirectUri() {
-    return '/inventoryItems';
+    return constants.routes.INVENTORY_ITEMS;
   }
 
   render() {
