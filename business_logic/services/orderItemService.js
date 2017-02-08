@@ -8,6 +8,8 @@ var ValidOrderItemStatusForUpdateRule = require('../rules/validOrderItemStatusFo
 var ValidOrderItemStatusForDeleteRule = require('../rules/validOrderItemStatusForDeleteRule');
 var CanSubmitOrderItemRule = require('../rules/canSubmitOrderItemRule');
 var utils = require('../shared/utils');
+var convert = utils.convert;
+var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var NotFoundError = require('../shared/notFoundError');
 var ShipOrderItemCommand = require('../commands/shipOrderItemCommand');
 var BaseService = require('../services/baseService');
@@ -17,8 +19,13 @@ var OrderItemService = BusinessService.extendService(BaseService, {
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
-      utils.stripAllFieldsFrom(item).except(['orderId', 'productId', 'quantity', 'amount', 'price']);
+      stripAllFieldsFrom(item).except(['orderId', 'productId', 'quantity', 'amount', 'price']);
       item.status = "PENDING";
+      convert(item, "orderId").toInt();
+      convert(item, "productId").toInt();
+      convert(item, "quantity").toFloat();
+      convert(item, "amount").toFloat();
+      convert(item, "price").toFloat();
       done();
     },
     _getRulesForInsertCommand: function(context, done) {
@@ -47,7 +54,12 @@ var OrderItemService = BusinessService.extendService(BaseService, {
     },
     _onUpdateCommandInitialization: function(context, done) {
       var item = this.data;
-      utils.stripAllFieldsFrom(item).except(['id', 'quantity', 'amount', 'price', 'productId', 'orderId']);
+      stripAllFieldsFrom(item).except(['id', 'quantity', 'amount', 'price', 'productId', 'orderId']);
+      convert(item, "orderId").toInt();
+      convert(item, "productId").toInt();
+      convert(item, "quantity").toFloat();
+      convert(item, "amount").toFloat();
+      convert(item, "price").toFloat();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {

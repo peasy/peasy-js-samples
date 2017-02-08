@@ -26,20 +26,23 @@ class OrdersView extends React.Component {
 
   OrdersList() {
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Order Date</th>
-            <th>Customer</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.orders.map(this.orderRow)}
-        </tbody>
-      </table>
+      <div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Order Date</th>
+              <th>Customer</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.orders.map(this.orderRow)}
+          </tbody>
+        </table>
+      </div>
     );
   }
 
@@ -47,8 +50,9 @@ class OrdersView extends React.Component {
     return (
       <tr key={index}>
         <td>
-          <Link to={constants.routes.ORDER + '/' + order.id }>{order.orderDate}</Link>
+          <Link to={constants.routes.ORDER + '/' + order.id }>{order.id}</Link>
         </td>
+        <td>{order.orderDate}</td>
         <td>{order.customerName}</td>
         <td></td>
         <td></td>
@@ -67,8 +71,7 @@ class OrdersView extends React.Component {
     return function() {
       return self.props.dispatch(orderActions.destroy(id))
         .then(result => {
-          if (!result.success) return self.handleErrors(result.errors);
-          return self.props.dispatch(inventoryItemActions.destroy(id));
+          if (!result.success) self.handleErrors(result.errors);
         });
     }
   }

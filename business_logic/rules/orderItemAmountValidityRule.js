@@ -6,7 +6,7 @@ var OrderItemAmountValidityRule = Rule.extend({
   functions: {
     _onValidate: function(done) {
       if (this.orderItem.amount !== this.product.price * this.orderItem.quantity) {
-        this._invalidate(`The amount for the ${this.product.name} order item does not equal the quanity multiplied by the current price in our system`);
+        this._invalidate(`The amount for the ${this.product.name} order item does not equal the quantity multiplied by the current price in our system`);
       }
       done();
     }

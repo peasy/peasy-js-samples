@@ -3,6 +3,7 @@ import customers from './customerReducer';
 import categories from './categoryReducer';
 import inventoryItems from './inventoryItemReducer';
 import orders from './orderReducer';
+import orderItems from './orderItemReducer';
 import products from './productReducer';
 import asyncInvocationsInProgress from './asyncStatusReducer'
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   customers,
   inventoryItems,
   orders,
+  orderItems,
   products,
   asyncInvocationsInProgress
 });

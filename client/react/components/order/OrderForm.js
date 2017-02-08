@@ -2,6 +2,7 @@ import React from 'react';
 import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 import { Link } from 'react-router';
+import OrderItemsView from '../orderItem/orderItemsView';
 
 const OrderForm = ({order, onSave, onChange, saving, errors, onCancel, customers}) => {
   return (
@@ -20,9 +21,7 @@ const OrderForm = ({order, onSave, onChange, saving, errors, onCancel, customers
         onChange={onChange}
         errors={errors} />
 
-      <div className="form-group">
-        <label>Total:</label> $100.00
-      </div>
+      <OrderItemsView orderId={order.id}/>
 
       <input
         type="submit"
@@ -33,7 +32,7 @@ const OrderForm = ({order, onSave, onChange, saving, errors, onCancel, customers
 
       <input
         type="button"
-        value="Cancel"
+        value="Done"
         className="btn btn-default btn-sm cancelButton"
         onClick={onCancel} />
 

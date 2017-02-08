@@ -23,9 +23,9 @@ class ManageEntityBase extends React.Component {
     }
   }
 
-  _redirectUri() { }
+  _redirectUri(entity) { }
 
-  _saveAction() { }
+  _saveAction(entity) { }
 
   cancel() {
     this.context.router.push(this._redirectUri());
@@ -39,7 +39,10 @@ class ManageEntityBase extends React.Component {
         this.setState({saving: false});
         if (!result.success) return this.handleErrors(result.errors);
         toastr.success("Save successful");
-        this.context.router.push(this._redirectUri());
+        var redirectUri = this._redirectUri(result.value);
+        if (redirectUri) {
+          this.context.router.push(redirectUri);
+        }
         return result;
       })
       .catch((e) => {
@@ -50,11 +53,12 @@ class ManageEntityBase extends React.Component {
 
   handleErrors(errors) {
     if (Array.isArray(errors)) {
-      var validationErrors = errors.filter(e => e.association);
+      var exclusionList = ['amount'];
+      var validationErrors = errors.filter(e => e.association && exclusionList.indexOf(e.association) === -1);
       if (validationErrors.length > 0) {
         this.setState({errors: validationErrors})
       }
-      var allOthers = errors.filter(e => !e.association);
+      var allOthers = errors.filter(e => !e.association || exclusionList.indexOf(e.association) > -1);
       allOthers.map(e => e.message).forEach(e => toastr.error(e));
     } else {
       if (errors instanceof ConcurrencyError) {

@@ -7,6 +7,7 @@ import OrderForm from './OrderForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
 import constants from '../../constants';
+import OrderItemsView from '../../components/orderItem/orderItemsView';
 
 let orderActions = new OrderActions();
 let inventoryItemActions = new InventoryItemActions();
@@ -14,25 +15,24 @@ let inventoryItemActions = new InventoryItemActions();
 class ManageOrder extends ManageEntityBase {
   constructor(props, context) {
     super(props, context);
+    this.cancelButtonClicked = false;
   }
 
   _saveAction(entity) { 
     return orderActions.save(entity);
    }
 
-  _redirectUri() {
-    return constants.routes.ORDERS;
+  _redirectUri(entity) {
+    if (this.cancelButtonClicked) {
+      return constants.routes.ORDERS;
+    }
+    return constants.routes.ORDER + '/' + entity.id;
   }
 
-  // save(event) {
-  //   var self = this;
-  //   return super.save(event)
-  //     .then((result) => {
-  //       if (result && result.success) {
-  //         return self.props.dispatch(inventoryItemActions.getById(result.value.id));
-  //       }
-  //     });
-  // }
+  cancel() {
+    this.cancelButtonClicked = true;
+    super.cancel();
+  }
 
   render() {
     return (

@@ -9,6 +9,7 @@ import ordersDotCom from '../businessLogic';
 import CustomerActions from './actions/customerActions';
 import CategoryActions from './actions/categoryActions';
 import OrderActions from './actions/orderActions';
+import OrderItemActions from './actions/orderItemActions';
 import ProductActions from './actions/productActions';
 import InventoryItemActions from './actions/inventoryItemActions';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -19,14 +20,16 @@ const store = configureStore();
 const customerActions = new CustomerActions();
 const categoryActions = new CategoryActions();
 const orderActions = new OrderActions();
+const orderItemActions = new OrderItemActions();
 const productActions = new ProductActions();
 const inventoryItemActions = new InventoryItemActions();
 
+store.dispatch(productActions.loadData());
 store.dispatch(customerActions.loadData());
 store.dispatch(categoryActions.loadData());
-store.dispatch(orderActions.loadData());
-store.dispatch(productActions.loadData());
 store.dispatch(inventoryItemActions.loadData());
+store.dispatch(orderActions.loadData());
+store.dispatch(orderItemActions.loadData());
 
 render(
   <Provider store={store}>

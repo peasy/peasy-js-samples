@@ -9,6 +9,7 @@ import OrdersView from './components/order/OrdersView';
 import ManageCustomer from './components/customer/ManageCustomer';
 import ManageCategory from './components/category/ManageCategory';
 import ManageOrder from './components/order/ManageOrder';
+import ManageOrderItem from './components/orderItem/ManageOrderItem';
 import ManageProduct from './components/product/ManageProduct';
 import ManageInventoryItem from './components/inventory/ManageInventoryItem';
 import constants from './constants';
@@ -29,6 +30,10 @@ export default (
     <Route path={ routes.ORDERS } component={OrdersView} />
     <Route path={ routes.ORDER } component={ManageOrder} />
     <Route path={ routes.ORDER + '/:id' } component={ManageOrder} />
+    <Route path={ routes.ORDER + '/:id/orderitem/:id'} component={ManageOrderItem} />
+    <Route path={ routes.ORDER + '/:id/orderitem'} component={ManageOrderItem} />
+    <Route path={ routes.ORDER_ITEM } component={ManageOrderItem} />
+    <Route path={ routes.ORDER_ITEM + '/:id' } component={ManageOrderItem} />
     <Route path={ routes.PRODUCTS } component={ProductsView} />
     <Route path={ routes.PRODUCT } component={ManageProduct} />
     <Route path={ routes.PRODUCT + '/:id' } component={ManageProduct} />
