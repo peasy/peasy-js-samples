@@ -29,7 +29,7 @@ const OrderItemForm = ({vm, onSave, onChange, saving, errors, onCancel }) => {
       </div>
 
       <div className="form-group">
-        <label>Price:</label> {vm.price}
+        <label>Price:</label> {vm.priceFormatted}
       </div>
 
       <TextInput
@@ -40,7 +40,7 @@ const OrderItemForm = ({vm, onSave, onChange, saving, errors, onCancel }) => {
         errors={errors} />
 
       <div className="form-group">
-        <label>Amount:</label> {vm.amount}
+        <label>Amount:</label> {vm.amountFormatted}
       </div>
 
       <input

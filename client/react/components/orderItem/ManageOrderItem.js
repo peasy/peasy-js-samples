@@ -7,6 +7,7 @@ import OrderItemForm from './orderItemForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
 import constants from '../../constants';
+import OrderItemViewModel from '../../viewModels/orderItemViewModel';
 
 let orderActions = new OrderActions();
 let orderItemActions = new OrderItemActions();
@@ -35,14 +36,6 @@ class ManageOrderItem extends ManageEntityBase {
 
   _saveAction(entity) { 
     return orderItemActions.save(entity._orderItem);
-    // var promise = Promise.resolve();
-    // if (!this.props.currentOrder && this.props.currentOrder.id) {
-    //   promise = orderActions.save({});
-    // }
-    // return promise.then((result) => {
-    //   var orderId = result.id || entity._orderItem.orderId;
-    //   return orderItemActions.save(entity._orderItem);
-    // });
    }
 
   _redirectUri() {
@@ -90,74 +83,6 @@ function mapStateToProps(state, ownProps) {
     entity: entity,
     categories: state.categories,
     products: state.products
-  }
-}
-
-class OrderItemViewModel {
-  constructor(orderItem, categories, products, inventoryItems) {
-    this._orderItem = orderItem;
-    this._currentCategoryId;
-    this._categories = categories;
-    this._products = products;
-    this._inventoryItems = inventoryItems;
-  }
-
-  get id() {
-    return this._orderItem.id;
-  }
-
-  get amount() {
-    return this.price * this.quantity;
-  }
-
-  get price() {
-    return parseFloat(this._orderItem.price) || 0;
-  }
-  set price(value) {
-    this._orderItem.price = parseFloat(value);
-    this._orderItem.amount = this.amount;
-  }
-
-  get quantity() {
-    return parseFloat(this._orderItem.quantity) || 0;
-  }
-  set quantity(value) {
-    this._orderItem.quantity = parseFloat(value);
-    this._orderItem.amount = this.amount;
-  }
-
-  get categoryId() {
-    return this._currentCategoryId;
-  }
-  set categoryId(value) {
-    this._currentCategoryId = parseInt(value);
-    this.productId = null;
-  }
-
-  get categories() {
-    return this._categories || [];
-  }
-
-  get products() {
-    if (this._currentCategoryId) {
-      return this._products.filter(p => p.categoryId === this._currentCategoryId);
-    }
-    return this._products;
-  }
-
-  get productId() {
-    return parseInt(this._orderItem.productId) || 0;
-  }
-  set productId(value) {
-    if (value) {
-      var productId = parseInt(value);
-      var product = this._products.find(p => parseInt(p.id) === productId);
-      this._orderItem.productId = product.id;
-      this.price = product.price;
-    } else {
-      delete this._orderItem.productId;
-      this.price = 0;
-    }
   }
 }
 
