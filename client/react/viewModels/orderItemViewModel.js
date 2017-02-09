@@ -68,7 +68,7 @@ class OrderItemViewModel {
   get productId() {
     return parseInt(this._orderItem.productId) || 0;
   }
-  
+
   set productId(value) {
     if (value) {
       var productId = parseInt(value);
@@ -79,6 +79,26 @@ class OrderItemViewModel {
       delete this._orderItem.productId;
       this.price = 0;
     }
+  }
+
+  get productName() {
+    var product = this.products.find(p => p.id === this.productId);
+    if (product) {
+      return product.name;
+    } 
+    return "";
+  }
+
+  get submittedOn() {
+    return this._orderItem.submittedOn || '-';
+  }
+
+  get shippedOn() {
+    return this._orderItem.shippedOn || '-';
+  }
+
+  get status() {
+    return this._orderItem.status || '';
   }
 }
 

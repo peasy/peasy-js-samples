@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import OrderItemActions from '../../actions/orderItemActions';
 import toastr from 'toastr';
 import constants from '../../constants';
+import OrderViewModel from '../../viewModels/orderViewModel';
 
 let orderItemActions = new OrderItemActions();
 
@@ -49,19 +50,14 @@ class OrderItemsView extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.orderItems.map(this.orderItemRow)}
+            {this.props.vm.orderItems.map(this.orderItemRow)}
           </tbody>
         </table>
         <div className="form-group">
-          <label>Total:</label> {this.getTotal()}
+          <label>Total:</label> {this.props.vm.totalFormatted}
         </div>
       </div>
     );
-  }
-
-  getTotal() {
-    if (this.props.orderItems.length > 0)
-      return this.props.orderItems.map(i => i.amount).reduce((a = 0, b) => a + b);
   }
 
   orderItemRow(orderItem, index) {
@@ -69,14 +65,13 @@ class OrderItemsView extends React.Component {
       <tr key={index}>
         <td>
           <Link to={ `${constants.routes.ORDER}/${orderItem.orderId}/orderitem/${orderItem.id}`}>{orderItem.productName}</Link>
-          {/*<Link to={constants.routes.ORDER_ITEM + '/' + orderItem.id }>{orderItem.productName}</Link>*/}
         </td>
-        <td className="numericCell">{orderItem.price}</td>
+        <td className="numericCell">{orderItem.priceFormatted}</td>
         <td className="numericCell">{orderItem.quantity}</td>
-        <td className="numericCell">{orderItem.amount}</td>
+        <td className="numericCell">{orderItem.amountFormatted}</td>
         <td>{orderItem.status}</td>
-        <td>{orderItem.submittedOn || '-'}</td>
-        <td>{orderItem.shippedOn || '-'}</td>
+        <td>{orderItem.submittedOn}</td>
+        <td>{orderItem.shippedOn}</td>
         <td>
           <input className="btn btn-default btn-sm" 
             type="button" 
@@ -113,17 +108,8 @@ class OrderItemsView extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  var orderItems = [];
-  var orderId = ownProps.orderId;
-  if (orderId) {
-    orderItems = state.orderItems.filter(i => i.orderId === orderId)
-                                 .map(i => {
-      var product = state.products.find(p => p.id === i.productId);
-      return Object.assign({}, i, { productName: product.name });
-    });
-  }
   return {
-    orderItems: orderItems
+    vm: new OrderViewModel(ownProps.orderId, state.orderItems, state.categories, state.products)
   };
 }
 
