@@ -109,7 +109,14 @@ class OrderItemsView extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    vm: new OrderViewModel(ownProps.orderId, state.orderItems, state.categories, state.products)
+    vm: new OrderViewModel(
+      ownProps.orderId, 
+      state.customers,
+      state.orders,
+      state.orderItems, 
+      state.categories, 
+      state.products
+    )
   };
 }
 

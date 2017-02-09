@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import OrderActions from '../../actions/orderActions';
 import toastr from 'toastr';
 import constants from '../../constants';
+import OrderViewModel from '../../viewModels/orderViewModel';
 
 let orderActions = new OrderActions();
 
@@ -33,7 +34,7 @@ class OrdersView extends React.Component {
               <th>Id</th>
               <th>Order Date</th>
               <th>Customer</th>
-              <th>Total</th>
+              <th className="numericCell">Total</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -54,8 +55,8 @@ class OrdersView extends React.Component {
         </td>
         <td>{order.orderDate}</td>
         <td>{order.customerName}</td>
-        <td></td>
-        <td></td>
+        <td className="numericCell">{order.totalFormatted}</td>
+        <td>{order.status}</td>
         <td>
           <input className="btn btn-default btn-sm" 
             type="button" 
@@ -97,7 +98,14 @@ function mapStateToProps(state, ownProps) {
     return Object.assign({}, o, { customerName: customer.name });
   });
   return {
-    orders: orders
+    orders: orders.map(o => new OrderViewModel(
+      o.id,
+      state.customers,
+      state.orders,
+      state.orderItems,
+      state.categories,
+      state.products
+    ))
   };
 }
 
