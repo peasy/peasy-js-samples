@@ -36,7 +36,7 @@ HttpDataProxy.prototype.destroy = function(id, done) {
 
 HttpDataProxy.prototype._handleResponseFrom = function(promise, done) {
   promise.then(response => done(null, response.data))
-         .catch((err) => done(this._getError(err)));
+         .catch((err) => { debugger; done(this._getError(err)) });
 }
 
 HttpDataProxy.prototype._handleGetListByIdFrom = function(promise, done) {

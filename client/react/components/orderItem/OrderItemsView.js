@@ -13,12 +13,12 @@ class OrderItemsView extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.orderItemRow = this.orderItemRow.bind(this);
+    this.ship = this.ship.bind(this);
   }
 
   render() {
     return (
       <div>
-        {this.AddItemLink()}
         {this.OrderItemsList()}
       </div>
     );
@@ -27,7 +27,7 @@ class OrderItemsView extends React.Component {
   AddItemLink() {
     if (this.props.orderId) {
       return (
-        <Link to={ `${constants.routes.ORDER}/${this.props.orderId}/orderitem`}>Add item</Link>
+        <Link to={ `${constants.routes.ORDER}/${this.props.orderId}/orderitem`} className="btn btn-primary btn-xs" >Add item</Link>
       );
     }
     return null;
@@ -39,6 +39,7 @@ class OrderItemsView extends React.Component {
         <table className="table orderItemsList">
           <thead>
             <tr>
+              <th>{this.AddItemLink()}</th> 
               <th>Product</th>
               <th className="numericCell">Price</th>
               <th className="numericCell">Quantity</th>
@@ -64,6 +65,12 @@ class OrderItemsView extends React.Component {
     return (
       <tr key={index}>
         <td>
+          <input className="btn btn-success btn-sm" 
+            type="button" 
+            onClick={this.ship(orderItem.id)}
+            value="Ship" />
+        </td>
+        <td>
           <Link to={ `${constants.routes.ORDER}/${orderItem.orderId}/orderitem/${orderItem.id}`}>{orderItem.productName}</Link>
         </td>
         <td className="numericCell">{orderItem.priceFormatted}</td>
@@ -82,13 +89,18 @@ class OrderItemsView extends React.Component {
     );
   }
 
+  ship(id) {
+    return function() {
+      console.log("Ship!", id);
+    }
+  }
+
   destroy(id) {
     var self = this;
     return function() {
       return self.props.dispatch(orderItemActions.destroy(id))
         .then(result => {
-          if (!result.success) return self.handleErrors(result.errors);
-          return self.props.dispatch(inventoryItemActions.destroy(id));
+          if (!result.success) self.handleErrors(result.errors);
         });
     }
   }

@@ -8,6 +8,10 @@ export default function orderItemReducer(state = [], action) {
       return [...state.filter(orderItem => orderItem.id !== action.orderItem.id), 
         Object.assign({}, action.orderItem)
       ];
+    case constants.actions.SUBMIT_ORDER_ITEM_SUCCESS:
+      return [...state.filter(orderItem => orderItem.id !== action.orderItem.id), 
+        Object.assign({}, action.orderItem)
+      ];
     case constants.actions.DESTROY_ORDER_ITEM_SUCCESS:
       return [...state.filter(orderItem => orderItem.id !== action.id)];
     case constants.actions.LOAD_ORDER_ITEMS_SUCCESS:

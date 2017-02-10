@@ -68,7 +68,8 @@ var wireUpRoutes = function(app) {
   routeHelper.createController('/orders', app, orderService);
 
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
-    return orderItemService.submitCommand(request.params.id);
+    var orderItemId = parseInt(request.params.id);
+    return orderItemService.submitCommand(orderItemId);
   });
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
     return orderItemService.shipCommand(request.params.id);

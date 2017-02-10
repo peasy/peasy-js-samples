@@ -14,6 +14,7 @@ let orderItemActions = new OrderItemActions();
 
 class ManageOrderItem extends ManageEntityBase {
   constructor(props, context) {
+    console.log("CTOR IN MANAGE ORDER ITEM");
     super(props, context);
     this.state = {
       entity: new OrderItemViewModel(this.state.entity, props.categories, props.products),

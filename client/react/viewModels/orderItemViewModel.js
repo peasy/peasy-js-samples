@@ -90,15 +90,23 @@ class OrderItemViewModel {
   }
 
   get submittedOn() {
-    return this._orderItem.submittedOn || '-';
+    var submittedOn = this._orderItem.submittedOn;
+    if (!submittedOn) return '-';
+    return new Date(submittedOn).toLocaleString();
   }
 
   get shippedOn() {
-    return this._orderItem.shippedOn || '-';
+    var shippedOn = this._orderItem.shippedOn;
+    if (!shippedOn) return '-';
+    return new Date(shippedOn).toLocaleDateString();
   }
 
   get status() {
     return this._orderItem.status || '';
+  }
+
+  get orderId() {
+    return this._orderItem.orderId;
   }
 }
 

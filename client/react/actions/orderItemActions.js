@@ -1,6 +1,7 @@
 import constants from '../constants';
 import ordersDotCom from '../../businessLogic';
 import ActionsBase from './ActionsBase';
+import CommandInvoker from '../commandInvoker';
 
 class OrderItemActions extends ActionsBase {
 
@@ -22,6 +23,18 @@ class OrderItemActions extends ActionsBase {
 
   destroyAction(id) { 
     return { type: constants.actions.DESTROY_ORDER_ITEM_SUCCESS, id: id };
+  }
+
+  submitAction(data) {
+    return { type: constants.actions.SUBMIT_ORDER_ITEM_SUCCESS, orderItem: data };
+  }
+
+  submitOrderItem(id) {
+    var self = this;
+    return function(dispatch, getState) {
+      var command = self.service().submitCommand(id);
+      return new CommandInvoker(dispatch).invoke(command, self.submitAction);
+    }
   }
 }
 

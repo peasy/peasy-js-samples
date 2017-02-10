@@ -33,6 +33,9 @@ class OrderViewModel {
   get order() {
     if (!this._currentOrder) {
       this._currentOrder = this._orders.find(o => o.id === this._orderId);
+      if (!this._currentOrder) {
+        this._currentOrder = {};
+      }
     }
     return this._currentOrder;
   }
@@ -55,12 +58,24 @@ class OrderViewModel {
   get customer() {
     if (!this._currentCustomer) {
       this._currentCustomer = this._customers.find(c => c.id === this.order.customerId);
+      if (!this._currentCustomer) {
+        this._currentCustomer = {};
+      }
     }
     return this._currentCustomer;
   }
 
   get customerName() {
     return this.customer.name;
+  }
+
+  get customers() {
+    return this._customers;
+  }
+
+  set customerId(value) {
+    this._currentCustomer = null;
+    this.order.customerId = parseInt(value);
   }
 
   get status() {
@@ -81,6 +96,14 @@ class OrderViewModel {
     if (this.orderItems.some(i => i.status === "SHIPPED")) {
       return "SHIPPED";
     }
+  }
+
+  get hasPendingItems() {
+    var result = this.orderItems
+      .filter(i => i.orderId === this.order.id)
+      .some(i => i.status === "PENDING");
+
+    return result;
   }
 }
 

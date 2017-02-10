@@ -1,25 +1,32 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import OrderActions from '../../actions/orderActions';
-import InventoryItemActions from '../../actions/inventoryItemActions';
 import OrderForm from './OrderForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
 import constants from '../../constants';
-import OrderItemsView from '../../components/orderItem/orderItemsView';
+import OrderViewModel from '../../viewModels/orderViewModel';
 
 let orderActions = new OrderActions();
-let inventoryItemActions = new InventoryItemActions();
 
 class ManageOrder extends ManageEntityBase {
   constructor(props, context) {
     super(props, context);
     this.cancelButtonClicked = false;
+    this.submitOrder = this.submitOrder.bind(this);
+    this.state = {
+      entity: this.props.entity,
+      errors: [],
+      saving: false
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ entity: nextProps.entity });
   }
 
   _saveAction(entity) { 
-    return orderActions.save(entity);
+    return orderActions.save(entity.order);
    }
 
   _redirectUri(entity) {
@@ -27,6 +34,12 @@ class ManageOrder extends ManageEntityBase {
       return constants.routes.ORDERS;
     }
     return constants.routes.ORDER + '/' + entity.id;
+  }
+
+  submitOrder() {
+    var orderId = this.props.entity.id;
+    this.props.dispatch(orderActions.submitOrder(orderId))
+      .then(() => toastr.success("Order submitted"));
   }
 
   cancel() {
@@ -42,8 +55,9 @@ class ManageOrder extends ManageEntityBase {
           onCancel={this.cancel}
           onChange={this.change}
           onSave={this.save}
+          onSubmitOrder={this.submitOrder}
+          orderItems={this.props.orderItems}
           order={this.state.entity}
-          customers={this.props.customers}
           errors={this.state.errors}
           saving={this.state.saving} />
       </div>
@@ -52,19 +66,16 @@ class ManageOrder extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
-  var entity = {};
-  var customers = state.customers || [];
-
-  if (ownProps.params.id) {
-    var entityId = parseInt(ownProps.params.id, 10);
-    if (state.orders.length > 0) {
-      entity = state.orders.find(c => c.id === entityId)
-    }
-  }
-
   return {
-    entity: entity,
-    customers: state.customers.map(c => { return { text: c.name, value: c.id }})
+    entity: new OrderViewModel(
+      parseInt(ownProps.params.id),
+      state.customers,
+      state.orders,
+      state.orderItems,
+      state.categories,
+      state.products 
+    ),
+    orderItems: state.orderItems
   };
 }
 

@@ -4,7 +4,8 @@ import SelectInput from '../common/SelectInput';
 import { Link } from 'react-router';
 import OrderItemsView from '../orderItem/orderItemsView';
 
-const OrderForm = ({order, onSave, onChange, saving, errors, onCancel, customers}) => {
+const OrderForm = ({order, orderItems, onSave, onChange, onSubmitOrder, saving, errors, onCancel}) => {
+
   return (
     <form>
 
@@ -15,9 +16,9 @@ const OrderForm = ({order, onSave, onChange, saving, errors, onCancel, customers
       <SelectInput
         name="customerId"
         label="Customer"
-        value={order.customerId}
+        value={order.customer.id}
         defaultOption="Select Customer..."
-        options={customers}
+        options={order.customers.map(c => { return { text: c.name, value: c.id } })}
         onChange={onChange}
         errors={errors} />
 
@@ -36,8 +37,26 @@ const OrderForm = ({order, onSave, onChange, saving, errors, onCancel, customers
         className="btn btn-default btn-sm cancelButton"
         onClick={onCancel} />
 
+      <input
+        type="button"
+        disabled={saving}
+        style={getStyle()}
+        value={saving ? 'Submitting...' : 'Submit Order'}
+        className="btn btn-success btn-sm"
+        onClick={onSubmitOrder} />
+
     </form>
   );
+
+  function getStyle() {
+    if (!order.hasPendingItems) {
+      return {
+        visibility: 'hidden'
+      }
+    }
+    return { };
+  };
 };
+
 
 export default OrderForm;
