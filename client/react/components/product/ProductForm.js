@@ -3,36 +3,36 @@ import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 import { Link } from 'react-router';
 
-const ProductForm = ({product, onSave, onChange, saving, errors, onCancel, categories}) => {
+const ProductForm = ({viewModel, onSave, onChange, saving, errors, onCancel}) => {
   return (
     <form>
       <TextInput
         name="name"
         label="Name"
-        value={product.name}
+        value={viewModel.entity.name}
         onChange={onChange}
         errors={errors} />
 
       <TextInput
         name="description"
         label="Description"
-        value={product.description}
+        value={viewModel.entity.description}
         onChange={onChange}
         errors={errors} />
 
       <TextInput
         name="price"
         label="Price"
-        value={product.price}
+        value={viewModel.entity.price}
         onChange={onChange}
         errors={errors} />
 
       <SelectInput
         name="categoryId"
         label="Category"
-        value={product.categoryId}
+        value={viewModel.entity.categoryId}
         defaultOption="Select Category..."
-        options={categories}
+        options={viewModel.categorySelectValues}
         onChange={onChange}
         errors={errors} />
 

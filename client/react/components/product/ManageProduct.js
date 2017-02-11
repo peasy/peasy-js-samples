@@ -7,6 +7,7 @@ import ProductForm from './ProductForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
 import constants from '../../constants';
+import ProductViewModel from '../../viewModels/productViewModel';
 
 let productActions = new ProductActions();
 let inventoryItemActions = new InventoryItemActions();
@@ -16,11 +17,11 @@ class ManageProduct extends ManageEntityBase {
     super(props, context);
   }
 
-  _saveAction(entity) { 
-    return productActions.save(entity);
+  _saveAction(viewModel) { 
+    return productActions.save(viewModel.entity);
    }
 
-  _redirectUri() {
+  _redirectUri(viewModel) {
     return constants.routes.PRODUCTS;
   }
 
@@ -42,8 +43,7 @@ class ManageProduct extends ManageEntityBase {
           onCancel={this.cancel}
           onChange={this.change}
           onSave={this.save}
-          product={this.state.entity}
-          categories={this.props.categories}
+          viewModel={this.state.viewModel}
           errors={this.state.errors}
           saving={this.state.saving} />
       </div>
@@ -52,19 +52,8 @@ class ManageProduct extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
-  var entity = {};
-  var categories = state.categories || [];
-
-  if (ownProps.params.id) {
-    var entityId = parseInt(ownProps.params.id, 10);
-    if (state.products.length > 0) {
-      entity = state.products.find(c => c.id === entityId)
-    }
-  }
-
   return {
-    entity: entity,
-    categories: state.categories.map(c => { return { text: c.name, value: c.id }})
+    viewModel: new ProductViewModel(ownProps.params.id, state.products, state.categories) 
   };
 }
 
