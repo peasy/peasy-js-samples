@@ -8,7 +8,7 @@ class ManageEntityBase extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      entity: Object.assign({}, props.entity),
+      viewModel: this.props.viewModel,
       errors: [],
       saving: false
     };
@@ -18,8 +18,8 @@ class ManageEntityBase extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.entity.id != nextProps.entity.id) {
-      this.setState({entity: Object.assign({}, nextProps.entity)});
+    if (this.state.viewModel.entity.id !== nextProps.viewModel.entity.id) {
+      this.setState({ viewModel: nextProps.viewModel });
     }
   }
 
@@ -34,7 +34,7 @@ class ManageEntityBase extends React.Component {
   save(event) {
     event.preventDefault();
     this.setState({saving: true});
-    return this.props.dispatch(this._saveAction(this.state.entity))
+    return this.props.dispatch(this._saveAction(this.state.viewModel))
       .then((result) => {
         this.setState({saving: false});
         if (!result.success) return this.handleErrors(result.errors);
@@ -70,14 +70,15 @@ class ManageEntityBase extends React.Component {
 
   change(event) {
     const field = event.target.name;
-    let entity = this.state.entity;
-    entity[field] = event.target.value;
+    let viewModel = this.state.viewModel;
+    viewModel.entity[field] = event.target.value;
     return this.setState({
-      entity: entity,
+      viewModel: viewModel,
       // clear errors associated with field until validation occurs again
       errors: this.state.errors.filter(e => e.association != field) 
     });
   };
+
 }
 
 ManageEntityBase.contextTypes = {

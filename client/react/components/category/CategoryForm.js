@@ -2,13 +2,13 @@ import React from 'react';
 import TextInput from '../common/TextInput';
 import { Link } from 'react-router';
 
-const CategoryForm = ({category, onSave, onChange, saving, errors, onCancel}) => {
+const CategoryForm = ({viewModel, onSave, onChange, saving, errors, onCancel}) => {
   return (
     <form>
       <TextInput
         name="name"
         label="Name"
-        value={category.entity.name}
+        value={viewModel.entity.name}
         onChange={onChange}
         errors={errors} />
       
