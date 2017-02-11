@@ -65,3 +65,7 @@ Here is what you should have:
 To run the tests, navigate to the */spec* directory from a command line and run the following command:
 
 ``` jasmine ```
+
+###Like what you see?
+
+Please consider showing your support by starring the project.
