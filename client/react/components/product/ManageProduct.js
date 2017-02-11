@@ -13,9 +13,6 @@ let productActions = new ProductActions();
 let inventoryItemActions = new InventoryItemActions();
 
 class ManageProduct extends ManageEntityBase {
-  constructor(props, context) {
-    super(props, context);
-  }
 
   _saveAction(viewModel) { 
     return productActions.save(viewModel.entity);

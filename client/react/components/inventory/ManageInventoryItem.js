@@ -1,24 +1,20 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import InventoryItemActions from '../../actions/inventoryItemActions';
 import InventoryItemForm from './InventoryItemForm';
-import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
 import constants from '../../constants';
+import InventoryItemViewModel from '../../viewModels/inventoryItemViewModel';
 
 let inventoryItemActions = new InventoryItemActions();
 
 class ManageInventoryItem extends ManageEntityBase {
-  constructor(props, context) {
-    super(props, context);
-  }
 
-  _saveAction(entity) { 
-    return inventoryItemActions.save(entity);
+  _saveAction(viewModel) { 
+    return inventoryItemActions.save(viewModel.entity);
    }
 
-  _redirectUri() {
+  _redirectUri(viewModel) {
     return constants.routes.INVENTORY_ITEMS;
   }
 
@@ -30,7 +26,7 @@ class ManageInventoryItem extends ManageEntityBase {
           onCancel={this.cancel}
           onChange={this.change}
           onSave={this.save}
-          inventoryItem={this.state.entity}
+          viewModel={this.state.viewModel}
           errors={this.state.errors}
           saving={this.state.saving} />
       </div>
@@ -39,19 +35,8 @@ class ManageInventoryItem extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
-  var entity = {};
-
-  if (ownProps.params.id) {
-    var entityId = parseInt(ownProps.params.id, 10);
-    if (state.inventoryItems.length > 0) {
-      entity = state.inventoryItems.find(c => c.id === entityId)
-      var associatedProduct = state.products.find(p => p.id === entity.id);
-      entity = Object.assign({}, entity, { name: associatedProduct.name });
-    }
-  }
-
   return {
-    entity: entity 
+    viewModel: new InventoryItemViewModel(ownProps.params.id, state.inventoryItems, state.products)
   };
 }
 
