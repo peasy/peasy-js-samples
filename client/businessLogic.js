@@ -5,7 +5,7 @@ var CategoryService = require('../business_logic/services/categoryService');
 var CustomerService = require('../business_logic/services/customerService');
 var InventoryItemService = require('../business_logic/services/inventoryItemService')
 var OrderItemService = require('../business_logic/services/clientOrderItemService');
-var OrderService = require('../business_logic/services/orderService');
+var OrderService = require('../business_logic/services/clientOrderService');
 var ProductService = require('../business_logic/services/clientProductService');
 
 var CategoryDataProxy = require('../data_proxies/http/categoryDataProxy');
