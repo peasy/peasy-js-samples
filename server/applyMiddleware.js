@@ -13,7 +13,7 @@ var applyMiddleware = function(app) {
 
   app.use(require('webpack-hot-middleware')(compiler));
   app.use(lowerCaseQueryParams);
-  app.use(convertQueryStringIdsToNumbers)
+  app.use(convertQueryStringIdsToNumbers);
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true

@@ -27,7 +27,7 @@ class OrderItemsView extends React.Component {
   AddItemLink() {
     if (this.props.orderId) {
       return (
-        <Link to={ `${constants.routes.ORDER}/${this.props.orderId}/orderitem`} className="btn btn-primary btn-xs" >Add item</Link>
+        <Link to={ `${constants.routes.ORDER}/${this.props.orderId}/orderitem`} className="btn btn-success btn-xs" >Add item</Link>
       );
     }
     return null;
@@ -61,15 +61,36 @@ class OrderItemsView extends React.Component {
     );
   }
 
+  shipButton(orderItem) {
+    var self = this;
+    if (orderItem.canShip) {
+      return (
+        <input className="btn btn-info btn-xs" 
+          type="button" 
+          onClick={self.ship(orderItem.id)}
+          value="Ship" />
+      );
+    }
+    return null;
+  }
+
+  deleteButton(orderItem) {
+    var self = this;
+    if (orderItem.canDelete) {
+      return (
+        <input className="btn btn-default btn-xs" 
+          type="button" 
+          onClick={self.destroy(orderItem.id)}
+          value="Delete" />
+      );
+    }
+    return null;
+  }
+
   orderItemRow(orderItem, index) {
     return (
       <tr key={index}>
-        <td>
-          <input className="btn btn-success btn-sm" 
-            type="button" 
-            onClick={this.ship(orderItem.id)}
-            value="Ship" />
-        </td>
+        <td>{this.shipButton(orderItem)}</td>
         <td>
           <Link to={ `${constants.routes.ORDER}/${orderItem.orderId}/orderitem/${orderItem.id}`}>{orderItem.productName}</Link>
         </td>
@@ -79,19 +100,18 @@ class OrderItemsView extends React.Component {
         <td>{orderItem.status}</td>
         <td>{orderItem.submittedOn}</td>
         <td>{orderItem.shippedOn}</td>
-        <td>
-          <input className="btn btn-default btn-sm" 
-            type="button" 
-            onClick={this.destroy(orderItem.id)}
-            value="Delete" />
-        </td>
+        <td>{this.deleteButton(orderItem)}</td>
       </tr>
     );
   }
 
   ship(id) {
+    var self = this;
     return function() {
-      console.log("Ship!", id);
+      return self.props.dispatch(orderItemActions.shipOrderItem(id))
+        .then(result => {
+          if (!result.success) self.handleErrors(result.errors);
+        });
     }
   }
 

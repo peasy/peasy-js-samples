@@ -108,7 +108,8 @@ describe("InventoryItemService", function() {
         var expectedResult = {
           id: 1,
           version: 1,
-          quantityOnHand: 3
+          quantityOnHand: 3,
+          productId: 2
         };
         var service = new InventoryItemService(dataProxy);
         service.updateCommand(inventoryItem).execute((err, result) => {
@@ -121,11 +122,13 @@ describe("InventoryItemService", function() {
         var expectedResult = {
           id: 1,
           version: 2,
-          quantityOnHand: 3.755 
+          quantityOnHand: 3.755,
+          productId: 2
         };
         inventoryItem.id = "1";
         inventoryItem.version = "2";
         inventoryItem.quantityOnHand = "3.755";
+        inventoryItem.productId = "2";
         var service = new InventoryItemService(dataProxy);
         service.updateCommand(inventoryItem).execute((err, result) => {
           expect(dataProxy.update).toHaveBeenCalledWith(expectedResult, jasmine.any(Function));

@@ -27,10 +27,11 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
     },
     _onUpdateCommandInitialization: function(context, done) {
       var item = this.data;
-      stripAllFieldsFrom(item).except(['id', 'quantityOnHand', 'version']);
+      stripAllFieldsFrom(item).except(['id', 'quantityOnHand', 'version', 'productId']);
       convert(item, "id").toInt();
       convert(item, "quantityOnHand").toFloat();
       convert(item, "version").toInt();
+      convert(item, "productId").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {

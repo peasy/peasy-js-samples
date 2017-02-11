@@ -98,11 +98,20 @@ class OrderItemViewModel {
   get shippedOn() {
     var shippedOn = this._orderItem.shippedOn;
     if (!shippedOn) return '-';
-    return new Date(shippedOn).toLocaleDateString();
+    return new Date(shippedOn).toLocaleString();
   }
 
   get status() {
     return this._orderItem.status || '';
+  }
+
+  get canDelete() {
+    return this._orderItem.status !== "SHIPPED";
+  }
+
+  get canShip() {
+    return this._orderItem.status === "SUBMITTED" ||
+           this._orderItem.status === "BACKORDERED";
   }
 
   get orderId() {

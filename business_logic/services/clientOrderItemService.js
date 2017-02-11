@@ -1,33 +1,19 @@
 var OrderItemService = require('./orderItemService');
-var CreateOrderItemCommand = require('../commands/createProductCommand');
-var DeleteOrderItemCommand = require('../commands/deleteProductCommand');
 var Command = require('peasy-js').Command;
 
-// class CreateOrderItemClientCommand extends CreateProductCommand {
-//   constructor(orderItem, productDataProxy, inventoryItemService) {
-//     super(orderItem, productDataProxy, inventoryItemService);
-//   }
+class ClientOrderItemService extends OrderItemService {
+  constructor(dataProxy, productDataProxy, inventoryItemService) {
+    super(dataProxy, productDataProxy, inventoryItemService);
+  }
 
-//   _onValidationSuccess(context, done) {
-//     this.orderItemDataProxy.insert(this.product, function(err, result) {
-//       if (err) { return done(err); }
-//       done(null, result);
-//     });
-//   }
-// }
+  submitCommand(orderItemId) {
+    return new SubmitCommand(orderItemId, this.dataProxy);
+  }
 
-// class DeleteOrderItemClientCommand extends DeleteProductCommand {
-//   constructor(orderItemId, dataProxy, orderService, inventoryItemService) {
-//     super(orderItemId, dataProxy, orderService, inventoryItemService);
-//   }
-
-//   _onValidationSuccess(context, done) {
-//     this.orderItemDataProxy.destroy(this.productId, function(err, result) {
-//       if (err) { return done(err); }
-//       done(null, result);
-//     });
-//   }
-// }
+  shipCommand(orderItemId) {
+    return new ShipCommand(orderItemId, this.dataProxy);
+  }
+} 
 
 class SubmitCommand extends Command {
   constructor(orderItemId, dataProxy) {
@@ -44,14 +30,19 @@ class SubmitCommand extends Command {
   }
 }
 
-class ClientOrderItemService extends OrderItemService {
-  constructor(dataProxy, productDataProxy, inventoryItemService) {
-    super(dataProxy, productDataProxy, inventoryItemService);
+class ShipCommand extends Command {
+  constructor(orderItemId, dataProxy) {
+    super();
+    this.orderItemId = orderItemId;
+    this.dataProxy = dataProxy;
   }
 
-  submitCommand(orderItemId) {
-    return new SubmitCommand(orderItemId, this.dataProxy);
+  _onValidationSuccess(context, done) {
+    this.dataProxy.ship(this.orderItemId, function(err, result) {
+      if (err) { return done(err); }
+      done(null, result);
+    });
   }
-} 
+}
 
 module.exports = ClientOrderItemService;

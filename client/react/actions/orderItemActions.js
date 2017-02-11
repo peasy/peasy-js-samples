@@ -36,6 +36,18 @@ class OrderItemActions extends ActionsBase {
       return new CommandInvoker(dispatch).invoke(command, self.submitAction);
     }
   }
+
+  shipAction(data) {
+    return { type: constants.actions.SHIP_ORDER_ITEM_SUCCESS, orderItem: data };
+  }
+
+  shipOrderItem(id) {
+    var self = this;
+    return function(dispatch, getState) {
+      var command = self.service().shipCommand(id);
+      return new CommandInvoker(dispatch).invoke(command, self.shipAction);
+    }
+  }
 }
 
 export default OrderItemActions;

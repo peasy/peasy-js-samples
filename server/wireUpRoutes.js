@@ -58,11 +58,11 @@ var wireUpRoutes = function(app) {
     return command;
   });
   routeHelper.addGetRouteHandler(app, '/orders/:id/orderitems', function(request) {
-    return orderItemService.getByOrderCommand(request.params.id);
+    return orderItemService.getByOrderCommand(parseInt(request.params.id));
   });
   routeHelper.addPostRouteHandler(app, '/orders/:id/orderitems', function(request) {
     var item = request.body;
-    item.orderId = request.params.id;
+    item.orderId = parseInt(request.params.id);
     return orderItemService.insertCommand(item);
   });
   routeHelper.createController('/orders', app, orderService);
@@ -72,7 +72,16 @@ var wireUpRoutes = function(app) {
     return orderItemService.submitCommand(orderItemId);
   });
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
-    return orderItemService.shipCommand(request.params.id);
+    var orderItemId = parseInt(request.params.id);
+    return orderItemService.shipCommand(orderItemId);
+  });
+  routeHelper.addGetRouteHandler(app, '/orderItems', function(request) {
+    var service = orderItemService;
+    var command = service.getAllCommand();
+    if (request.query.orderid) {
+      return service.getByOrderCommand(request.query.orderid);
+    }
+    return command;
   });
   routeHelper.createController('/orderItems', app, orderItemService);
 

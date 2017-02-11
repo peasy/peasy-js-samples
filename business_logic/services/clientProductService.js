@@ -48,7 +48,6 @@ class ClientProductService extends ProductService {
 // }
 // ClientCreateProductCommand.prototype = new CreateProductCommand();
 // ClientCreateProductCommand.prototype._onValidationSuccess = function(context, done) {
-//   debugger;
 //   this.productDataProxy.insert(this.product, function(err, result) {
 //     if (err) { return done(err); }
 //     done(null, result);

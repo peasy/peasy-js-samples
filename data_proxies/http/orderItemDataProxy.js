@@ -15,4 +15,8 @@ OrderItemDataProxy.prototype.submit = function(orderId, done) {
   this._handleResponseFrom(axios.post(`${this._url}/${orderId}/submit`, orderId), done);
 };
 
+OrderItemDataProxy.prototype.ship = function(orderId, done) {
+  this._handleResponseFrom(axios.post(`${this._url}/${orderId}/ship`, orderId), done);
+};
+
 module.exports = OrderItemDataProxy;

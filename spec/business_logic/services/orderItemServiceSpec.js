@@ -183,6 +183,7 @@ describe("OrderItemService", function() {
             }
           };
           spyOn(dataProxy, 'getById');
+          spyOn(dataProxy, "update").and.callThrough();
         });
 
         it ('invalidates all', () => {
@@ -193,20 +194,6 @@ describe("OrderItemService", function() {
           });
         });
 
-        it ('invalidates all with invalid type', () => {
-          var item = {
-            orderId: 3,
-            quantity: "4",
-            amount: "101",
-            price: "25.25",
-            productId: 2
-          };
-          var service = new OrderItemService(dataProxy, productDataProxy);
-          service.insertCommand(item).execute((err, result) => {
-            expect(result.errors.length).toEqual(3);
-            expect(dataProxy.getById).not.toHaveBeenCalled();
-          });
-        });
       });
     });
 

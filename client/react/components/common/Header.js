@@ -6,7 +6,7 @@ let routes = constants.routes;
 
 const Header = () => {
   return (
-    <nav>
+    <nav className="navbar navbar-inverse">
       <IndexLink to={routes.ROOT} activeClassName="active">Customers</IndexLink>
       {" | "}
       <Link to={ routes.ORDERS } activeClassName="active">Orders</Link>

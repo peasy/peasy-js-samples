@@ -35,6 +35,8 @@ class OrderViewModel {
       this._currentOrder = this._orders.find(o => o.id === this._orderId);
       if (!this._currentOrder) {
         this._currentOrder = {};
+      } else {
+        this._currentOrder = Object.assign({}, this._currentOrder);
       }
     }
     return this._currentOrder;

@@ -42,7 +42,7 @@ const OrderForm = ({order, orderItems, onSave, onChange, onSubmitOrder, saving, 
         disabled={saving}
         style={getStyle()}
         value={saving ? 'Submitting...' : 'Submit Order'}
-        className="btn btn-success btn-sm"
+        className="btn btn-info btn-sm"
         onClick={onSubmitOrder} />
 
     </form>

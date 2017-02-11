@@ -5,12 +5,17 @@
   margin: 0 auto;
 }
 
-a.active {
-  color: orange;
+nav {
+  padding-left: 10px;
+  padding-top: 15px;
 }
 
-nav {
-  padding-top: 20px;
+nav a:link {
+  text-decoration: none;
+}
+
+nav a.active {
+  color: white;
 }
 
 .numericCell {
