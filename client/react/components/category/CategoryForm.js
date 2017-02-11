@@ -8,7 +8,7 @@ const CategoryForm = ({category, onSave, onChange, saving, errors, onCancel}) =>
       <TextInput
         name="name"
         label="Name"
-        value={category.name}
+        value={category.entity.name}
         onChange={onChange}
         errors={errors} />
       
