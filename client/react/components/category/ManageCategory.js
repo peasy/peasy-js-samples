@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import CategoryActions from '../../actions/categoryActions';
 import CategoryForm from './CategoryForm';
-import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
 import constants from '../../constants';
 import CategoryViewModel from '../../viewModels/categoryViewModel';
@@ -16,7 +15,7 @@ class ManageCategory extends ManageEntityBase {
     return categoryActions.save(viewModel.entity);
    }
 
-  _redirectUri() {
+  _redirectUri(viewModel) {
     return constants.routes.CATEGORIES;
   }
 

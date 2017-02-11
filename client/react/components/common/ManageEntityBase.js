@@ -23,9 +23,9 @@ class ManageEntityBase extends React.Component {
     }
   }
 
-  _redirectUri(entity) { }
+  _redirectUri(viewModel) { }
 
-  _saveAction(entity) { }
+  _saveAction(viewModel) { }
 
   cancel() {
     this.context.router.push(this._redirectUri());
