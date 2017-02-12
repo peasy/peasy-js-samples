@@ -14,8 +14,12 @@ nav a:link {
   text-decoration: none;
 }
 
-nav a.active {
+nav a:active {
   color: white;
+}
+
+nav a {
+  color: gray;
 }
 
 .numericCell {

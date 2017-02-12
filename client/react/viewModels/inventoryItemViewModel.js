@@ -7,6 +7,10 @@ class InventoryItemViewModel extends ViewModelBase {
     this._associatedProduct;
   }
 
+  set quantityOnHand(value) {
+    this.entity.quantityOnHand = value;
+  }
+
   get associatedProduct() {
     if (!this._associatedProduct) {
       this._associatedProduct = {};

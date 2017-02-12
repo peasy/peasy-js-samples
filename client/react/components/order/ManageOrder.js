@@ -14,30 +14,25 @@ class ManageOrder extends ManageEntityBase {
     super(props, context);
     this.cancelButtonClicked = false;
     this.submitOrder = this.submitOrder.bind(this);
-    this.state = {
-      entity: this.props.entity,
-      errors: [],
-      saving: false
-    };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ entity: nextProps.entity });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({ entity: nextProps.entity });
+  // }
 
-  _saveAction(entity) { 
-    return orderActions.save(entity.order);
+  _saveAction(viewModel) { 
+    return orderActions.save(viewModel.entity);
    }
 
-  _redirectUri(entity) {
+  _redirectUri(viewModel) {
     if (this.cancelButtonClicked) {
       return constants.routes.ORDERS;
     }
-    return constants.routes.ORDER + '/' + entity.id;
+    return constants.routes.ORDER + '/' + viewModel.entity.id;
   }
 
   submitOrder() {
-    var orderId = this.props.entity.id;
+    var orderId = this.props.viewModel.entity.id;
     this.props.dispatch(orderActions.submitOrder(orderId))
       .then(() => toastr.success("Order submitted"));
   }

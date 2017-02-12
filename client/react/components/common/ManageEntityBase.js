@@ -71,7 +71,7 @@ class ManageEntityBase extends React.Component {
   change(event) {
     const field = event.target.name;
     let viewModel = this.state.viewModel;
-    viewModel.entity[field] = event.target.value;
+    viewModel[field] = event.target.value;
     return this.setState({
       viewModel: viewModel,
       // clear errors associated with field until validation occurs again

@@ -3,44 +3,45 @@ import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 import { Link } from 'react-router';
 
-const OrderItemForm = ({vm, onSave, onChange, saving, errors, onCancel }) => {
+const OrderItemForm = ({viewModel, onSave, onChange, saving, errors, onCancel }) => {
   return (
     <form>
+
       <SelectInput
         name="categoryId"
         label="Category"
-        value={vm.categoryId}
+        value={viewModel.categoryId}
         defaultOption="Select Category..."
-        options={vm.categories.map(c => { return { text: c.name, value: c.id }})}
+        options={viewModel.categorySelectValues}
         onChange={onChange}
         errors={errors} />
 
       <SelectInput
         name="productId"
         label="Product"
-        value={vm.productId}
+        value={viewModel.productId}
         defaultOption="Select Product..."
-        options={vm.products.map(c => { return { text: c.name, value: c.id }})}
+        options={viewModel.productSelectValues}
         onChange={onChange}
         errors={errors} />
 
       <div className="form-group">
-        <label>In Stock:</label> {20}
+        <label>In Stock:</label> {viewModel.inventoryCount}
       </div>
 
       <div className="form-group">
-        <label>Price:</label> {vm.priceFormatted}
+        <label>Price:</label> {viewModel.priceFormatted}
       </div>
 
       <TextInput
         name="quantity"
         label="Quantity"
-        value={vm.quantity}
+        value={viewModel.entity.quantity}
         onChange={onChange}
         errors={errors} />
 
       <div className="form-group">
-        <label>Amount:</label> {vm.amountFormatted}
+        <label>Amount:</label> {viewModel.amountFormatted}
       </div>
 
       <input
@@ -59,6 +60,5 @@ const OrderItemForm = ({vm, onSave, onChange, saving, errors, onCancel }) => {
     </form>
   );
 };
-
 
 export default OrderItemForm;
