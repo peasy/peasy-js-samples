@@ -6,19 +6,17 @@ import CustomerForm from './CustomerForm';
 import toastr from 'toastr';
 import ManageEntityBase from '../common/ManageEntityBase';
 import constants from '../../constants';
+import CustomerViewModel from '../../viewModels/customerViewModel';
 
 let customerActions = new CustomerActions();
 
 class ManageCustomer extends ManageEntityBase {
-  constructor(props, context) {
-    super(props, context);
-  }
 
-  _saveAction(entity) { 
-    return customerActions.save(entity);
+  _saveAction(viewModel) { 
+    return customerActions.save(viewModel.entity);
    }
 
-  _redirectUri() {
+  _redirectUri(viewModel) {
     return constants.routes.ROOT;
   }
 
@@ -30,7 +28,7 @@ class ManageCustomer extends ManageEntityBase {
           onCancel={this.cancel}
           onChange={this.change}
           onSave={this.save}
-          customer={this.state.entity}
+          viewModel={this.state.viewModel}
           errors={this.state.errors}
           saving={this.state.saving} />
       </div>
@@ -39,18 +37,10 @@ class ManageCustomer extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
-  var entity = {};
-
-  if (ownProps.params.id) {
-    var entityId = parseInt(ownProps.params.id, 10);
-    if (state.customers.length > 0) {
-      entity = state.customers.find(c => c.id === entityId)
-    }
-  }
-
   return {
-    entity: entity 
+    viewModel: new CustomerViewModel(ownProps.params.id, state.customers) 
   };
+
 }
 
 export default connect(mapStateToProps)(ManageCustomer);
