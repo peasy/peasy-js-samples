@@ -1,5 +1,6 @@
 import OrderItemLineItemViewModel from './orderItemLineItemViewModel';
 import ViewModelBase from '../viewModels/viewModelBase';
+import ordersDotCom from '../../businessLogic';
 
 class OrderViewModel extends ViewModelBase {
   constructor(orderId, customers, orders, orderItems, categories, products) {
@@ -86,11 +87,8 @@ class OrderViewModel extends ViewModelBase {
   }
 
   get hasPendingItems() {
-    var result = this.orderItems
-      .filter(i => i.orderItem.orderId === this.entity.id)
-      .some(i => i.orderItem.status === "PENDING");
-
-    return result;
+    var orderItems = this.orderItems.map(vm => vm.orderItem);
+    return ordersDotCom.services.orderService.hasPendingItems(this.entity.id, this.orderItems);
   }
 }
 

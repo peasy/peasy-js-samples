@@ -138,4 +138,13 @@ OrderItemService.prototype.shipCommand = function(orderItemId) {
   return new ShipOrderItemCommand(orderItemId, this.dataProxy, this.inventoryItemService);
 }
 
+OrderItemService.prototype.canDelete = function(orderItem) {
+  return orderItem.status !== "SHIPPED";
+}
+
+OrderItemService.prototype.canShip = function(orderItem) {
+  return orderItem.status === "SUBMITTED" ||
+         orderItem.status === "BACKORDERED";
+}
+
 module.exports = OrderItemService;

@@ -72,4 +72,10 @@ OrderService.prototype.destroyCommand = function(orderId) {
   return new DeleteOrderCommand(orderId, this.dataProxy, this.orderItemService);
 };
 
+OrderService.prototype.hasPendingItems = function(orderId, orderItems) {
+  return orderItems
+    .filter(i => i.orderItem.orderId === orderId)
+    .some(i => i.orderItem.status === "PENDING");
+};
+
 module.exports = OrderService;

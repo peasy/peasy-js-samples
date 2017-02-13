@@ -1,3 +1,5 @@
+import ordersDotCom from '../../businessLogic';
+
 class OrderItemLineItemViewModel {
 
   constructor(orderItem, products) {
@@ -50,12 +52,11 @@ class OrderItemLineItemViewModel {
   }
 
   get canDelete() {
-    return this._orderItem.status !== "SHIPPED";
+    return ordersDotCom.services.orderItemService.canDelete(this._orderItem);
   }
 
   get canShip() {
-    return this._orderItem.status === "SUBMITTED" ||
-           this._orderItem.status === "BACKORDERED";
+    return ordersDotCom.services.orderItemService.canShip(this._orderItem);
   }
 }
 
