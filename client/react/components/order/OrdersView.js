@@ -55,7 +55,7 @@ class OrdersView extends ListViewBase {
         <td>
           <Link to={constants.routes.ORDER + '/' + vm.orderId }>{vm.orderId}</Link>
         </td>
-        <td>{vm.orderDate}</td>
+        <td>{vm.orderDateFormatted}</td>
         <td>{vm.customerName}</td>
         <td className="numericCell">{vm.totalFormatted}</td>
         <td>{vm.status}</td>

@@ -16,6 +16,10 @@ class OrderLineItemViewModel {
     return this._order.orderDate;
   }
 
+  get orderDateFormatted() {
+    return new Date(this.orderDate).toLocaleString();
+  }
+
   get customerName() {
     return this.customer.name;
   }
