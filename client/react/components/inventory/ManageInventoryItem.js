@@ -14,7 +14,7 @@ class ManageInventoryItem extends ManageEntityBase {
     return inventoryItemActions.save(viewModel.entity);
    }
 
-  _redirectUri(viewModel) {
+  _redirectUri() {
     return constants.routes.INVENTORY_ITEMS;
   }
 

@@ -16,19 +16,20 @@ class ManageOrder extends ManageEntityBase {
     this.submitOrder = this.submitOrder.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({ entity: nextProps.entity });
-  // }
-
   _saveAction(viewModel) { 
+    console.log("SAVING...");
     return orderActions.save(viewModel.entity);
    }
 
-  _redirectUri(viewModel) {
+  _redirectUri(savedEntity) {
     if (this.cancelButtonClicked) {
       return constants.routes.ORDERS;
     }
-    return constants.routes.ORDER + '/' + viewModel.entity.id;
+    return constants.routes.ORDER + '/' + savedEntity.id;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({viewModel: nextProps.viewModel});
   }
 
   submitOrder() {
@@ -47,12 +48,12 @@ class ManageOrder extends ManageEntityBase {
       <div>
         <h1>Manage Order</h1>
         <OrderForm
+          dispatch={this.props.dispatch}
           onCancel={this.cancel}
           onChange={this.change}
           onSave={this.save}
           onSubmitOrder={this.submitOrder}
-          orderItems={this.props.orderItems}
-          order={this.state.entity}
+          viewModel={this.state.viewModel}
           errors={this.state.errors}
           saving={this.state.saving} />
       </div>
@@ -61,16 +62,17 @@ class ManageOrder extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
+  console.log("MAP STATE TO PROPS", ownProps.params.id);
+  var orderId = parseInt(ownProps.params.id);
   return {
-    entity: new OrderViewModel(
-      parseInt(ownProps.params.id),
+    viewModel: new OrderViewModel(
+      orderId,
       state.customers,
       state.orders,
       state.orderItems,
       state.categories,
       state.products 
-    ),
-    orderItems: state.orderItems
+    )
   };
 }
 

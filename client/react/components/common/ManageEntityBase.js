@@ -23,7 +23,7 @@ class ManageEntityBase extends React.Component {
     }
   }
 
-  _redirectUri(viewModel) { }
+  _redirectUri() { }
 
   _saveAction(viewModel) { }
 

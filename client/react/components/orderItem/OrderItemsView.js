@@ -25,9 +25,9 @@ class OrderItemsView extends React.Component {
   }
 
   AddItemLink() {
-    if (this.props.orderId) {
+    if (this.props.vm.canAddItem) {
       return (
-        <Link to={ `${constants.routes.ORDER}/${this.props.orderId}/orderitem`} className="btn btn-success btn-xs" >Add item</Link>
+        <Link to={ `${constants.routes.ORDER}/${this.props.vm.id}/orderitem`} className="btn btn-success btn-xs" >Add item</Link>
       );
     }
     return null;
@@ -61,46 +61,46 @@ class OrderItemsView extends React.Component {
     );
   }
 
-  shipButton(orderItem) {
+  shipButton(itemViewModel) {
     var self = this;
-    if (orderItem.canShip) {
+    if (itemViewModel.canShip) {
       return (
         <input className="btn btn-info btn-xs" 
           type="button" 
-          onClick={self.ship(orderItem.id)}
+          onClick={self.ship(itemViewModel.orderItem.id)}
           value="Ship" />
       );
     }
     return null;
   }
 
-  deleteButton(orderItem) {
+  deleteButton(itemViewModel) {
     var self = this;
-    if (orderItem.canDelete) {
+    if (itemViewModel.canDelete) {
       return (
         <input className="btn btn-default btn-xs" 
           type="button" 
-          onClick={self.destroy(orderItem.id)}
+          onClick={self.destroy(itemViewModel.orderItem.id)}
           value="Delete" />
       );
     }
     return null;
   }
 
-  orderItemRow(orderItem, index) {
+  orderItemRow(itemViewModel, index) {
     return (
       <tr key={index}>
-        <td>{this.shipButton(orderItem)}</td>
+        <td>{this.shipButton(itemViewModel)}</td>
         <td>
-          <Link to={ `${constants.routes.ORDER}/${orderItem.orderId}/orderitem/${orderItem.id}`}>{orderItem.productName}</Link>
+          <Link to={ `${constants.routes.ORDER}/${this.props.vm.id}/orderitem/${itemViewModel.orderItem.id}`}>{itemViewModel.productName}</Link>
         </td>
-        <td className="numericCell">{orderItem.priceFormatted}</td>
-        <td className="numericCell">{orderItem.quantity}</td>
-        <td className="numericCell">{orderItem.amountFormatted}</td>
-        <td>{orderItem.status}</td>
-        <td>{orderItem.submittedOn}</td>
-        <td>{orderItem.shippedOn}</td>
-        <td>{this.deleteButton(orderItem)}</td>
+        <td className="numericCell">{itemViewModel.priceFormatted}</td>
+        <td className="numericCell">{itemViewModel.orderItem.quantity}</td>
+        <td className="numericCell">{itemViewModel.amountFormatted}</td>
+        <td>{itemViewModel.orderItem.status}</td>
+        <td>{itemViewModel.submittedOnFormatted}</td>
+        <td>{itemViewModel.shippedOnFormatted}</td>
+        <td>{this.deleteButton(itemViewModel)}</td>
       </tr>
     );
   }
@@ -120,6 +120,7 @@ class OrderItemsView extends React.Component {
     return function() {
       return self.props.dispatch(orderItemActions.destroy(id))
         .then(result => {
+          console.log("RESULT", result);
           if (!result.success) self.handleErrors(result.errors);
         });
     }
@@ -139,17 +140,4 @@ class OrderItemsView extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
-    vm: new OrderViewModel(
-      ownProps.orderId, 
-      state.customers,
-      state.orders,
-      state.orderItems, 
-      state.categories, 
-      state.products
-    )
-  };
-}
-
-export default connect(mapStateToProps)(OrderItemsView);
+export default OrderItemsView;

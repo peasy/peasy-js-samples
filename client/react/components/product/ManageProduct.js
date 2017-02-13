@@ -18,7 +18,7 @@ class ManageProduct extends ManageEntityBase {
     return productActions.save(viewModel.entity);
    }
 
-  _redirectUri(viewModel) {
+  _redirectUri(savedEntity) {
     return constants.routes.PRODUCTS;
   }
 

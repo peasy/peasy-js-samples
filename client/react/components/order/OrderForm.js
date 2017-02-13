@@ -4,25 +4,24 @@ import SelectInput from '../common/SelectInput';
 import { Link } from 'react-router';
 import OrderItemsView from '../orderItem/orderItemsView';
 
-const OrderForm = ({order, orderItems, onSave, onChange, onSubmitOrder, saving, errors, onCancel}) => {
-
+const OrderForm = ({viewModel, onSave, onChange, onSubmitOrder, saving, errors, onCancel, dispatch}) => {
   return (
     <form>
 
       <div className="form-group">
-        <label>Id:</label> {order.id}
+        <label>Id:</label> {viewModel.entity.id}
       </div>
 
       <SelectInput
         name="customerId"
         label="Customer"
-        value={order.customer.id}
+        value={viewModel.entity.customerId}
         defaultOption="Select Customer..."
-        options={order.customers.map(c => { return { text: c.name, value: c.id } })}
+        options={viewModel.customerSelectValues}
         onChange={onChange}
         errors={errors} />
 
-      <OrderItemsView orderId={order.id}/>
+      <OrderItemsView vm={viewModel} dispatch={dispatch}/>
 
       <input
         type="submit"
@@ -49,7 +48,7 @@ const OrderForm = ({order, orderItems, onSave, onChange, onSubmitOrder, saving, 
   );
 
   function getStyle() {
-    if (!order.hasPendingItems) {
+    if (!viewModel.hasPendingItems) {
       return {
         visibility: 'hidden'
       }

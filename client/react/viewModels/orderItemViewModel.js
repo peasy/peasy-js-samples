@@ -1,9 +1,5 @@
 import ViewModelBase from '../viewModels/viewModelBase';
 
-function formatDollars(value) {
-  return value.toLocaleString("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2})
-}
-
 class OrderItemViewModel extends ViewModelBase {
   constructor(orderId, orderItemId, orderItems, categories, products, inventoryItems) {
     super(orderItemId, orderItems);
@@ -67,7 +63,7 @@ class OrderItemViewModel extends ViewModelBase {
   }
 
   set quantity(value) {
-    this.entity.quantity = parseFloat(value);
+    this.entity.quantity = parseFloat(value) || 0;
     this.entity.amount = this.amount;
   }
 
@@ -79,13 +75,13 @@ class OrderItemViewModel extends ViewModelBase {
 
   get amountFormatted() {
     if (this.amount) {
-      return formatDollars(this.amount);
+      return this.formatDollars(this.amount);
     }
   }
 
   get priceFormatted() {
     if (this.entity.price) {
-      return formatDollars(this.entity.price);
+      return this.formatDollars(this.entity.price);
     }
   }
 
@@ -100,138 +96,25 @@ class OrderItemViewModel extends ViewModelBase {
     return this._inventoryCount;
   }
 
+  get submittedOnFormatted() {
+    var submittedOn = this.entity.submittedOn;
+    if (!submittedOn) return '-';
+    return new Date(submittedOn).toLocaleString();
+  }
 
+  get shippedOnFormatted() {
+    var shippedOn = this.entity.shippedOn;
+    if (!shippedOn) return '-';
+    return new Date(shippedOn).toLocaleString();
+  }
 
-
-
-  // get price() {
-  //   return parseFloat(this._orderItem.price) || 0;
-  // }
-
-  // set price(value) {
-  //   this._orderItem.price = parseFloat(value);
-  //   this._orderItem.amount = this.amount;
-  // }
-
-  // get quantity() {
-  //   return parseFloat(this._orderItem.quantity) || 0;
-  // }
-
-  // set quantity(value) {
-  //   this._orderItem.quantity = parseFloat(value);
-  //   this._orderItem.amount = this.amount;
-  // }
-
-
-
-
-
-  // get id() {
-  //   return this._orderItem.id;
-  // }
-
-  // get amountFormatted() {
-  //   return formatDollars(this.amount);
-  // }
-
-  // get amount() {
-  //   return this.price * this.quantity;
-  // }
-
-  // get priceFormatted() {
-  //   return formatDollars(this.price);
-  // }
-
-  // get price() {
-  //   return parseFloat(this._orderItem.price) || 0;
-  // }
-
-  // set price(value) {
-  //   this._orderItem.price = parseFloat(value);
-  //   this._orderItem.amount = this.amount;
-  // }
-
-  // get quantity() {
-  //   return parseFloat(this._orderItem.quantity) || 0;
-  // }
-
-  // set quantity(value) {
-  //   this._orderItem.quantity = parseFloat(value);
-  //   this._orderItem.amount = this.amount;
-  // }
-
-  // get categoryId() {
-  //   return this._currentCategoryId;
-  // }
-
-  // set categoryId(value) {
-  //   this._currentCategoryId = parseInt(value);
-  //   this.productId = null;
-  // }
-
-  // get categories() {
-  //   return this._categories || [];
-  // }
-
-  // get products() {
-  //   if (this._currentCategoryId) {
-  //     return this._products.filter(p => p.categoryId === this._currentCategoryId);
-  //   }
-  //   return this._products;
-  // }
-
-  // get productId() {
-  //   return parseInt(this._orderItem.productId) || 0;
-  // }
-
-  // set productId(value) {
-  //   if (value) {
-  //     var productId = parseInt(value);
-  //     var product = this._products.find(p => parseInt(p.id) === productId);
-  //     this._orderItem.productId = product.id;
-  //     this.price = product.price;
-  //   } else {
-  //     delete this._orderItem.productId;
-  //     this.price = 0;
-  //   }
-  // }
-
-  // get productName() {
-  //   var product = this.products.find(p => p.id === this.productId);
-  //   if (product) {
-  //     return product.name;
-  //   } 
-  //   return "";
-  // }
-
-  // get submittedOn() {
-  //   var submittedOn = this._orderItem.submittedOn;
-  //   if (!submittedOn) return '-';
-  //   return new Date(submittedOn).toLocaleString();
-  // }
-
-  // get shippedOn() {
-  //   var shippedOn = this._orderItem.shippedOn;
-  //   if (!shippedOn) return '-';
-  //   return new Date(shippedOn).toLocaleString();
-  // }
-
-  // get status() {
-  //   return this._orderItem.status || '';
-  // }
-
-  // get canDelete() {
-  //   return this._orderItem.status !== "SHIPPED";
-  // }
-
-  // get canShip() {
-  //   return this._orderItem.status === "SUBMITTED" ||
-  //          this._orderItem.status === "BACKORDERED";
-  // }
-
-  // get orderId() {
-  //   return this._orderItem.orderId;
-  // }
+  get productName() {
+    var product = this._products.find(p => p.id === this.entity.productId);
+    if (product) {
+      return product.name;
+    } 
+    return "";
+  }
 }
 
 export default OrderItemViewModel;

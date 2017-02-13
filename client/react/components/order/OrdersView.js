@@ -5,6 +5,7 @@ import OrderActions from '../../actions/orderActions';
 import toastr from 'toastr';
 import constants from '../../constants';
 import OrderViewModel from '../../viewModels/orderViewModel';
+import OrderLineItemViewModel from '../../viewModels/orderLineItemViewModel';
 
 let orderActions = new OrderActions();
 
@@ -40,27 +41,27 @@ class OrdersView extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.orders.map(this.orderRow)}
+            {this.props.viewModels.map(this.orderRow)}
           </tbody>
         </table>
       </div>
     );
   }
 
-  orderRow(order, index) {
+  orderRow(vm, index) {
     return (
       <tr key={index}>
         <td>
-          <Link to={constants.routes.ORDER + '/' + order.id }>{order.id}</Link>
+          <Link to={constants.routes.ORDER + '/' + vm.orderId }>{vm.orderId}</Link>
         </td>
-        <td>{order.orderDate}</td>
-        <td>{order.customerName}</td>
-        <td className="numericCell">{order.totalFormatted}</td>
-        <td>{order.status}</td>
+        <td>{vm.orderDate}</td>
+        <td>{vm.customerName}</td>
+        <td className="numericCell">{vm.totalFormatted}</td>
+        <td>{vm.status}</td>
         <td>
           <input className="btn btn-default btn-sm" 
             type="button" 
-            onClick={this.destroy(order.id)}
+            onClick={this.destroy(vm.orderId)}
             value="Delete" />
         </td>
       </tr>
@@ -93,18 +94,11 @@ class OrdersView extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   var orders = state.orders || [];
-  orders = orders.map(o => {
-    var customer = state.customers.find(c => c.id === o.customerId);
-    return Object.assign({}, o, { customerName: customer.name });
-  });
   return {
-    orders: orders.map(o => new OrderViewModel(
-      o.id,
-      state.customers,
-      state.orders,
+    viewModels: orders.map(order => new OrderLineItemViewModel(
+      order,
       state.orderItems,
-      state.categories,
-      state.products
+      state.customers
     ))
   };
 }

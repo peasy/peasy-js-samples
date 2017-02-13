@@ -19,7 +19,6 @@ class DestroyCommand extends Command {
   }
 
   _onValidationSuccess(context, done) {
-    debugger;
     this.dataProxy.destroy(this.orderId, done);
   }
 }

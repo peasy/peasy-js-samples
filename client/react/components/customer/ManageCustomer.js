@@ -16,7 +16,7 @@ class ManageCustomer extends ManageEntityBase {
     return customerActions.save(viewModel.entity);
    }
 
-  _redirectUri(viewModel) {
+  _redirectUri(savedEntity) {
     return constants.routes.ROOT;
   }
 

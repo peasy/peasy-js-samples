@@ -16,9 +16,9 @@ class ManageOrderItem extends ManageEntityBase {
     return orderItemActions.save(viewModel.entity);
    }
 
-  _redirectUri(viewModel) {
-    var orderId = this.props.location.pathname.split("/")[3];
-    return constants.routes.ORDER + '/' + orderId;
+  _redirectUri(savedEntity) {
+    var currentOrder = savedEntity || this.props.viewModel.entity;
+    return constants.routes.ORDER + '/' + currentOrder.orderId;
   }
 
   render() {
@@ -38,8 +38,8 @@ class ManageOrderItem extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
-  var orderItemId = ownProps.params.id[0];
-  var orderId = ownProps.params.id[1];
+  var orderId = ownProps.params.id[0];
+  var orderItemId = ownProps.params.id[1];
   return {
     viewModel: new OrderItemViewModel(
       orderId,

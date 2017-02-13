@@ -69,7 +69,6 @@ var OrderService = BusinessService.extendService(BaseService, {
 }).service;
 
 OrderService.prototype.destroyCommand = function(orderId) {
-  debugger;
   return new DeleteOrderCommand(orderId, this.dataProxy, this.orderItemService);
 };
 

@@ -1,12 +1,9 @@
-import OrderItemViewModel from './orderItemViewModel';
+import OrderItemLineItemViewModel from './orderItemLineItemViewModel';
+import ViewModelBase from '../viewModels/viewModelBase';
 
-function formatDollars(value) {
-  return value.toLocaleString("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2})
-}
-
-class OrderViewModel {
+class OrderViewModel extends ViewModelBase {
   constructor(orderId, customers, orders, orderItems, categories, products) {
-    this._orderId = orderId;
+    super(orderId, orders);
     this._currentOrder;
     this._currentCustomer;
     this._currentOrderItems;
@@ -17,11 +14,15 @@ class OrderViewModel {
     this._products = products;
   }
 
+  get customerSelectValues() {
+    return this._customers.map(c => { return { text: c.name, value: c.id }});
+  }
+
   get orderItems() {
     if (!this._currentOrderItems) {
       this._currentOrderItems = this._orderItems
-        .filter(i => i.orderId === this._orderId)
-        .map(i => { return new OrderItemViewModel(i, this._categories, this._products) }); 
+        .filter(i => i.orderId === this.entity.id)
+        .map(i => { return new OrderItemLineItemViewModel(i, this._products) }); 
     }
     return this._currentOrderItems;
   }
@@ -32,7 +33,7 @@ class OrderViewModel {
 
   get order() {
     if (!this._currentOrder) {
-      this._currentOrder = this._orders.find(o => o.id === this._orderId);
+      this._currentOrder = this._orders.find(o => o.id === this.entity.id);
       if (!this._currentOrder) {
         this._currentOrder = {};
       } else {
@@ -44,13 +45,13 @@ class OrderViewModel {
 
   get total() {
     if (this.orderItems.length > 0) {
-      return this.orderItems.map(i => i.amount).reduce((a = 0, b) => a + b)
+      return this.orderItems.map(i => i.orderItem.amount).reduce((a = 0, b) => a + b)
     }
     return 0;
   }
 
   get totalFormatted() {
-    return formatDollars(this.total);
+    return this.formatDollars(this.total);
   }
 
   get orderDate() {
@@ -77,33 +78,17 @@ class OrderViewModel {
 
   set customerId(value) {
     this._currentCustomer = null;
-    this.order.customerId = parseInt(value);
+    this.entity.customerId = value;
   }
 
-  get status() {
-    if (!this.orderItems) return "";
-
-    if (this.orderItems.some(i => i.status === "BACKORDERED")) {
-      return "BACKORDERED";
-    }
-
-    if (this.orderItems.some(i => i.status === "PENDING")) {
-      return "PENDING";
-    }
-
-    if (this.orderItems.some(i => i.status === "SUBMITTED")) {
-      return "SUBMITTED";
-    }
-
-    if (this.orderItems.some(i => i.status === "SHIPPED")) {
-      return "SHIPPED";
-    }
+  get canAddItem() {
+    return this.entity.id;
   }
 
   get hasPendingItems() {
     var result = this.orderItems
-      .filter(i => i.orderId === this.order.id)
-      .some(i => i.status === "PENDING");
+      .filter(i => i.orderItem.orderId === this.entity.id)
+      .some(i => i.orderItem.status === "PENDING");
 
     return result;
   }

@@ -15,7 +15,7 @@ class ManageCategory extends ManageEntityBase {
     return categoryActions.save(viewModel.entity);
    }
 
-  _redirectUri(viewModel) {
+  _redirectUri(savedEntity) {
     return constants.routes.CATEGORIES;
   }
 
