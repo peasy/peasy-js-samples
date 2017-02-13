@@ -78,4 +78,24 @@ OrderService.prototype.hasPendingItems = function(orderId, orderItems) {
     .some(i => i.orderItem.status === "PENDING");
 };
 
+OrderService.prototype.status = function(orderItems) {
+  if (!orderItems) return "";
+
+  if (orderItems.some(i => i.status === "BACKORDERED")) {
+    return "BACKORDERED";
+  }
+
+  if (orderItems.some(i => i.status === "PENDING")) {
+    return "PENDING";
+  }
+
+  if (orderItems.some(i => i.status === "SUBMITTED")) {
+    return "SUBMITTED";
+  }
+
+  if (orderItems.some(i => i.status === "SHIPPED")) {
+    return "SHIPPED";
+  }
+}
+
 module.exports = OrderService;

@@ -1,3 +1,5 @@
+import ordersDotCom from '../../businessLogic';
+
 class OrderLineItemViewModel {
 
   constructor(order, orderItems, customers) {
@@ -41,23 +43,7 @@ class OrderLineItemViewModel {
   }
 
   get status() {
-    if (!this.orderItems) return "";
-
-    if (this.orderItems.some(i => i.status === "BACKORDERED")) {
-      return "BACKORDERED";
-    }
-
-    if (this.orderItems.some(i => i.status === "PENDING")) {
-      return "PENDING";
-    }
-
-    if (this.orderItems.some(i => i.status === "SUBMITTED")) {
-      return "SUBMITTED";
-    }
-
-    if (this.orderItems.some(i => i.status === "SHIPPED")) {
-      return "SHIPPED";
-    }
+    return ordersDotCom.services.orderService.status(this.orderItems);
   }
 
   get customer() {
