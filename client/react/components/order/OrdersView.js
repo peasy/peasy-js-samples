@@ -2,10 +2,14 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import OrderActions from '../../actions/orderActions';
+import OrderItemActions from '../../actions/orderItemActions';
 import toastr from 'toastr';
 import constants from '../../constants';
 import OrderLineItemViewModel from '../../viewModels/orderLineItemViewModel';
 import ListViewBase from '../../components/common/ListViewBase';
+
+let orderActions = new OrderActions();
+let orderItemActions = new OrderItemActions();
 
 class OrdersView extends ListViewBase {
 
@@ -69,8 +73,15 @@ class OrdersView extends ListViewBase {
     );
   }
 
-  _destroyAction(id) {
-    return new OrderActions().destroy(id);
+  destroy(id) {
+    var self = this;
+    return function() {
+      return self.props.dispatch(orderActions.destroy(id))
+        .then(result => {
+          if (!result.success) return self.handleErrors(result.errors);
+          return self.props.dispatch(orderItemActions.destroyByOrder(id));
+        });
+    }
   }
 }
 

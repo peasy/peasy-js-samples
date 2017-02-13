@@ -18,6 +18,9 @@ export default function orderItemReducer(state = [], action) {
       ];
     case constants.actions.DESTROY_ORDER_ITEM_SUCCESS:
       return [...state.filter(orderItem => orderItem.id !== action.id)];
+    case constants.actions.DESTROY_BY_ORDER_SUCCESS:
+      var orderItemIds = action.orderItems.map(i => i.id);
+      return [...state.filter(orderItem => !orderItemIds.includes(orderItem.id))];
     case constants.actions.LOAD_ORDER_ITEMS_SUCCESS:
       return action.orderItems;
     default:

@@ -25,8 +25,24 @@ class OrderItemActions extends ActionsBase {
     return { type: constants.actions.DESTROY_ORDER_ITEM_SUCCESS, id: id };
   }
 
+  destroyByOrderAction(items) {
+    return { type: constants.actions.DESTROY_BY_ORDER_SUCCESS, orderItems: items };
+  }
+
   submitAction(data) {
     return { type: constants.actions.SUBMIT_ORDER_ITEM_SUCCESS, orderItem: data };
+  }
+
+  shipAction(data) {
+    return { type: constants.actions.SHIP_ORDER_ITEM_SUCCESS, orderItem: data };
+  }
+
+  destroyByOrder(orderId) {
+    var self = this;
+    return function(dispatch, getState) {
+      var orderItems = getState().orderItems.filter(i => i.orderId === orderId);
+      return dispatch(self.destroyByOrderAction(orderItems));
+    }
   }
 
   submitOrderItem(id) {
@@ -35,10 +51,6 @@ class OrderItemActions extends ActionsBase {
       var command = self.service().submitCommand(id);
       return new CommandInvoker(dispatch).invoke(command, self.submitAction);
     }
-  }
-
-  shipAction(data) {
-    return { type: constants.actions.SHIP_ORDER_ITEM_SUCCESS, orderItem: data };
   }
 
   shipOrderItem(id) {
