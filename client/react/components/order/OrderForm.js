@@ -21,7 +21,9 @@ const OrderForm = ({viewModel, onSave, onChange, onSubmitOrder, saving, errors, 
         onChange={onChange}
         errors={errors} />
 
-      <OrderItemsView vm={viewModel} dispatch={dispatch}/>
+      <OrderItemsView 
+        viewModel={viewModel} 
+        dispatch={dispatch} />
 
       <input
         type="submit"
@@ -48,13 +50,8 @@ const OrderForm = ({viewModel, onSave, onChange, onSubmitOrder, saving, errors, 
   );
 
   function getStyle() {
-    if (!viewModel.hasPendingItems) {
-      return {
-        visibility: 'hidden'
-      }
-    }
-    return { };
-  };
+    return viewModel.hasPendingItems ? {} : { visibility: 'hidden' };
+  }
 };
 
 

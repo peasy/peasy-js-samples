@@ -1,13 +1,11 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import OrderActions from '../../actions/orderActions';
 import OrderItemActions from '../../actions/orderItemActions';
 import OrderItemForm from './orderItemForm';
 import ManageEntityBase from '../common/ManageEntityBase';
 import constants from '../../constants';
 import OrderItemViewModel from '../../viewModels/orderItemViewModel';
 
-let orderActions = new OrderActions();
 let orderItemActions = new OrderItemActions();
 
 class ManageOrderItem extends ManageEntityBase {

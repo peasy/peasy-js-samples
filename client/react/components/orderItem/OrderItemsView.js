@@ -5,15 +5,20 @@ import OrderItemActions from '../../actions/orderItemActions';
 import toastr from 'toastr';
 import constants from '../../constants';
 import OrderViewModel from '../../viewModels/orderViewModel';
+import ListViewBase from '../../components/common/ListViewBase';
 
 let orderItemActions = new OrderItemActions();
 
-class OrderItemsView extends React.Component {
+class OrderItemsView extends ListViewBase {
 
   constructor(props, context) {
     super(props, context);
     this.orderItemRow = this.orderItemRow.bind(this);
     this.ship = this.ship.bind(this);
+  }
+
+  _destroyAction(id) {
+    return orderItemActions.destroy(id);
   }
 
   render() {
@@ -25,9 +30,9 @@ class OrderItemsView extends React.Component {
   }
 
   AddItemLink() {
-    if (this.props.vm.canAddItem) {
+    if (this.props.viewModel.canAddItem) {
       return (
-        <Link to={ `${constants.routes.ORDER}/${this.props.vm.id}/orderitem`} className="btn btn-success btn-xs" >Add item</Link>
+        <Link to={ `${constants.routes.ORDER}/${this.props.viewModel.id}/orderitem`} className="btn btn-success btn-xs" >Add item</Link>
       );
     }
     return null;
@@ -51,11 +56,11 @@ class OrderItemsView extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.vm.orderItems.map(this.orderItemRow)}
+            {this.props.viewModel.orderItems.map(this.orderItemRow)}
           </tbody>
         </table>
         <div className="form-group">
-          <label>Total:</label> {this.props.vm.totalFormatted}
+          <label>Total:</label> {this.props.viewModel.totalFormatted}
         </div>
       </div>
     );
@@ -92,7 +97,7 @@ class OrderItemsView extends React.Component {
       <tr key={index}>
         <td>{this.shipButton(itemViewModel)}</td>
         <td>
-          <Link to={ `${constants.routes.ORDER}/${this.props.vm.id}/orderitem/${itemViewModel.orderItem.id}`}>{itemViewModel.productName}</Link>
+          <Link to={ `${constants.routes.ORDER}/${this.props.viewModel.id}/orderitem/${itemViewModel.orderItem.id}`}>{itemViewModel.productName}</Link>
         </td>
         <td className="numericCell">{itemViewModel.priceFormatted}</td>
         <td className="numericCell">{itemViewModel.orderItem.quantity}</td>
@@ -115,29 +120,6 @@ class OrderItemsView extends React.Component {
     }
   }
 
-  destroy(id) {
-    var self = this;
-    return function() {
-      return self.props.dispatch(orderItemActions.destroy(id))
-        .then(result => {
-          console.log("RESULT", result);
-          if (!result.success) self.handleErrors(result.errors);
-        });
-    }
-  }
-
-  handleErrors(errors) {
-    if (Array.isArray(errors)) {
-      var validationErrors = errors.filter(e => e.association);
-      if (validationErrors.length > 0) {
-        this.setState({errors: validationErrors})
-      }
-      var allOthers = errors.filter(e => !e.association);
-      allOthers.map(e => e.message).forEach(e => toastr.error(e));
-    } else {
-      toastr.error(errors.message);
-    }
-  }
 }
 
 export default OrderItemsView;

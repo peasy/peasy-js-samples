@@ -17,7 +17,6 @@ class ManageOrder extends ManageEntityBase {
   }
 
   _saveAction(viewModel) { 
-    console.log("SAVING...");
     return orderActions.save(viewModel.entity);
    }
 
@@ -62,7 +61,6 @@ class ManageOrder extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log("MAP STATE TO PROPS", ownProps.params.id);
   var orderId = parseInt(ownProps.params.id);
   return {
     viewModel: new OrderViewModel(

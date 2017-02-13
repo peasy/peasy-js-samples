@@ -2,12 +2,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import CustomerActions from '../../actions/customerActions';
-import toastr from 'toastr';
 import constants from '../../constants';
+import ListViewBase from '../../components/common/ListViewBase';
 
-let customerActions = new CustomerActions();
-
-class CustomersView extends React.Component {
+class CustomersView extends ListViewBase {
 
   constructor(props, context) {
     super(props, context);
@@ -56,27 +54,8 @@ class CustomersView extends React.Component {
     );
   }
 
-  destroy(id) {
-    var self = this;
-    return function() {
-      return self.props.dispatch(customerActions.destroy(id))
-        .then(result => {
-          if (!result.success) self.handleErrors(result.errors);
-        });
-    }
-  }
-
-  handleErrors(errors) {
-    if (Array.isArray(errors)) {
-      var validationErrors = errors.filter(e => e.association);
-      if (validationErrors.length > 0) {
-        this.setState({errors: validationErrors})
-      }
-      var allOthers = errors.filter(e => !e.association);
-      allOthers.map(e => e.message).forEach(e => toastr.error(e));
-    } else {
-      toastr.error(errors.message);
-    }
+  _destroyAction(id) {
+    return new CustomerActions().destroy(id);
   }
 }
 

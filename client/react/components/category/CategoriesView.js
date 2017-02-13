@@ -4,10 +4,9 @@ import {Link} from 'react-router';
 import CategoryActions from '../../actions/categoryActions';
 import toastr from 'toastr';
 import constants from '../../constants';
+import ListViewBase from '../../components/common/ListViewBase';
 
-let categoryActions = new CategoryActions();
-
-class CategoriesView extends React.Component {
+class CategoriesView extends ListViewBase {
 
   constructor(props, context) {
     super(props, context);
@@ -56,29 +55,9 @@ class CategoriesView extends React.Component {
     );
   }
 
-  destroy(id) {
-    var self = this;
-    return function() {
-      return self.props.dispatch(categoryActions.destroy(id))
-        .then(result => {
-          if (!result.success) self.handleErrors(result.errors);
-        });
-    }
+  _destroyAction(id) {
+    return new CategoryActions().destroy(id);
   }
-
-  handleErrors(errors) {
-    if (Array.isArray(errors)) {
-      var validationErrors = errors.filter(e => e.association);
-      if (validationErrors.length > 0) {
-        this.setState({errors: validationErrors})
-      }
-      var allOthers = errors.filter(e => !e.association);
-      allOthers.map(e => e.message).forEach(e => toastr.error(e));
-    } else {
-      toastr.error(errors.message);
-    }
-  }
-
 }
 
 

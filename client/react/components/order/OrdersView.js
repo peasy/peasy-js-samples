@@ -4,12 +4,10 @@ import {Link} from 'react-router';
 import OrderActions from '../../actions/orderActions';
 import toastr from 'toastr';
 import constants from '../../constants';
-import OrderViewModel from '../../viewModels/orderViewModel';
 import OrderLineItemViewModel from '../../viewModels/orderLineItemViewModel';
+import ListViewBase from '../../components/common/ListViewBase';
 
-let orderActions = new OrderActions();
-
-class OrdersView extends React.Component {
+class OrdersView extends ListViewBase {
 
   constructor(props, context) {
     super(props, context);
@@ -68,27 +66,8 @@ class OrdersView extends React.Component {
     );
   }
 
-  destroy(id) {
-    var self = this;
-    return function() {
-      return self.props.dispatch(orderActions.destroy(id))
-        .then(result => {
-          if (!result.success) self.handleErrors(result.errors);
-        });
-    }
-  }
-
-  handleErrors(errors) {
-    if (Array.isArray(errors)) {
-      var validationErrors = errors.filter(e => e.association);
-      if (validationErrors.length > 0) {
-        this.setState({errors: validationErrors})
-      }
-      var allOthers = errors.filter(e => !e.association);
-      allOthers.map(e => e.message).forEach(e => toastr.error(e));
-    } else {
-      toastr.error(errors.message);
-    }
+  _destroyAction(id) {
+    return new OrderActions().destroy(id);
   }
 }
 
