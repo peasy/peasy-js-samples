@@ -21,7 +21,6 @@ class ProductsView extends ListViewBase {
     return (
       <div>
         <h1>Products</h1>
-        <Link to={constants.routes.PRODUCT}>Create New</Link>
         {this.ProductsList()}
       </div>
     );
@@ -32,6 +31,9 @@ class ProductsView extends ListViewBase {
       <table className="table">
         <thead>
           <tr>
+            <th className="addButtonColumn">
+              <Link className="btn btn-success btn-xs" to={constants.routes.PRODUCT}>Create New</Link>
+            </th>
             <th>Name</th>
             <th></th>
           </tr>
@@ -46,6 +48,7 @@ class ProductsView extends ListViewBase {
   productRow(product, index) {
     return (
       <tr key={index}>
+        <td></td>
         <td>
           <Link to={constants.routes.PRODUCT + '/' + product.id }>{product.name}</Link>
         </td>

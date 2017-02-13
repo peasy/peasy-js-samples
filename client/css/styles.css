@@ -33,3 +33,7 @@ nav a {
 .orderItemsList {
   margin-top: 10px;
 }
+
+.addButtonColumn {
+  width: 5%
+}

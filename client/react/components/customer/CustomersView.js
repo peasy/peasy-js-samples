@@ -16,7 +16,6 @@ class CustomersView extends ListViewBase {
     return (
       <div>
         <h1>Customers</h1>
-        <Link to={constants.routes.CUSTOMER}>Create New</Link>
         {this.customersList()}
       </div>
     );
@@ -27,6 +26,9 @@ class CustomersView extends ListViewBase {
       <table className="table">
         <thead>
           <tr>
+            <th className="addButtonColumn">
+              <Link className="btn btn-success btn-xs" to={constants.routes.CUSTOMER}>Create New</Link>
+            </th>
             <th>Name</th>
             <th></th>
           </tr>
@@ -41,6 +43,7 @@ class CustomersView extends ListViewBase {
   customerRow(customer, index) {
     return (
       <tr key={index}>
+        <td></td>
         <td>
           <Link to={ constants.routes.CUSTOMER + '/' + customer.id }>{customer.name}</Link>
         </td>

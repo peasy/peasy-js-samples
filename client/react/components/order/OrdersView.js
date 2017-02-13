@@ -18,7 +18,6 @@ class OrdersView extends ListViewBase {
     return (
       <div>
         <h1>Orders</h1>
-        <Link to={constants.routes.ORDER}>Create New</Link>
         {this.OrdersList()}
       </div>
     );
@@ -30,6 +29,9 @@ class OrdersView extends ListViewBase {
         <table className="table">
           <thead>
             <tr>
+              <th className="addButtonColumn">
+                <Link className="btn btn-success btn-xs" to={constants.routes.ORDER}>Create New</Link>
+              </th>
               <th>Id</th>
               <th>Order Date</th>
               <th>Customer</th>
@@ -49,6 +51,7 @@ class OrdersView extends ListViewBase {
   orderRow(vm, index) {
     return (
       <tr key={index}>
+        <td></td>
         <td>
           <Link to={constants.routes.ORDER + '/' + vm.orderId }>{vm.orderId}</Link>
         </td>

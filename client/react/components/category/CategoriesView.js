@@ -17,7 +17,6 @@ class CategoriesView extends ListViewBase {
     return (
       <div>
         <h1>Categories</h1>
-        <Link to={constants.routes.CATEGORY}>Create New</Link>
         {this.CategoriesList()}
       </div>
     );
@@ -28,6 +27,9 @@ class CategoriesView extends ListViewBase {
       <table className="table">
         <thead>
           <tr>
+            <th className="addButtonColumn">
+              <Link className="btn btn-success btn-xs" to={constants.routes.CATEGORY}>Create New</Link>
+            </th>
             <th>Name</th>
             <th></th>
           </tr>
@@ -42,14 +44,15 @@ class CategoriesView extends ListViewBase {
   categoryRow(category, index) {
     return (
       <tr key={index}>
+        <td></td>
         <td>
           <Link to={constants.routes.CATEGORY + '/' + category.id }>{category.name}</Link>
         </td>
         <td>
-        <input className="btn btn-default btn-sm" 
-          type="button" 
-          onClick={this.destroy(category.id)}
-          value="Delete" />
+          <input className="btn btn-default btn-sm" 
+            type="button" 
+            onClick={this.destroy(category.id)}
+            value="Delete" />
         </td>
       </tr>
     );
