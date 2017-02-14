@@ -18,11 +18,12 @@ let routes = constants.routes;
 
 export default (
   <Route path={routes.ROOT} component={App}>
-    <IndexRoute component={CustomersView} />
+    <IndexRoute component={OrdersView} />
     <Route path={ routes.ORDERS } component={OrdersView} />
     <Route path={ routes.CATEGORIES } component={CategoriesView} />
     <Route path={ routes.CATEGORY } component={ManageCategory} />
     <Route path={ routes.CATEGORY + '/:id' } component={ManageCategory} />
+    <Route path={ routes.CUSTOMERS } component={CustomersView} />
     <Route path={ routes.CUSTOMER } component={ManageCustomer} />
     <Route path={ routes.CUSTOMER + '/:id' } component={ManageCustomer} />
     <Route path={ routes.INVENTORY_ITEMS } component={InventoryItemsView} />

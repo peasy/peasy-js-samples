@@ -7,9 +7,9 @@ let routes = constants.routes;
 const Header = () => {
   return (
     <nav className="navbar navbar-inverse">
-      <IndexLink to={routes.ROOT} activeClassName="active">Customers</IndexLink>
+      <IndexLink to={routes.ROOT} activeClassName="active">Orders</IndexLink>
       {" | "}
-      <Link to={ routes.ORDERS } activeClassName="active">Orders</Link>
+      <Link to={ routes.CUSTOMERS } activeClassName="active">Customers</Link>
       {" | "}
       <Link to={ routes.CATEGORIES } activeClassName="active">Categories</Link>
       {" | "}

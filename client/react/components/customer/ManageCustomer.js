@@ -17,7 +17,7 @@ class ManageCustomer extends ManageEntityBase {
    }
 
   _redirectUri(savedEntity) {
-    return constants.routes.ROOT;
+    return constants.routes.CUSTOMERS;
   }
 
   render() {
