@@ -1,33 +1,34 @@
 var peasy = require('peasy-js');
 
-var BaseService = require('../business_logic/services/baseService');
+// var BaseService = require('../business_logic/services/baseService');
 var CategoryService = require('../business_logic/services/categoryService');
 var CustomerService = require('../business_logic/services/customerService');
 var InventoryItemService = require('../business_logic/services/inventoryItemService')
-var OrderItemService = require('../business_logic/services/clientOrderItemService');
-var OrderService = require('../business_logic/services/clientOrderService');
-var ProductService = require('../business_logic/services/clientProductService');
+var OrderItemService, OrderService, ProductService, proxyFactory;
 
-var CategoryDataProxy = require('../data_proxies/http/categoryDataProxy');
-var CustomerDataProxy = require('../data_proxies/http/customerDataProxy');
-var InventoryItemDataProxy = require('../data_proxies/http/inventoryItemDataProxy');
-var OrderDataProxy = require('../data_proxies/http/orderDataProxy');
-var OrderItemDataProxy = require('../data_proxies/http/orderItemDataProxy');
-var ProductDataProxy = require('../data_proxies/http/productDataProxy');
+function configureInMemory() {
+  OrderItemService = require('../business_logic/services/orderItemService');
+  OrderService = require('../business_logic/services/orderService');
+  ProductService = require('../business_logic/services/productService');
+  proxyFactory = require('../data_proxies/in-memory/inMemoryDataProxyFactory');
+}
 
-var categoryDataProxy = new CategoryDataProxy();
-var customerDataProxy = new CustomerDataProxy(); 
-var inventoryItemDataProxy = new InventoryItemDataProxy();
-var orderDataProxy = new OrderDataProxy();
-var orderItemDataProxy = new OrderItemDataProxy();
-var productDataProxy = new ProductDataProxy();
+function configureHttp() {
+  OrderItemService = require('../business_logic/services/clientOrderItemService');
+  OrderService = require('../business_logic/services/clientOrderService');
+  ProductService = require('../business_logic/services/clientProductService');
+  proxyFactory = require('../data_proxies/http/httpDataProxyFactory');
+}
 
-var inventoryItemService = new InventoryItemService(inventoryItemDataProxy);
-var orderItemService = new OrderItemService(orderItemDataProxy, productDataProxy, inventoryItemService);
-var orderService = new OrderService(orderDataProxy, orderItemService);
-var productService = new ProductService(productDataProxy, orderService, inventoryItemService);
-var categoryService = new CategoryService(categoryDataProxy, productService);
-var customerService = new CustomerService(customerDataProxy, orderService);
+// configureInMemory();
+configureHttp();
+
+var inventoryItemService = new InventoryItemService(proxyFactory.inventoryItemDataProxy);
+var orderItemService = new OrderItemService(proxyFactory.orderItemDataProxy, proxyFactory.productDataProxy, inventoryItemService);
+var orderService = new OrderService(proxyFactory.orderDataProxy, orderItemService);
+var productService = new ProductService(proxyFactory.productDataProxy, orderService, inventoryItemService);
+var categoryService = new CategoryService(proxyFactory.categoryDataProxy, productService);
+var customerService = new CustomerService(proxyFactory.customerDataProxy, orderService);
 
 var ordersDotCom = {
   services: {
