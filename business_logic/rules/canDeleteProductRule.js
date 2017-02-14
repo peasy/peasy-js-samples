@@ -10,7 +10,7 @@ var CanDeleteProductRule = Rule.extend({
         if (result.value && result.value.length > 0) {
           self._invalidate("This product is associated with one or more orders and cannot be deleted");
         }
-        done();
+        done(result.errors);
       });
     }
   }

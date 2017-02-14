@@ -36,8 +36,8 @@ class ManageOrderItem extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
-  var orderId = ownProps.params.id[0];
-  var orderItemId = ownProps.params.id[1];
+  var orderId = ownProps.params.id;
+  var orderItemId = ownProps.params.itemid;
   return {
     viewModel: new OrderItemViewModel(
       orderId,

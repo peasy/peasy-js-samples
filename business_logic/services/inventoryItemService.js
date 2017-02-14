@@ -28,18 +28,16 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
     _onUpdateCommandInitialization: function(context, done) {
       var item = this.data;
       stripAllFieldsFrom(item).except(['id', 'quantityOnHand', 'version', 'productId']);
-      convert(item, "id").toInt();
       convert(item, "quantityOnHand").toFloat();
       convert(item, "version").toInt();
-      convert(item, "productId").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {
       var item = this.data;
       done(null, [
-        new FieldRequiredRule('id', item)
-          .ifValidThenValidate(new FieldTypeRule('id', item.id, "number")),
-        new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number"),
+        new FieldRequiredRule('id', item),
+        new FieldRequiredRule('quantityOnHand', item)
+          .ifValidThenValidate(new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number")),
         new FieldRequiredRule("version", item)
           .ifValidThenValidate(new FieldTypeRule("version", item.version, "number")),
       ]);

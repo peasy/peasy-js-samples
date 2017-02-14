@@ -14,7 +14,6 @@ var CreateProductCommand = Command.extend({
     _onInitialization: function(context, done) {
       var product = this.product;
       convert(product, "price").toFloat();
-      convert(product, "categoryId").toInt();
       stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
       done();
     },
@@ -26,7 +25,6 @@ var CreateProductCommand = Command.extend({
         new FieldRequiredRule("price", product)
              .ifValidThenValidate(new FieldTypeRule("price", product.price, "number")),
         new FieldRequiredRule("categoryId", product)
-             .ifValidThenValidate(new FieldTypeRule("categoryId", product.categoryId, "number")),
       ]);
     },
     _onValidationSuccess: function(context, done) {

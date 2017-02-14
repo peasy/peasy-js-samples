@@ -61,7 +61,7 @@ class ManageOrder extends ManageEntityBase {
 }
 
 function mapStateToProps(state, ownProps) {
-  var orderId = parseInt(ownProps.params.id);
+  var orderId = ownProps.params.id;
   return {
     viewModel: new OrderViewModel(
       orderId,

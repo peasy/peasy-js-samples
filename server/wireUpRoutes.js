@@ -8,10 +8,10 @@ var OrderService = require('../business_logic/services/orderService');
 var OrderItemService = require('../business_logic/services/orderItemService');
 
 //MONGO DATA PROXIES
-//var proxyFactory = require('./data_proxies/mongo/mongoDataProxyFactory');
+var proxyFactory = require('../data_proxies/mongo/mongoDataProxyFactory');
 
 //IN-MEMORY DATA PROXIES
-var proxyFactory = require('../data_proxies/in-memory/inMemoryDataProxyFactory');
+// var proxyFactory = require('../data_proxies/in-memory/inMemoryDataProxyFactory');
 
 var inventoryItemService = new InventoryItemService(proxyFactory.inventoryItemDataProxy);
 var orderItemService = new OrderItemService(proxyFactory.orderItemDataProxy, proxyFactory.productDataProxy, inventoryItemService);
@@ -58,22 +58,20 @@ var wireUpRoutes = function(app) {
     return command;
   });
   routeHelper.addGetRouteHandler(app, '/orders/:id/orderitems', function(request) {
-    return orderItemService.getByOrderCommand(parseInt(request.params.id));
+    return orderItemService.getByOrderCommand(request.params.id);
   });
   routeHelper.addPostRouteHandler(app, '/orders/:id/orderitems', function(request) {
     var item = request.body;
-    item.orderId = parseInt(request.params.id);
+    item.orderId = request.params.id;
     return orderItemService.insertCommand(item);
   });
   routeHelper.createController('/orders', app, orderService);
 
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
-    var orderItemId = parseInt(request.params.id);
-    return orderItemService.submitCommand(orderItemId);
+    return orderItemService.submitCommand(request.params.id);
   });
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
-    var orderItemId = parseInt(request.params.id);
-    return orderItemService.shipCommand(orderItemId);
+    return orderItemService.shipCommand(request.params.id);
   });
   routeHelper.addGetRouteHandler(app, '/orderItems', function(request) {
     var service = orderItemService;

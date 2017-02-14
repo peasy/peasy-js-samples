@@ -9,9 +9,8 @@ class ViewModelBase {
     if (!this._currentEntity) {
       this._currentEntity = {};
       if (this._id) {
-        var entityId = parseInt(this._id);
         if (this._list) {
-          var entity = this._list.find(e => e.id === entityId)
+          var entity = this._list.find(e => e.id === this._id)
           this._currentEntity = Object.assign({}, entity);
         }
       } 

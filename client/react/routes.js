@@ -30,7 +30,7 @@ export default (
     <Route path={ routes.ORDERS } component={OrdersView} />
     <Route path={ routes.ORDER } component={ManageOrder} />
     <Route path={ routes.ORDER + '/:id' } component={ManageOrder} />
-    <Route path={ routes.ORDER + '/:id/orderitem/:id'} component={ManageOrderItem} />
+    <Route path={ routes.ORDER + '/:id/orderitem/:itemid'} component={ManageOrderItem} />
     <Route path={ routes.ORDER + '/:id/orderitem'} component={ManageOrderItem} />
     <Route path={ routes.ORDER_ITEM } component={ManageOrderItem} />
     <Route path={ routes.ORDER_ITEM + '/:id' } component={ManageOrderItem} />

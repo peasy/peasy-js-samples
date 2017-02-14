@@ -22,7 +22,6 @@ var CategoryService = BusinessService.extendService(BaseService, {
     _onUpdateCommandInitialization: function(context, done) {
       var category = this.data;
       stripAllFieldsFrom(category).except(['id', 'name', 'parentid']);
-      convert(category, "id").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {

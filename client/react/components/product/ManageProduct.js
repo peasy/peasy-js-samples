@@ -27,7 +27,7 @@ class ManageProduct extends ManageEntityBase {
     return super.save(event)
       .then((result) => {
         if (result && result.success) {
-          return self.props.dispatch(inventoryItemActions.getById(result.value.id));
+          return self.props.dispatch(inventoryItemActions.loadData());
         }
       });
   }

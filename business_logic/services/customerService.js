@@ -28,14 +28,12 @@ var CustomerService = BusinessService.extendService(BaseService, {
       var customer = this.data;
       stripAllFieldsFrom(customer).except(['id', 'name', 'address']);
       stripAllFieldsFrom(customer.address).except(['street', 'zip']);
-      convert(customer, "id").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {
       var customer = this.data;
       done(null, [
-        new FieldRequiredRule('id', customer)
-          .ifValidThenValidate(new FieldTypeRule('id', customer.id, "number")),
+        new FieldRequiredRule('id', customer),
         new FieldLengthRule("name", customer.name, 50)
       ]); 
     },

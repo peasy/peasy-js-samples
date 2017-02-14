@@ -53,7 +53,7 @@ class ManageEntityBase extends React.Component {
 
   handleErrors(errors) {
     if (Array.isArray(errors)) {
-      var exclusionList = ['amount'];
+      var exclusionList = ['id', 'amount'];
       var validationErrors = errors.filter(e => e.association && exclusionList.indexOf(e.association) === -1);
       if (validationErrors.length > 0) {
         this.setState({errors: validationErrors})

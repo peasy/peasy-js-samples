@@ -2,12 +2,14 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import OrderItemActions from '../../actions/orderItemActions';
+import InventoryItemActions from '../../actions/inventoryItemActions';
 import toastr from 'toastr';
 import constants from '../../constants';
 import OrderViewModel from '../../viewModels/orderViewModel';
 import ListViewBase from '../../components/common/ListViewBase';
 
 let orderItemActions = new OrderItemActions();
+let inventoryItemActions = new InventoryItemActions();
 
 class OrderItemsView extends ListViewBase {
 
@@ -116,6 +118,7 @@ class OrderItemsView extends ListViewBase {
       return self.props.dispatch(orderItemActions.shipOrderItem(id))
         .then(result => {
           if (!result.success) self.handleErrors(result.errors);
+          self.props.dispatch(inventoryItemActions.loadData());
         });
     }
   }

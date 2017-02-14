@@ -27,8 +27,7 @@ class OrderItemViewModel extends ViewModelBase {
   }
 
   set categoryId(value) {
-    var categoryId = parseInt(value);
-    this._selectedCategoryId = categoryId;
+    this._selectedCategoryId = value;
     this.productId = null;
   }
 
@@ -38,7 +37,7 @@ class OrderItemViewModel extends ViewModelBase {
 
   set productId(value) {
     if (value) {
-      var productId = parseInt(value);
+      var productId = value;
       var product = this._products.find(p => p.id === productId);
       this.entity.productId = productId;
       this.entity.price = product.price;

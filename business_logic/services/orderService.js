@@ -16,7 +16,6 @@ var OrderService = BusinessService.extendService(BaseService, {
       var order = this.data;
       stripAllFieldsFrom(order).except(['customerId']);
       order.orderDate = new Date();
-      convert(order, "customerId").toInt();
       done();
     },
     _getRulesForInsertCommand: function(context, done) {
@@ -26,7 +25,6 @@ var OrderService = BusinessService.extendService(BaseService, {
     _onUpdateCommandInitialization: function(context, done) {
       var order = this.data;
       stripAllFieldsFrom(order).except(['id', 'customerId']);
-      convert(order, "customerId").toInt();
       done();
     },
     _getRulesForUpdateCommand: function(context, done) {
@@ -41,7 +39,6 @@ var OrderService = BusinessService.extendService(BaseService, {
     _getRules: function(context, done) {
       done(null, [
         new FieldRequiredRule('customerId', { customerId: this.customerId })
-          .ifValidThenValidate(new FieldTypeRule('customerId', this.customerId, "number")),
       ]);
     },
     _onValidationSuccess: function(context, done) {
@@ -57,7 +54,6 @@ var OrderService = BusinessService.extendService(BaseService, {
     _getRules: function(context, done) {
       done(null, [
         new FieldRequiredRule('productId', { productId: this.productId })
-          .ifValidThenValidate(new FieldTypeRule('productId', this.productId, "number")),
       ]);
     },
     _onValidationSuccess: function(context, done) {

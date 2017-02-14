@@ -20,7 +20,7 @@ InMemoryDataProxy.prototype.getAll = function(done) {
 };
 
 InMemoryDataProxy.prototype.insert = function(data, done) {
-  data.id = this._store.length + 1;
+  data.id = (this._store.length + 1).toString();
   this._store.push(Object.assign({}, data));
   done(null, data);
 };

@@ -17,6 +17,7 @@ OrderDataProxy.prototype.getByCustomer = function(customerId, done) {
 OrderDataProxy.prototype.getByProduct = function(productId, done) {
   var self = this;
   self._orderItemDataProxy.getAll(function(err, items) {
+    console.log("ITEMS", items);
     var orderIds = items.filter(function(item) {
       return item.productId === productId;
     }).map(function(item) {

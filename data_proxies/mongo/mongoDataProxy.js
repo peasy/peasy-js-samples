@@ -50,7 +50,7 @@ MongoDataProxy.prototype.insert = function(data, done) {
     var collection = db.collection(self.collectionName);
     collection.insert(data, function(err, result) {
       var entity = result.ops[0];
-      entity.id = entity._id;
+      entity.id = entity._id.toString();
       delete entity._id;
       db.close();
       done(err, entity);

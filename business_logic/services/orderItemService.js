@@ -21,8 +21,6 @@ var OrderItemService = BusinessService.extendService(BaseService, {
       var item = this.data;
       stripAllFieldsFrom(item).except(['orderId', 'productId', 'quantity', 'amount', 'price']);
       item.status = "PENDING";
-      convert(item, "orderId").toInt();
-      convert(item, "productId").toInt();
       convert(item, "quantity").toFloat();
       convert(item, "amount").toFloat();
       convert(item, "price").toFloat();
@@ -55,8 +53,6 @@ var OrderItemService = BusinessService.extendService(BaseService, {
     _onUpdateCommandInitialization: function(context, done) {
       var item = this.data;
       stripAllFieldsFrom(item).except(['id', 'quantity', 'amount', 'price', 'productId', 'orderId']);
-      convert(item, "orderId").toInt();
-      convert(item, "productId").toInt();
       convert(item, "quantity").toFloat();
       convert(item, "amount").toFloat();
       convert(item, "price").toFloat();
