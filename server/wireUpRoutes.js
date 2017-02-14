@@ -8,10 +8,10 @@ var OrderService = require('../business_logic/services/orderService');
 var OrderItemService = require('../business_logic/services/orderItemService');
 
 //MONGO DATA PROXIES
-var proxyFactory = require('../data_proxies/mongo/mongoDataProxyFactory');
+// var proxyFactory = require('../data_proxies/mongo/mongoDataProxyFactory');
 
 //IN-MEMORY DATA PROXIES
-// var proxyFactory = require('../data_proxies/in-memory/inMemoryDataProxyFactory');
+var proxyFactory = require('../data_proxies/in-memory/inMemoryDataProxyFactory');
 
 var inventoryItemService = new InventoryItemService(proxyFactory.inventoryItemDataProxy);
 var orderItemService = new OrderItemService(proxyFactory.orderItemDataProxy, proxyFactory.productDataProxy, inventoryItemService);
