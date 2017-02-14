@@ -68,7 +68,7 @@ class ProductsView extends ListViewBase {
       return self.props.dispatch(productActions.destroy(id))
         .then(result => {
           if (!result.success) return self.handleErrors(result.errors);
-          return self.props.dispatch(inventoryItemActions.destroy(id));
+          return self.props.dispatch(inventoryItemActions.loadData());
         });
     }
   }
