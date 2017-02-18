@@ -32,12 +32,12 @@ var customerService = new CustomerService(proxyFactory.customerDataProxy, orderS
 
 var ordersDotCom = {
   services: {
-    categoryService,
-    customerService,
-    inventoryItemService,
-    orderItemService,
-    orderService,
-    productService
+    categoryService: categoryService,
+    customerService: customerService,
+    inventoryItemService: inventoryItemService,
+    orderItemService: orderItemService,
+    orderService: orderService,
+    productService: productService
   }
 };
 
