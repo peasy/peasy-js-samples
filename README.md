@@ -30,9 +30,9 @@ With the application up and running you can navigate to the following urls:
 * [http://localhost:3000/categories](http://localhost:3000/categories)
 * [http://localhost:3000/inventoryitems](http://localhost:3000/inventoryitems)
 
-### Application Walkthrough
+### API Walkthrough
 
-[This walkthrough](https://github.com/peasy/peasy-js-samples/wiki/Application-Walkthrough) covers creating a customer, category, product, and placing an order on behalf of the new customer.  It also covers submitting and shipping an order to see how it affects inventory.
+[This walkthrough](https://github.com/peasy/peasy-js-samples/wiki/API-Walkthrough) covers creating a customer, category, product, and placing an order on behalf of the new customer.  It also covers submitting and shipping an order to see how it affects inventory.
 
 ### Mongodb Configuration
 
