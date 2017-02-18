@@ -19,6 +19,8 @@ From a command line, navigate to the peasy-js-samples directory and run:
 1. ``` npm install ```
 2. ``` npm run start ```
 
+![samples](https://www.dropbox.com/s/85knat70l0f6pc0/peasy-samples.gif?dl=0&raw=1)
+
 ### Testing out the application
 
 With the application up and running you can navigate to the following urls:
