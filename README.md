@@ -21,7 +21,7 @@ From a command line, navigate to the peasy-js-samples directory and run:
 
 ![samples](https://www.dropbox.com/s/85knat70l0f6pc0/peasy-samples.gif?dl=0&raw=1)
 
-### Testing out the web api
+### Testing out the web API
 
 With the application up and running you can navigate to the following urls:
 
@@ -32,7 +32,7 @@ With the application up and running you can navigate to the following urls:
 * [http://localhost:3000/categories](http://localhost:3000/categories)
 * [http://localhost:3000/inventoryitems](http://localhost:3000/inventoryitems)
 
-### Web api Walkthrough
+### Web API Walkthrough
 
 [This walkthrough](https://github.com/peasy/peasy-js-samples/wiki/API-Walkthrough) covers creating a customer, category, product, and placing an order on behalf of the new customer.  It also covers submitting and shipping an order to see how it affects inventory.
 
