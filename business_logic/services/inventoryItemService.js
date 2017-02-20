@@ -36,8 +36,7 @@ var InventoryItemService = BusinessService.extendService(BaseService, {
       var item = this.data;
       done(null, [
         new FieldRequiredRule('id', item),
-        new FieldRequiredRule('quantityOnHand', item)
-          .ifValidThenValidate(new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number")),
+        new FieldTypeRule("quantityOnHand", item.quantityOnHand, "number"),
         new FieldRequiredRule("version", item)
           .ifValidThenValidate(new FieldTypeRule("version", item.version, "number")),
       ]);

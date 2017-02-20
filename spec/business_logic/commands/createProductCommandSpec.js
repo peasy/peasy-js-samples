@@ -34,7 +34,6 @@ describe("CreateProductCommand", function() {
         };
         var command = new CreateProductCommand(payload, dataProxy, inventoryService);
         command.execute((err, result) => {
-          expect(result.value.categoryId).toEqual(1);
           expect(result.value.price).toEqual(52.75);
         });
       })

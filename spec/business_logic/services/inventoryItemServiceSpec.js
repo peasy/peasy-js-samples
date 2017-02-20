@@ -125,10 +125,8 @@ describe("InventoryItemService", function() {
           quantityOnHand: 3.755,
           productId: 2
         };
-        inventoryItem.id = "1";
         inventoryItem.version = "2";
         inventoryItem.quantityOnHand = "3.755";
-        inventoryItem.productId = "2";
         var service = new InventoryItemService(dataProxy);
         service.updateCommand(inventoryItem).execute((err, result) => {
           expect(dataProxy.update).toHaveBeenCalledWith(expectedResult, jasmine.any(Function));
@@ -141,12 +139,6 @@ describe("InventoryItemService", function() {
         it("is required", () => {
           var service = new InventoryItemService(dataProxy);
           service.updateCommand({version: 1, quantityOnHand: 0}).execute((err, result) => {
-            expect(result.errors.length).toEqual(1);
-          });
-        });
-        it("is the correct type", () => {
-          var service = new InventoryItemService(dataProxy);
-          service.updateCommand({id: "badvalue", version: 1, quantityOnHand: 0}).execute((err, result) => {
             expect(result.errors.length).toEqual(1);
           });
         });

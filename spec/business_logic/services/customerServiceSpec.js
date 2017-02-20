@@ -123,12 +123,6 @@ describe("CustomerService", function() {
             expect(result.errors.length).toEqual(1);
           });
         });
-        it("is the correct type", () => {
-          var service = new CustomerService(dataProxy);
-          service.updateCommand({id: "hello", name: 'Jimi Hendrix'}).execute((err, result) => {
-            expect(result.errors.length).toEqual(1);
-          });
-        });
       });
       describe("name", () => {
         it("is the correct length", () => {
