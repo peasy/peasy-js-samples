@@ -21,9 +21,7 @@ From a command line, navigate to the peasy-js-samples directory and run:
 
 ![samples](https://www.dropbox.com/s/85knat70l0f6pc0/peasy-samples.gif?dl=0&raw=1)
 
-By default, the client (react) application is configured to use in-memory implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxyy). However, there are a few configuration possibilities.  The [configurations](https://github.com/peasy/Samples#configurations) section provides details on setting up many potential configurations.
-
-
+By default, the client (react) application is configured to use in-memory implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxyy). However, there are a few configuration possibilities.  The [configurations](https://github.com/peasy/peasy-js-samples#configurations) section provides details on setting up many potential configurations.
 
 ### Configurations
 
