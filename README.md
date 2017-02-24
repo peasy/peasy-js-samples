@@ -25,13 +25,13 @@ By default, the client (react) application is configured to use in-memory implem
 
 ### Configurations
 
-#### Client &#8594; In-Memory (Default configuration)
+#### Client &#8594; In-Memory
 
 In this scenario, the client consumes [business services](https://github.com/peasy/peasy-js/wiki/BusinessService) that are injected with [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy) that communicate with in-memory data stores.  
 
-[![archlessnode](https://www.dropbox.com/s/ifzuwhse8thvn7p/FullArchitectureLessNode%20%281%29.svg?dl=01&raw=1)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-In-Memory-(default))
+[![archlessnode](https://www.dropbox.com/s/ifzuwhse8thvn7p/FullArchitectureLessNode%20%281%29.svg?dl=01&raw=1)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-In-Memory)
 
-#### Client &#8594; Web API &#8594; In-Memory
+#### Client &#8594; Web API &#8594; In-Memory (Default configuration)
 
 In this scenario, the client consumes [business services](https://github.com/peasy/peasy-js/wiki/BusinessService) that are injected with [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy) that use HTTP to communicate with the Web API application.  In turn, the Web API application uses business services that are injected with data proxies that communicate with in-memory data stores.
 
