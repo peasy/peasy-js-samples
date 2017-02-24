@@ -10,7 +10,7 @@ The sample application is a ficticious order entry / inventory management system
 
 1. [nodejs](https://nodejs.org/) - this application is a nodejs application and therefore must be installed.
 2. [postman](https://www.getpostman.com/), [fiddler](https://www.telerik.com/download/fiddler), [cURL](https://curl.haxx.se/download.html), or similar - these tools help to facilitate communications with http endpoints.
-3. [MongoDB](https://www.mongodb.com/) (**optional**) - this application by default is configured to work with in-memory data proxies, however, you can easily swap data proxies to interact with a mongodb instance if desired. See [MongoDB Configuration](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-MongoDB#mongodb-configuration) for more details.
+3. [MongoDB](https://www.mongodb.com/) (**optional**) - this application by default is configured to work with in-memory data proxies, however, you can easily swap data proxies to interact with a mongodb instance if desired. See [MongoDB Configuration](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-MongoDB) for more details.
 
 ### Running the application
 
