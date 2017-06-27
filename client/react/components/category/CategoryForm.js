@@ -11,7 +11,7 @@ const CategoryForm = ({viewModel, onSave, onChange, saving, errors, onCancel}) =
         value={viewModel.entity.name}
         onChange={onChange}
         errors={errors} />
-      
+
       <input
         type="submit"
         disabled={saving}

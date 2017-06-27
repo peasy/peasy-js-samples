@@ -8,19 +8,19 @@ class ProductActions extends ActionsBase {
     return ordersDotCom.services.productService;
   }
 
-  getAllAction(data) { 
+  getAllAction(data) {
     return { type: constants.actions.LOAD_PRODUCTS_SUCCESS, products: data };
   }
 
-  insertAction(data) { 
+  insertAction(data) {
     return { type: constants.actions.INSERT_PRODUCT_SUCCESS, product: data };
   }
 
-  updateAction(data) { 
+  updateAction(data) {
     return { type: constants.actions.UPDATE_PRODUCT_SUCCESS, product: data };
   }
 
-  destroyAction(id) { 
+  destroyAction(id) {
     return { type: constants.actions.DESTROY_PRODUCT_SUCCESS, id: id };
   }
 }
