@@ -87,8 +87,12 @@ var wireUpRoutes = function(app) {
     res.render('../../views/index', { title: 'orders.com' });
   });
 
-  app.get('*', function(req, res, next) {
+  app.get('/react', function(req, res, next) {
     res.sendFile(path.join(__dirname, '../client/react/index.html'));
+  });
+
+  app.get('/angular', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../client/angular/src/index.html'));
   });
 };
 
