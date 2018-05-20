@@ -92,8 +92,9 @@ var wireUpRoutes = function(app) {
   });
 
   app.get('/angular', function(req, res, next) {
-    res.sendFile(path.join(__dirname, '../client/angular/src/index.html'));
+    res.sendFile(path.join(__dirname, '../client/angular/dist/angular/index.html'));
   });
+
 };
 
 module.exports = wireUpRoutes;

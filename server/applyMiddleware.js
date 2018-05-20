@@ -17,8 +17,10 @@ var applyMiddleware = function(app) {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
+
   app.use(express.static('public'));
   app.use(express.static('node_modules'));
+  app.use(express.static('client'));
 };
 
 function lowerCaseQueryParams(req, res, next) {
