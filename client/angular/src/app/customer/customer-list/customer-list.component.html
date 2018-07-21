@@ -1,0 +1,9 @@
+<label>Name:
+  <input [(ngModel)] = "currentCustomer.name">
+  {{ currentCustomer.name }}
+  <ul>
+    <li *ngFor="let customer of customers" (click)="customerClicked(customer)">
+      {{ customer.name }}
+    </li>
+  </ul>
+</label>
