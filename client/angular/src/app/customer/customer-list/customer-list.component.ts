@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../../customer';
-import { Customers } from '../../customers';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-customer-list',
@@ -12,12 +12,21 @@ export class CustomerListComponent implements OnInit {
   currentCustomer: Customer;
   customers: Customer[];
 
-  constructor() {
+  constructor(private customerService: CustomerService) {
   }
 
-  ngOnInit(): void {
-    this.customers = Customers;
-    this.currentCustomer = this.customers[0];
+  // async ngOnInit() {
+  //   console.log('made it');
+  //   this.customers = await this.customerService.getAll();
+  //   this.currentCustomer = this.customers[0];
+  // }
+
+  ngOnInit() {
+    console.log('made it');
+    this.customerService.getAll().then(results => {
+      this.customers = results;
+      this.currentCustomer = this.customers[0];
+    });
   }
 
   customerClicked(customer: Customer): void {

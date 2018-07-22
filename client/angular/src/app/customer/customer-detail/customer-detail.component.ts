@@ -14,6 +14,7 @@ export class CustomerDetailComponent implements OnInit {
   selectedCustomer: Customer;
 
   ngOnInit() {
+    this.selectedCustomer = new Customer();
   }
 
 }
