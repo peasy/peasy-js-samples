@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CustomerDetailViewModel } from './customer-detail-viewmodel';
 import { CustomerService } from '../../services/customer.service';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from '../../customer';
 import { CustomerService } from '../../services/customer.service';
+import { Customer } from '../../contracts';
 
 @Component({
   selector: 'app-customer-list',
@@ -18,5 +18,4 @@ export class CustomerListComponent implements OnInit {
     const result = await this.customerService.getAll();
     this.customers = result.value;
   }
-
 }
