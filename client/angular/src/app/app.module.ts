@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { OrderDetailComponent } from './order/order-detail/order-detail.component';
+import { OrderListComponent } from './order/order-list/order-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerListComponent,
-    CustomerDetailComponent
+    CustomerDetailComponent,
+    OrderDetailComponent,
+    OrderListComponent
   ],
   imports: [
     BrowserModule,
