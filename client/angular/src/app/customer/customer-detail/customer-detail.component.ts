@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Customer } from '../../customer';
 import { ActivatedRoute } from '../../../../node_modules/@angular/router';
-import { CustomerService } from '../../services/customer.service';
 import { Location } from '@angular/common';
+import { CustomerDetailViewModel } from './customer-detail-viewmodel';
+import ordersDotCom from '../../../../../businessLogic.js';
 
 @Component({
   selector: 'app-customer-detail',
@@ -13,19 +13,21 @@ export class CustomerDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
-    private customerService: CustomerService) { }
+    private location: Location) { }
 
-  @Input()
-  selectedCustomer: Customer = new Customer();
+  viewModel: CustomerDetailViewModel = new CustomerDetailViewModel(ordersDotCom.services.customerService);
 
   async ngOnInit(): Promise<void> {
-    const customers = await this.customerService.getAll();
-    this.selectedCustomer = customers.find(c => c.id === this.route.snapshot.paramMap.get('id'));
+    const customerId = this.route.snapshot.params['id'];
+    this.viewModel = new CustomerDetailViewModel(ordersDotCom.services.customerService, customerId);
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    this.viewModel.save();
   }
 
 }
