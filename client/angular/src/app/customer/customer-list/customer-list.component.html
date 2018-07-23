@@ -1,6 +1,6 @@
 <ul>
   <li *ngFor="let customer of customers" (click)="customerClicked(customer)">
-    {{ customer.name }}
+    <a routerLink="/customers/{{customer.id}}">{{ customer.name }}</a>
   </li>
 </ul>
-<app-customer-detail [selectedCustomer]="currentCustomer"></app-customer-detail>
+<!-- <app-customer-detail [selectedCustomer]="currentCustomer"></app-customer-detail> -->

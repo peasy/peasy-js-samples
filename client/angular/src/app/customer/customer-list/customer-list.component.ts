@@ -9,28 +9,13 @@ import { CustomerService } from '../../services/customer.service';
 })
 export class CustomerListComponent implements OnInit {
 
-  currentCustomer: Customer;
   customers: Customer[];
 
   constructor(private customerService: CustomerService) {
   }
 
-  // async ngOnInit() {
-  //   console.log('made it');
-  //   this.customers = await this.customerService.getAll();
-  //   this.currentCustomer = this.customers[0];
-  // }
-
-  ngOnInit() {
-    console.log('made it');
-    this.customerService.getAll().then(results => {
-      this.customers = results;
-      this.currentCustomer = this.customers[0];
-    });
-  }
-
-  customerClicked(customer: Customer): void {
-    this.currentCustomer = customer;
+  async ngOnInit() {
+    this.customers = await this.customerService.getAll();
   }
 
 }
