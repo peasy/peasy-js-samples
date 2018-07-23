@@ -15,7 +15,8 @@ export class CustomerListComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.customers = await this.customerService.getAll();
+    const result = await this.customerService.getAll();
+    this.customers = result.value;
   }
 
 }

@@ -1,10 +1,10 @@
-// import { Customer } from '../../customer';
+import { CustomerService, ExecutionResult } from '../../services/customer.service';
 
-interface Entity {
+export interface Entity {
   id: string;
 }
 
-interface Customer extends Entity {
+export interface Customer extends Entity {
   name: string;
 }
 
@@ -16,7 +16,7 @@ class ViewModelBase<T extends Entity> {
 
   protected CurrentEntity: T;
 
-  constructor(protected service, protected entityId: string = null) {
+  constructor(protected service: CustomerService, protected entityId: string = null) {
     this.CurrentEntity = { id: null} as T;
     if (this.entityId) {
       this.loadData();
@@ -24,8 +24,7 @@ class ViewModelBase<T extends Entity> {
   }
 
   private loadData() {
-    const command = this.service.getByIdCommand(this.entityId);
-    this.handleCommand(command);
+    this.handle(() => this.service.getById(this.entityId));
   }
 
   get id(): string {
@@ -53,28 +52,30 @@ class ViewModelBase<T extends Entity> {
     return error ? error.message : null;
   }
 
-  private handleCommand(command): void {
+  protected async handle(command): Promise<void> {
     this._isBusy = true;
-    command.execute((err, result) => {
-      this._isBusy = false;
-      this._isDirty = false;
-      if (err) { return this._errors.push(err); }
-      if (!result.success) {
-        this._errors = result.errors;
-        return;
-      }
+    try  {
+      const result = await command();
       this.CurrentEntity = result.value;
-    });
+      this._isDirty = false;
+    } catch (e) {
+      if (Array.isArray(e)) {
+        this._errors = e;
+      } else {
+        this._errors.push(e);
+      }
+    }
+    this._isBusy = false;
   }
 
-  save(): void {
+  async save(): Promise<void> {
     if (this.isDirty) {
       this._errors = [];
-      let command = this.service.updateCommand(this.CurrentEntity);
       if (this.isNew) {
-        command = this.service.insertCommand(this.CurrentEntity);
+        return await this.handle(() => this.service.insert(this.CurrentEntity));
+      } else {
+        return await this.handle(() => this.service.update(this.CurrentEntity));
       }
-      this.handleCommand(command);
     }
   }
 
