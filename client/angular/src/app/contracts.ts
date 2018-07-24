@@ -6,6 +6,10 @@ export interface Customer extends Entity {
   name: string;
 }
 
+export interface Category extends Entity {
+  name: string;
+}
+
 export interface Error {
   association: string;
   message: string;

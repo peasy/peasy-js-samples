@@ -1,0 +1,15 @@
+<div>
+  <div>
+    <!-- <label *ngIf="viewModel.isBusy">Loading ....</label> -->
+    <ul *ngIf="viewModel.errors">
+      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+    </ul>
+    <label for="name">Name</label>
+    <div>
+      <input id="name" [(ngModel)] = "viewModel.name">
+      <label>{{viewModel.getErrorMessageFor('name')}}</label>
+    </div>
+  </div>
+</div>
+<button (click)="goBack()">go back</button>
+<button [disabled]="!viewModel.isDirty" (click)="save()">save</button>

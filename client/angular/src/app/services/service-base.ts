@@ -1,14 +1,4 @@
-
-export interface Error {
-  association: string;
-  message: string;
-}
-
-export interface ExecutionResult<T> {
-  success: boolean;
-  errors: Error[];
-  value: T;
-}
+import { ExecutionResult } from '../contracts';
 
 export class ServiceBase<T> {
 

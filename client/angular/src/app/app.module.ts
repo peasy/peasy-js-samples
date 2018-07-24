@@ -8,6 +8,7 @@ import { CustomerDetailComponent } from './customer/customer-detail/customer-det
 import { AppRoutingModule } from '../app-routing.module';
 import { OrderDetailComponent } from './order/order-detail/order-detail.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
+import { CategoryDetailComponent } from './category/category-detail/category-detail.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { OrderListComponent } from './order/order-list/order-list.component';
     CustomerListComponent,
     CustomerDetailComponent,
     OrderDetailComponent,
-    OrderListComponent
+    OrderListComponent,
+    CategoryDetailComponent
   ],
   imports: [
     BrowserModule,
