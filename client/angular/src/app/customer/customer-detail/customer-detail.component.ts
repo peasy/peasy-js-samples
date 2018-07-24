@@ -16,19 +16,19 @@ export class CustomerDetailComponent implements OnInit {
     private location: Location,
     private customerService: CustomerService) { }
 
-  viewModel: CustomerDetailViewModel = new CustomerDetailViewModel(this.customerService);
+  public viewModel: CustomerDetailViewModel = new CustomerDetailViewModel(this.customerService);
 
-  async ngOnInit(): Promise<void> {
+  public async ngOnInit(): Promise<void> {
     let customerId = this.route.snapshot.params['id'];
     if (customerId.toLowerCase() === 'new') { customerId = null; }
     this.viewModel = new CustomerDetailViewModel(this.customerService, customerId);
   }
 
-  goBack(): void {
+  public goBack(): void {
     this.location.back();
   }
 
-  async save(): Promise<void> {
+  public async save(): Promise<void> {
     await this.viewModel.save();
     this.goBack();
   }

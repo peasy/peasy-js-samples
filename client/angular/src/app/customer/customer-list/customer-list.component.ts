@@ -9,12 +9,12 @@ import { Customer } from '../../contracts';
 })
 export class CustomerListComponent implements OnInit {
 
-  customers: Customer[];
+  public customers: Customer[];
 
   constructor(private customerService: CustomerService) {
   }
 
-  async ngOnInit() {
+  public async ngOnInit() {
     const result = await this.customerService.getAll();
     this.customers = result.value;
   }
