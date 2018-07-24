@@ -8,6 +8,10 @@ class CustomerViewModel extends ViewModelBase {
   set name(value) {
     this.entity.name = value;
   }
+
+  get name() {
+    return this.entity.name;
+  }
 }
 
 export default CustomerViewModel;

@@ -45,13 +45,15 @@ export class ViewModelBase<T extends Entity> {
     return error ? error.message : null;
   }
 
-  protected async handle(command): Promise<void> {
+  protected async handle(command): Promise<boolean> {
+    let success = true;
     this._isBusy = true;
     try  {
       const result = await command();
       this.CurrentEntity = result.value;
       this._isDirty = false;
     } catch (e) {
+      success = false;
       if (Array.isArray(e)) {
         this._errors = e;
       } else {
@@ -59,9 +61,10 @@ export class ViewModelBase<T extends Entity> {
       }
     }
     this._isBusy = false;
+    return success;
   }
 
-  async save(): Promise<void> {
+  async save(): Promise<boolean> {
     if (this.isDirty) {
       this._errors = [];
       if (this.isNew) {

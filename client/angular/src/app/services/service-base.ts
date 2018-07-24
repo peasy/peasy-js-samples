@@ -31,6 +31,9 @@ export class ServiceBase<T> {
         if (err) {
           return reject(err);
         }
+        if (!result.success) {
+          return reject(result.errors);
+        }
         return resolve(result);
       });
     });

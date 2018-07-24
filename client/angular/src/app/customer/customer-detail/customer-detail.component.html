@@ -2,7 +2,7 @@
   <div>
     <!-- <label *ngIf="viewModel.isBusy">Loading ....</label> -->
     <ul *ngIf="viewModel.errors">
-      <li *ngFor="let error of viewModel.errors">{{error}}</li>
+      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
     </ul>
     <label for="name">Name</label>
     <div>

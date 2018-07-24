@@ -8,6 +8,6 @@ export class CustomerService extends ServiceBase<Customer> {
 
   constructor() {
     super(ordersDotCom.services.customerService);
-   }
+  }
 
 }

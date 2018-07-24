@@ -8,6 +8,10 @@ class CategoryViewModel extends ViewModelBase {
   set name(value) {
     this.entity.name = value;
   }
+
+  get name() {
+    return this.entity.name;
+  }
 }
 
 export default CategoryViewModel;

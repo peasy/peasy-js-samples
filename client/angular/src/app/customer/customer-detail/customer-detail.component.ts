@@ -29,8 +29,9 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   public async save(): Promise<void> {
-    await this.viewModel.save();
-    this.goBack();
+    if (await this.viewModel.save()) {
+      this.goBack();
+    }
   }
 
 }
