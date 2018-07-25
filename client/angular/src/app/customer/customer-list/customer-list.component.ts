@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../services/customer.service';
-import { Customer } from '../../contracts';
+import { CustomerListViewModel } from './customer-list-viewmodel';
 
 @Component({
   selector: 'app-customer-list',
@@ -9,13 +9,16 @@ import { Customer } from '../../contracts';
 })
 export class CustomerListComponent implements OnInit {
 
-  public customers: Customer[];
+  public viewModel: CustomerListViewModel;
 
   constructor(private customerService: CustomerService) {
   }
 
   public async ngOnInit() {
-    const result = await this.customerService.getAll();
-    this.customers = result.value;
+    this.viewModel = new CustomerListViewModel(this.customerService);
+  }
+
+  public async destroy(id: string): Promise<void> {
+    await this.viewModel.destroy(id);
   }
 }

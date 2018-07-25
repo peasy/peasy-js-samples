@@ -1,10 +1,10 @@
-import { ViewModelBase } from '../../view-model-base';
-import { Category } from '../../contracts';
+import { Category, ViewModelArgs } from '../../contracts';
+import { EntityViewModelBase } from '../../entity-view-model-base';
 
-export class CategoryDetailViewModel extends ViewModelBase<Category> {
+export class CategoryDetailViewModel extends EntityViewModelBase<Category> {
 
-  constructor(protected service, protected categoryId: string = null) {
-    super(service, categoryId);
+  constructor(args: ViewModelArgs<Category>) {
+    super(args);
   }
 
   get name(): string {

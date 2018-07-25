@@ -1,10 +1,10 @@
-import { ViewModelBase } from '../../view-model-base';
-import { Customer } from '../../contracts';
+import { Customer, ViewModelArgs } from '../../contracts';
+import { EntityViewModelBase } from '../../entity-view-model-base';
 
-export class CustomerDetailViewModel extends ViewModelBase<Customer> {
+export class CustomerDetailViewModel extends EntityViewModelBase<Customer> {
 
-  constructor(protected service, protected entityId: string = null) {
-    super(service, entityId);
+  constructor(args: ViewModelArgs<Customer>) {
+    super(args);
   }
 
   get name(): string {

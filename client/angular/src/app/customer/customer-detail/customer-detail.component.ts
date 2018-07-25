@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CustomerDetailViewModel } from './customer-detail-viewmodel';
 import { CustomerService } from '../../services/customer.service';
+import { Customer, ViewModelArgs } from '../../contracts';
 
 @Component({
   selector: 'app-customer-detail',
@@ -16,12 +17,15 @@ export class CustomerDetailComponent implements OnInit {
     private location: Location,
     private customerService: CustomerService) { }
 
-  public viewModel: CustomerDetailViewModel = new CustomerDetailViewModel(this.customerService);
+  public viewModel: CustomerDetailViewModel;
 
   public async ngOnInit(): Promise<void> {
     let customerId = this.route.snapshot.params['id'];
     if (customerId.toLowerCase() === 'new') { customerId = null; }
-    this.viewModel = new CustomerDetailViewModel(this.customerService, customerId);
+    this.viewModel = new CustomerDetailViewModel({
+      service: this.customerService,
+      entityID: customerId
+    } as ViewModelArgs<Customer>);
   }
 
   public goBack(): void {

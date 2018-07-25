@@ -1,3 +1,5 @@
+import { ServiceBase } from './services/service-base';
+
 export interface Entity {
   id: string;
 }
@@ -19,4 +21,10 @@ export interface ExecutionResult<T> {
   success: boolean;
   errors: Error[];
   value: T;
+}
+
+export interface ViewModelArgs<T> {
+  service: ServiceBase<T>;
+  entity: T;
+  entityID: string;
 }

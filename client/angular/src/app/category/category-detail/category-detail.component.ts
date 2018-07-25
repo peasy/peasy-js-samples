@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CategoryDetailViewModel } from './category-detail-viewmodel';
 import { CategoryService } from '../../services/category.service';
+import { Category, ViewModelArgs } from '../../contracts';
 
 @Component({
   selector: 'app-category-detail',
@@ -16,12 +17,15 @@ export class CategoryDetailComponent implements OnInit {
     private location: Location,
     private categoryService: CategoryService) { }
 
-  public viewModel: CategoryDetailViewModel = new CategoryDetailViewModel(this.categoryService);
+  public viewModel: CategoryDetailViewModel;
 
   public async ngOnInit(): Promise<void> {
     let categoryId = this.route.snapshot.params['id'];
     if (categoryId.toLowerCase() === 'new') { categoryId = null; }
-    this.viewModel = new CategoryDetailViewModel(this.categoryService, categoryId);
+    this.viewModel = new CategoryDetailViewModel({
+      service: this.categoryService,
+      entityID: categoryId
+    } as ViewModelArgs<Category>);
   }
 
   public goBack(): void {

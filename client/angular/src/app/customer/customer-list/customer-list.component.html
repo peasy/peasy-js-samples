@@ -1,7 +1,7 @@
 <ul>
-  <li *ngFor="let customer of customers">
+  <li *ngFor="let customer of viewModel.data">
     <a routerLink="/customers/{{customer.id}}">{{ customer.name }}</a>
+    <button (click)="destroy(customer.id)">DELETE</button>
   </li>
 </ul>
 <a routerLink="/customers/new">New Customer</a>
-<!-- <app-customer-detail [selectedCustomer]="currentCustomer"></app-customer-detail> -->

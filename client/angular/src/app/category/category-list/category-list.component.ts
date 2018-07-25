@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../../contracts';
 import { CategoryService } from '../../services/category.service';
+import { CategoryListViewModel } from './category-list-viewmodel';
 
 @Component({
   selector: 'app-category-list',
@@ -9,14 +9,16 @@ import { CategoryService } from '../../services/category.service';
 })
 export class CategoryListComponent implements OnInit {
 
-  public categories: Category[];
+  public viewModel: CategoryListViewModel;
 
-  constructor(private categoryService: CategoryService) {
+  constructor(private customerService: CategoryService) {
   }
 
   public async ngOnInit() {
-    const result = await this.categoryService.getAll();
-    this.categories = result.value;
+    this.viewModel = new CategoryListViewModel(this.customerService);
   }
 
+  public async destroy(id: string): Promise<void> {
+    await this.viewModel.destroy(id);
+  }
 }
