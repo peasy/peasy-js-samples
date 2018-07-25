@@ -1,0 +1,29 @@
+<div>
+  <div>
+    <!-- <label *ngIf="viewModel.isBusy">Loading ....</label> -->
+    <ul *ngIf="viewModel.errors">
+      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+    </ul>
+
+    <label for="name">Name</label>
+    <div>
+      <input id="name" [(ngModel)] = "viewModel.name">
+      <label>{{viewModel.getErrorMessageFor('name')}}</label>
+    </div>
+
+    <label for="price">Price</label>
+    <div>
+      <input id="price" [(ngModel)] = "viewModel.price">
+      <label>{{viewModel.getErrorMessageFor('price')}}</label>
+    </div>
+
+    <label for="categoryId">Category</label>
+    <div>
+      <input id="categoryId" [(ngModel)] = "viewModel.categoryId">
+      <label>{{viewModel.getErrorMessageFor('categoryId')}}</label>
+    </div>
+
+  </div>
+</div>
+<button (click)="goBack()">go back</button>
+<button [disabled]="!viewModel.isDirty" (click)="save()">save</button>

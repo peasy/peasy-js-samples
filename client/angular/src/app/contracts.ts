@@ -12,6 +12,12 @@ export interface Category extends Entity {
   name: string;
 }
 
+export interface Product extends Entity {
+  name: string;
+  price: number;
+  categoryId: string;
+}
+
 export interface Error {
   association: string;
   message: string;

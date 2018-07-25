@@ -1,5 +1,5 @@
 <ul>
-  <li *ngFor="let category of categories">
+  <li *ngFor="let category of viewModel.data">
     <a routerLink="/categories/{{category.id}}">{{ category.name }}</a>
     <button (click)="destroy(category.id)">DELETE</button>
   </li>

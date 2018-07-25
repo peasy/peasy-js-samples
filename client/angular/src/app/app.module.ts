@@ -10,6 +10,8 @@ import { OrderDetailComponent } from './order/order-detail/order-detail.componen
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { CategoryDetailComponent } from './category/category-detail/category-detail.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
+import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { CategoryListComponent } from './category/category-list/category-list.co
     OrderDetailComponent,
     OrderListComponent,
     CategoryDetailComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    ProductDetailComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
