@@ -13,7 +13,7 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
   }
 
   get isBusy() {
-    return super['isBusy'] && this._categoriesVM.isBusy;
+    return super['isBusy'] || this._categoriesVM.isBusy;
   }
 
   get name(): string {

@@ -31,7 +31,7 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
 
   protected async handle(command): Promise<boolean> {
     let success = true;
-    this._isBusy = true;
+    this.loadStarted();
     try  {
       const result = await command();
       this.CurrentEntity = result.value;
@@ -44,7 +44,7 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
         this._errors.push(e);
       }
     }
-    this._isBusy = false;
+    this.loadCompleted();
     return success;
   }
 

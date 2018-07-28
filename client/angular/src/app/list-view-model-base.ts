@@ -11,13 +11,9 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
     this.handle(() => service.getAll());
   }
 
-  protected onDataRequest() {
-
-  }
-
   protected async handle(command): Promise<boolean> {
     let success = true;
-    this._isBusy = true;
+    this.loadStarted();
     try  {
       const result = await command();
       this.data = result.value || this.data;
@@ -29,7 +25,7 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
         this._errors.push(e);
       }
     }
-    this._isBusy = false;
+    this.loadCompleted();
     return success;
   }
 

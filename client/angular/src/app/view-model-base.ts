@@ -1,15 +1,27 @@
 export class ViewModelBase {
 
   protected _isDirty: boolean;
-  protected _isBusy: boolean;
+  protected _busyCount: number;
   protected _errors: any[] = [];
+
+  constructor() {
+    this._busyCount = 0;
+  }
 
   public get isDirty(): boolean {
     return this._isDirty;
   }
 
   public get isBusy(): boolean {
-    return this._isBusy;
+    return this._busyCount > 0;
+  }
+
+  protected loadStarted(): void {
+    this._busyCount += 1;
+  }
+
+  protected loadCompleted(): void {
+    this._busyCount -= 1;
   }
 
   public get errors(): any[] {
