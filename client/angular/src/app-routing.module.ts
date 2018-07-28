@@ -7,6 +7,8 @@ import { CategoryDetailComponent } from './app/category/category-detail/category
 import { CategoryListComponent } from './app/category/category-list/category-list.component';
 import { ProductDetailComponent } from './app/product/product-detail/product-detail.component';
 import { ProductListComponent } from './app/product/product-list/product-list.component';
+import { InventoryDetailComponent } from './app/inventory/inventory-detail/inventory-detail.component';
+import { InventoryListComponent } from './app/inventory/inventory-list/inventory-list.component';
 
 const Routes: Routes = [
   { path: '', redirectTo: '/orders', pathMatch: 'full' },
@@ -16,6 +18,8 @@ const Routes: Routes = [
   { path: 'categories', component: CategoryListComponent },
   { path: 'products/:id', component: ProductDetailComponent },
   { path: 'products', component: ProductListComponent },
+  { path: 'inventory/:id', component: InventoryDetailComponent },
+  { path: 'inventory', component: InventoryListComponent },
   { path: 'orders', component: OrderListComponent }
 ];
 

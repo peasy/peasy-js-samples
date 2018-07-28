@@ -12,6 +12,8 @@ import { CategoryDetailComponent } from './category/category-detail/category-det
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
+import { InventoryDetailComponent } from './inventory/inventory-detail/inventory-detail.component';
+import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { ProductListComponent } from './product/product-list/product-list.compon
     CategoryDetailComponent,
     CategoryListComponent,
     ProductDetailComponent,
-    ProductListComponent
+    ProductListComponent,
+    InventoryDetailComponent,
+    InventoryListComponent
   ],
   imports: [
     BrowserModule,

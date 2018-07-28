@@ -18,6 +18,12 @@ export interface Product extends Entity {
   categoryId: string;
 }
 
+export interface InventoryItem extends Entity {
+  quantityOnHand: number;
+  productId: string;
+  version: number;
+}
+
 export interface Error {
   association: string;
   message: string;
