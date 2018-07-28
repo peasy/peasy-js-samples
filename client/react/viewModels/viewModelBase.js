@@ -13,7 +13,7 @@ class ViewModelBase {
           var entity = this._list.find(e => e.id === this._id)
           this._currentEntity = Object.assign({}, entity);
         }
-      } 
+      }
     }
     return this._currentEntity;
   }
