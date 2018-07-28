@@ -4,19 +4,19 @@ export class ViewModelBase {
   protected _isBusy: boolean;
   protected _errors: any[] = [];
 
-  get isDirty(): boolean {
+  public get isDirty(): boolean {
     return this._isDirty;
   }
 
-  get isBusy(): boolean {
+  public get isBusy(): boolean {
     return this._isBusy;
   }
 
-  get errors(): any[] {
+  public get errors(): any[] {
     return this._errors;
   }
 
-  getErrorMessageFor(field: string): string {
+  protected getErrorMessageFor(field: string): string {
     const error = this._errors.find(e => e.association === field);
     return error ? error.message : null;
   }

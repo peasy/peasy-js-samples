@@ -19,7 +19,9 @@
 
     <label for="categoryId">Category</label>
     <div>
-      <input id="categoryId" [(ngModel)] = "viewModel.categoryId">
+      <select id="categoryId" [(ngModel)]="viewModel.categoryId">
+        <option *ngFor="let category of viewModel.categories" value="{{category.id}}">{{category.name}}</option>
+      </select>
       <label>{{viewModel.getErrorMessageFor('categoryId')}}</label>
     </div>
 

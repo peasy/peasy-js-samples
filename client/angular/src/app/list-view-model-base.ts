@@ -11,6 +11,10 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
     this.handle(() => service.getAll());
   }
 
+  protected onDataRequest() {
+
+  }
+
   protected async handle(command): Promise<boolean> {
     let success = true;
     this._isBusy = true;

@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { ProductDetailViewModel } from './product-detail-viewmodel';
 import { Product, ViewModelArgs } from '../../contracts';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,7 +16,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private categoryService: CategoryService ) { }
 
   public viewModel: ProductDetailViewModel;
 
@@ -25,7 +27,7 @@ export class ProductDetailComponent implements OnInit {
     this.viewModel = new ProductDetailViewModel({
       service: this.productService,
       entityID: productId
-    } as ViewModelArgs<Product>);
+    } as ViewModelArgs<Product>, this.categoryService);
   }
 
   public goBack(): void {

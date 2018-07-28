@@ -1,10 +1,19 @@
 import { EntityViewModelBase } from '../../entity-view-model-base';
-import { Product, ViewModelArgs } from '../../contracts';
+import { Product, ViewModelArgs, Category } from '../../contracts';
+import { CategoryService } from '../../services/category.service';
+import { CategoryListViewModel } from '../../category/category-list/category-list-viewmodel';
 
 export class ProductDetailViewModel extends EntityViewModelBase<Product> {
 
-  constructor(args: ViewModelArgs<Product>) {
+  private _categoriesVM: CategoryListViewModel;
+
+  constructor(args: ViewModelArgs<Product>, private categoryService: CategoryService) {
     super(args);
+    this._categoriesVM = new CategoryListViewModel(categoryService);
+  }
+
+  get isBusy() {
+    return super['isBusy'] && this._categoriesVM.isBusy;
   }
 
   get name(): string {
@@ -33,4 +42,9 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
     this.CurrentEntity.categoryId = value;
     this._isDirty = true;
   }
+
+  get categories(): Category[] {
+    return this._categoriesVM.data;
+  }
+
 }
