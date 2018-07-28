@@ -5,10 +5,16 @@
       <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
     </ul>
 
-    <label for="name">Name</label>
+    <label>Name</label>
     <div>
-      <input id="name" [(ngModel)] = "viewModel.name">
+      <label>{{viewModel.name}}</label>
       <label>{{viewModel.getErrorMessageFor('name')}}</label>
+    </div>
+
+    <label for="quantityOnHand">Quantity</label>
+    <div>
+      <input id="quantityOnHand" [(ngModel)] = "viewModel.quantityOnHand">
+      <label>{{viewModel.getErrorMessageFor('quantityOnHand')}}</label>
     </div>
 
   </div>

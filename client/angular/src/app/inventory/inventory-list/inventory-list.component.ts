@@ -13,14 +13,9 @@ export class InventoryListComponent implements OnInit {
   public viewModel: InventoryListViewModel;
 
   constructor(private inventoryService: InventoryService, private productService: ProductService) {
+  }
+
+  public ngOnInit() {
     this.viewModel = new InventoryListViewModel(this.inventoryService, this.productService);
-  }
-
-  public async ngOnInit() {
-    // this.viewModel = new InventoryListViewModel(this.inventoryService, this.productService);
-  }
-
-  public async destroy(id: string): Promise<void> {
-    await this.viewModel.destroy(id);
   }
 }

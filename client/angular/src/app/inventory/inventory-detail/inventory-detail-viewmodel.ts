@@ -17,6 +17,15 @@ export class InventoryDetailViewModel extends EntityViewModelBase<InventoryItem>
     return super['isBusy'] || this._productsVM.isBusy;
   }
 
+  get quantityOnHand(): number {
+    return this.CurrentEntity.quantityOnHand;
+  }
+
+  set quantityOnHand(amount: number) {
+    this.CurrentEntity.quantityOnHand = amount;
+    this._isDirty = true;
+  }
+
   get name(): string {
     const products = this._productsVM.data;
     if (!this._productName) {

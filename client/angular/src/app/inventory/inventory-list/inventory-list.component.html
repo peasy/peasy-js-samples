@@ -1,6 +1,13 @@
-<ul>
-  <li *ngFor="let item of viewModel.data">
-    <a routerLink="/inventory/{{item.id}}">{{ viewModel.getProductNameFor(item.productId) }}</a>
-    <button (click)="destroy(item.id)">DELETE</button>
-  </li>
-</ul>
+<table>
+  <thead>
+    <td>Name</td>
+    <td>Quantity</td>
+    <td></td>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of viewModel.data">
+      <td><a routerLink="/inventory/{{item.id}}">{{ viewModel.getProductNameFor(item.productId) }}</a></td>
+      <td>{{ item.quantityOnHand }}</td>
+    </tr>
+  </tbody>
+</table>
