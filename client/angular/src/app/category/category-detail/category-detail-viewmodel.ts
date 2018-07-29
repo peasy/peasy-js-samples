@@ -1,10 +1,13 @@
-import { Category, ViewModelArgs } from '../../contracts';
+import { Category } from '../../contracts';
 import { EntityViewModelBase } from '../../entity-view-model-base';
+import { CategoryService } from '../../services/category.service';
+import { Injectable } from '../../../../node_modules/@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class CategoryDetailViewModel extends EntityViewModelBase<Category> {
 
-  constructor(args: ViewModelArgs<Category>) {
-    super(args);
+  constructor(service: CategoryService) {
+    super(service);
   }
 
   get name(): string {

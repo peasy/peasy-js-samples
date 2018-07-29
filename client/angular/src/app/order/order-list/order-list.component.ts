@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import ordersDotCom from '../../../../../businessLogic.js';
+import { OrderService } from '../../services/order.service';
+import { CustomerService } from '../../services/customer.service';
+import { OrderListViewModel } from './order-list-viewmodel';
+import { OrderItemService } from '../../services/order-item.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-order-list',
@@ -8,9 +12,25 @@ import ordersDotCom from '../../../../../businessLogic.js';
 })
 export class OrderListComponent implements OnInit {
 
-  constructor() { }
+  public viewModel: OrderListViewModel;
 
-  ngOnInit() {
+  constructor(
+    private orderService: OrderService,
+    private customerService: CustomerService,
+    private orderItemService: OrderItemService,
+    private productService: ProductService) {
   }
+
+  // TODO: inject the VM into constructor
+  ngOnInit() {
+    this.viewModel = new OrderListViewModel(
+      this.orderService,
+      this.orderItemService,
+      this.customerService,
+      this.productService
+    );
+    this.viewModel.loadData();
+  }
+
 
 }

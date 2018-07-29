@@ -18,6 +18,22 @@ export interface Product extends Entity {
   categoryId: string;
 }
 
+export interface Order extends Entity {
+  orderDate: Date;
+  customerId: string;
+}
+
+export interface OrderItem extends Entity {
+  quantity: number;
+  amount: number;
+  price: number;
+  productId: string;
+  orderId: string;
+  status: string;
+  submittedOn: Date;
+  shippedOn: Date;
+}
+
 export interface InventoryItem extends Entity {
   quantityOnHand: number;
   productId: string;
@@ -37,6 +53,6 @@ export interface ExecutionResult<T> {
 
 export interface ViewModelArgs<T> {
   service: ServiceBase<T>;
-  entity: T;
+  entity?: T;
   entityID: string;
 }

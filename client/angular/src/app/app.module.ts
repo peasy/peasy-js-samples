@@ -14,6 +14,8 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { InventoryDetailComponent } from './inventory/inventory-detail/inventory-detail.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
+import { OrderItemDetailComponent } from './order-item/order-item-detail/order-item-detail.component';
+import { OrderItemListComponent } from './order-item/order-item-list/order-item-list.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { InventoryListComponent } from './inventory/inventory-list/inventory-lis
     ProductDetailComponent,
     ProductListComponent,
     InventoryDetailComponent,
-    InventoryListComponent
+    InventoryListComponent,
+    OrderItemDetailComponent,
+    OrderItemListComponent
   ],
   imports: [
     BrowserModule,

@@ -15,15 +15,12 @@ export class CustomerDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private customerService: CustomerService) { }
-
-  public viewModel: CustomerDetailViewModel;
+    public viewModel: CustomerDetailViewModel) { }
 
   public async ngOnInit(): Promise<void> {
     let customerId = this.route.snapshot.params['id'];
     if (customerId.toLowerCase() === 'new') { customerId = null; }
-    this.viewModel = new CustomerDetailViewModel({
-      service: this.customerService,
+    this.viewModel.loadData({
       entityID: customerId
     } as ViewModelArgs<Customer>);
   }

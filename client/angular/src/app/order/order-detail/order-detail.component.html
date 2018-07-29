@@ -1,3 +1,24 @@
-<p>
-  order-detail works!
-</p>
+<div>
+  <div>
+    <label *ngIf="viewModel.isBusy">Loading ....</label>
+    <ul *ngIf="viewModel.errors">
+      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+    </ul>
+
+    <label for="id">Id:</label>{{ viewModel.id }}
+
+    <label for="customerId">Customer</label>
+    <div>
+      <select id="customerId" [(ngModel)]="viewModel.customerId">
+        <option *ngFor="let customer of viewModel.customers" value="{{customer.id}}">{{customer.name}}</option>
+      </select>
+      <label>{{viewModel.getErrorMessageFor('customerId')}}</label>
+    </div>
+
+  </div>
+</div>
+
+<app-order-item-list [orderItems]="viewModel.orderItems"></app-order-item-list>
+
+<button (click)="goBack()">go back</button>
+<button [disabled]="!viewModel.isDirty" (click)="save()">save</button>

@@ -1,20 +1,27 @@
 import { ListViewModelBase } from '../../list-view-model-base';
 import { InventoryItem } from '../../contracts';
 import { InventoryService } from '../../services/inventory.service';
-import { ProductService } from '../../services/product.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
+import { Injectable } from '../../../../node_modules/@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class InventoryListViewModel extends ListViewModelBase<InventoryItem> {
 
-  private _productsVM: ProductListViewModel;
-
-  constructor(protected service: InventoryService, private productService: ProductService) {
+  constructor(protected service: InventoryService, private productListVM: ProductListViewModel) {
     super(service);
-    this._productsVM = new ProductListViewModel(productService);
+  }
+
+  get isBusy() {
+    return super['isBusy'] || this.productListVM.isBusy;
+  }
+
+  loadData() {
+    super.loadData();
+    this.productListVM.loadData();
   }
 
   getProductNameFor(productId: string): string {
-    const products = this._productsVM.data;
+    const products = this.productListVM.data;
     if (products) {
       return products.find(p => p.id === productId).name;
     }

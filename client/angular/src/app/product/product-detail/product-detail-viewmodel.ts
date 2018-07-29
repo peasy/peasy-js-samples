@@ -1,19 +1,23 @@
 import { EntityViewModelBase } from '../../entity-view-model-base';
 import { Product, ViewModelArgs, Category } from '../../contracts';
-import { CategoryService } from '../../services/category.service';
 import { CategoryListViewModel } from '../../category/category-list/category-list-viewmodel';
+import { ProductService } from '../../services/product.service';
+import { Injectable } from '../../../../node_modules/@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class ProductDetailViewModel extends EntityViewModelBase<Product> {
 
-  private _categoriesVM: CategoryListViewModel;
+  constructor(productService: ProductService, private categoryListVM: CategoryListViewModel) {
+    super(productService);
+  }
 
-  constructor(args: ViewModelArgs<Product>, private categoryService: CategoryService) {
-    super(args);
-    this._categoriesVM = new CategoryListViewModel(categoryService);
+  loadData(args: ViewModelArgs<Product>): any {
+    super.loadData(args);
+    this.categoryListVM.loadData();
   }
 
   get isBusy() {
-    return super['isBusy'] || this._categoriesVM.isBusy;
+    return super['isBusy'] || this.categoryListVM.isBusy;
   }
 
   get name(): string {
@@ -44,7 +48,7 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
   }
 
   get categories(): Category[] {
-    return this._categoriesVM.data;
+    return this.categoryListVM.data;
   }
 
 }

@@ -1,0 +1,23 @@
+<table>
+  <thead>
+    <td>Product</td>
+    <td>Price</td>
+    <td>Quantity</td>
+    <td>Amount</td>
+    <td>Status</td>
+    <td>Submitted On</td>
+    <td>Shipped On</td>
+    <td></td>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of viewModel.data">
+      <td><a routerLink="/orderItem/{{item.id}}">{{ viewModel.getProductNameFor(item.productId) }}</a></td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.amount }}</td>
+      <td>{{ item.status }}</td>
+      <td>{{ item.submittedOn }}</td>
+      <td>{{ item.shippedOn }}</td>
+    </tr>
+  </tbody>
+</table>

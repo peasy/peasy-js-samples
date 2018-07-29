@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomerService } from '../../services/customer.service';
 import { CustomerListViewModel } from './customer-list-viewmodel';
 
 @Component({
@@ -11,11 +10,12 @@ export class CustomerListComponent implements OnInit {
 
   public viewModel: CustomerListViewModel;
 
-  constructor(private customerService: CustomerService) {
+  constructor(vm: CustomerListViewModel) {
+    this.viewModel = vm;
   }
 
   public async ngOnInit() {
-    this.viewModel = new CustomerListViewModel(this.customerService);
+    this.viewModel.loadData();
   }
 
   public async destroy(id: string): Promise<void> {

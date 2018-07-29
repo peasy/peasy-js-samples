@@ -12,10 +12,11 @@ export class InventoryListComponent implements OnInit {
 
   public viewModel: InventoryListViewModel;
 
-  constructor(private inventoryService: InventoryService, private productService: ProductService) {
+  constructor(vm: InventoryListViewModel) {
+    this.viewModel = vm;
   }
 
   public ngOnInit() {
-    this.viewModel = new InventoryListViewModel(this.inventoryService, this.productService);
+    this.viewModel.loadData();
   }
 }

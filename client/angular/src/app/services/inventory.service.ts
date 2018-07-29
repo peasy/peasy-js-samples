@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { InventoryItem } from '../contracts';
+import { InventoryItem, OrderItem } from '../contracts';
 import ordersDotCom from '../../../../businessLogic.js';
 import { ServiceBase } from './service-base';
 

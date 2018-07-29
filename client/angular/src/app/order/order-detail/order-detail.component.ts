@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { ViewModelArgs, Order } from '../../contracts';
+import { OrderDetailViewModel } from './order-detail-viewmodel';
+import { OrderService } from '../../services/order.service';
+import { CustomerService } from '../../services/customer.service';
+import { OrderItemService } from '../../services/order-item.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -7,9 +15,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    public viewModel: OrderDetailViewModel) { }
 
-  ngOnInit() {
+  public async ngOnInit(): Promise<void> {
+    let orderId: string = this.route.snapshot.params['id'];
+    if (orderId.toLowerCase() === 'new') { orderId = null; }
+    this.viewModel.loadData({
+      entityID: orderId
+    } as ViewModelArgs<Order>);
+  }
+
+  public goBack(): void {
+    this.location.back();
+  }
+
+  public async save(): Promise<void> {
+    if (await this.viewModel.save()) {
+      this.goBack();
+    }
   }
 
 }

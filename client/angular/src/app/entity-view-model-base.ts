@@ -6,20 +6,31 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
 
   protected CurrentEntity: T;
 
-  protected service: ServiceBase<T>;
+  // protected service: ServiceBase<T>;
 
-  constructor(args: ViewModelArgs<T>) {
+  constructor(protected service: ServiceBase<T>) {
     super();
-    this.service = args.service;
+  }
+
+  loadData(args: ViewModelArgs<T>): any {
     this.CurrentEntity = args.entity || {} as T;
     if (!this.CurrentEntity.id && args.entityID) {
-      this.loadData(args.entityID);
+      this.handle(() => this.service.getById(args.entityID));
     }
   }
 
-  loadData(entityId: string): any {
-    this.handle(() => this.service.getById(entityId));
-  }
+  // constructor(args: ViewModelArgs<T>) {
+  //   super();
+  //   this.service = args.service;
+  //   this.CurrentEntity = args.entity || {} as T;
+  //   if (!this.CurrentEntity.id && args.entityID) {
+  //     this.loadData(args.entityID);
+  //   }
+  // }
+
+  // loadData(entityId: string): any {
+  //   this.handle(() => this.service.getById(entityId));
+  // }
 
   get isNew(): boolean {
     return !this.CurrentEntity.id;

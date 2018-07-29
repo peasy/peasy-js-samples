@@ -8,7 +8,10 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
 
   constructor(protected service: ServiceBase<T>) {
     super();
-    this.handle(() => service.getAll());
+  }
+
+  public loadData() {
+    this.handle(() => this.service.getAll()); // TODO: remove this and expose a loadData() method
   }
 
   protected async handle(command): Promise<boolean> {

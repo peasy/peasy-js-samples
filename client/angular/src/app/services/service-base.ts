@@ -25,7 +25,7 @@ export class ServiceBase<T> {
     return this.handle(this.service.destroyCommand(id));
   }
 
-  private handle<P>(command): Promise<ExecutionResult<P>> {
+  protected handle<P>(command): Promise<ExecutionResult<P>> {
     return new Promise((resolve, reject) => {
       command.execute((err, result) => {
         if (err) {
