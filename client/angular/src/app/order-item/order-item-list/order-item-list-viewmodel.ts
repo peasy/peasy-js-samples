@@ -2,25 +2,28 @@ import { ListViewModelBase } from '../../list-view-model-base';
 import { OrderItem } from '../../contracts';
 import { OrderItemService } from '../../services/order-item.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
-import { ProductService } from '../../services/product.service';
+import { Injectable } from '../../../../node_modules/@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
-
-  private _orderItems: OrderItem[];
-  private _productsVM: ProductListViewModel;
 
   constructor(
     protected service: OrderItemService,
-    private productService: ProductService,
-    orderItems: OrderItem[] = []) {
+    private productsVM: ProductListViewModel) {
       super(service);
-      this._orderItems = orderItems;
-      this.data = [...orderItems];
-      this._productsVM = new ProductListViewModel(productService);
+  }
+
+  get isBusy() {
+    return super['isBusy'] || this.productsVM.isBusy;
+  }
+
+  async loadDataFor(orderId: string) {
+    super.handle(() => this.service.getByOrder(orderId));
+    this.productsVM.loadData();
   }
 
   getProductNameFor(productId: string): string {
-    const products = this._productsVM.data;
+    const products = this.productsVM.data;
     if (products) {
       return products.find(p => p.id === productId).name;
     }

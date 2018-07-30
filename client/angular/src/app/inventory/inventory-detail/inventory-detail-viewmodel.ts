@@ -1,10 +1,10 @@
 import { EntityViewModelBase } from '../../entity-view-model-base';
 import { ViewModelArgs, InventoryItem } from '../../contracts';
-import { ProductService } from '../../services/product.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
-import { InventoryListViewModel } from '../inventory-list/inventory-list-viewmodel';
 import { InventoryService } from '../../services/inventory.service';
+import { Injectable } from '../../../../node_modules/@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class InventoryDetailViewModel extends EntityViewModelBase<InventoryItem> {
 
   private _productName: string;
@@ -14,6 +14,7 @@ export class InventoryDetailViewModel extends EntityViewModelBase<InventoryItem>
   }
 
   loadData(args: ViewModelArgs<InventoryItem>): any {
+    this._productName = null;
     super.loadData(args);
     this.productsVM.loadData();
   }
@@ -33,7 +34,7 @@ export class InventoryDetailViewModel extends EntityViewModelBase<InventoryItem>
 
   get name(): string {
     const products = this.productsVM.data;
-    if (!this._productName) {
+    if (!this._productName && this.CurrentEntity.id) {
       if (products) {
         this._productName = products.find(p => p.id === this.CurrentEntity.productId).name;
       }

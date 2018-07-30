@@ -22,10 +22,7 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   loadData(args: ViewModelArgs<Order>): any {
     super.loadData(args);
     this.customersVM.loadData();
-    // this.handle()
-    //   orderItemService.getByOrder(this.args.entityID).then(results => {
-    //     this._orderItemsVM = new OrderItemListViewModel(this.orderItemService, this.productService, results.value);
-    //   });
+    // this.orderItemsVM.loadDataFor(args.entityID);
   }
 
   get customerId(): string {

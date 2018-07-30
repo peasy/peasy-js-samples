@@ -1,29 +1,28 @@
 import { ListViewModelBase } from '../../list-view-model-base';
 import { Order } from '../../contracts';
 import { OrderService } from '../../services/order.service';
-import { CustomerService } from '../../services/customer.service';
 import { CustomerListViewModel } from '../../customer/customer-list/customer-list-viewmodel';
 import { OrderItemListViewModel } from '../../order-item/order-item-list/order-item-list-viewmodel';
-import { OrderItemService } from '../../services/order-item.service';
-import { ProductService } from '../../services/product.service';
+import { Injectable } from '../../../../node_modules/@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class OrderListViewModel extends ListViewModelBase<Order> {
-
-  private _customersVM: CustomerListViewModel;
-  private _orderItemsVM: OrderItemListViewModel;
 
   constructor(
     protected service: OrderService,
-    private orderItemService: OrderItemService,
-    private customerService: CustomerService,
-    private productService: ProductService) {
+    private customersVM: CustomerListViewModel,
+    private orderItemsVM: OrderItemListViewModel) {
       super(service);
-      this._customersVM = new CustomerListViewModel(customerService);
-      this._orderItemsVM = new OrderItemListViewModel(orderItemService, productService);
+  }
+
+  loadData() {
+    super.loadData();
+    this.customersVM.loadData();
+    this.orderItemsVM.loadData();
   }
 
   getCustomerNameFor(customerId: string): string {
-    const customers = this._customersVM.data;
+    const customers = this.customersVM.data;
     if (customers) {
       return customers.find(c => c.id === customerId).name;
     }
@@ -31,7 +30,7 @@ export class OrderListViewModel extends ListViewModelBase<Order> {
   }
 
   getStatusFor(orderId: string): string {
-    const allOrderItems = this._orderItemsVM.data;
+    const allOrderItems = this.orderItemsVM.data;
     if (allOrderItems) {
       const orderItems = allOrderItems.filter(i => i.orderId === orderId);
       return this.service.getStatusFor(orderItems);
@@ -40,7 +39,7 @@ export class OrderListViewModel extends ListViewModelBase<Order> {
   }
 
   getTotalFor(orderId: string): number {
-    const allOrderItems = this._orderItemsVM.data;
+    const allOrderItems = this.orderItemsVM.data;
     if (allOrderItems) {
       return allOrderItems.filter(i => i.orderId === orderId)
         .map(i => i.amount)

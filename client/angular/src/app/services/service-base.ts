@@ -5,23 +5,23 @@ export class ServiceBase<T> {
   constructor(protected service) {
   }
 
-  getAll(): Promise<ExecutionResult<T[]>> {
+  public getAll(): Promise<ExecutionResult<T[]>> {
     return this.handle(this.service.getAllCommand());
   }
 
-  getById(id: string): Promise<ExecutionResult<T>> {
+  public getById(id: string): Promise<ExecutionResult<T>> {
     return this.handle(this.service.getByIdCommand(id));
   }
 
-  update(entity: T): Promise<ExecutionResult<T>> {
+  public update(entity: T): Promise<ExecutionResult<T>> {
     return this.handle(this.service.updateCommand(entity));
   }
 
-  insert(entity: T): Promise<ExecutionResult<T>> {
+  public insert(entity: T): Promise<ExecutionResult<T>> {
     return this.handle(this.service.insertCommand(entity));
   }
 
-  destroy(id: string): Promise<ExecutionResult<T>> {
+  public destroy(id: string): Promise<ExecutionResult<T>> {
     return this.handle(this.service.destroyCommand(id));
   }
 

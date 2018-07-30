@@ -11,10 +11,10 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
   }
 
   public loadData() {
-    this.handle(() => this.service.getAll()); // TODO: remove this and expose a loadData() method
+    this.handle(() => this.service.getAll());
   }
 
-  protected async handle(command): Promise<boolean> {
+  protected async handle(command: Function): Promise<boolean> {
     let success = true;
     this.loadStarted();
     try  {

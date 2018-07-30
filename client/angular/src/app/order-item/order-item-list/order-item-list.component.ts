@@ -1,8 +1,5 @@
 import { OnInit, Component, Input } from '@angular/core';
 import { OrderItemListViewModel } from './order-item-list-viewmodel';
-import { OrderItemService } from '../../services/order-item.service';
-import { ProductService } from '../../services/product.service';
-import { OrderItem } from '../../contracts';
 
 @Component({
   selector: 'app-order-item-list',
@@ -12,15 +9,15 @@ import { OrderItem } from '../../contracts';
 export class OrderItemListComponent implements OnInit {
 
   @Input()
-  orderItems: OrderItem[];
+  public orderId: string;
 
-  public viewModel: OrderItemListViewModel;
-
-  constructor(private orderItemService: OrderItemService, private productService: ProductService) {
+  constructor(public viewModel: OrderItemListViewModel) {
   }
 
   public async ngOnInit() {
-    this.viewModel = new OrderItemListViewModel(this.orderItemService, this.productService, this.orderItems);
+    if (this.orderId) {
+      this.viewModel.loadDataFor(this.orderId);
+    }
   }
 
   public async destroy(id: string): Promise<void> {

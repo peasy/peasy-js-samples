@@ -10,8 +10,8 @@ export class OrderItemService extends ServiceBase<OrderItem> {
     super(ordersDotCom.services.orderItemService);
   }
 
-  getByOrder(orderId: string): Promise<ExecutionResult<OrderItem[]>> {
-    return this.handle(ordersDotCom.services.orderItemService.getByOrderCommand(orderId));
+  public getByOrder(orderId: string): Promise<ExecutionResult<OrderItem[]>> {
+    return super.handle(ordersDotCom.services.orderItemService.getByOrderCommand(orderId));
   }
 
 }

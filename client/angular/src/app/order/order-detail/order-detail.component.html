@@ -18,7 +18,9 @@
   </div>
 </div>
 
-<app-order-item-list [orderItems]="viewModel.orderItems"></app-order-item-list>
+<div *ngIf="viewModel.id">
+  <app-order-item-list [orderId]="viewModel.id"></app-order-item-list>
+</div>
 
 <button (click)="goBack()">go back</button>
 <button [disabled]="!viewModel.isDirty" (click)="save()">save</button>

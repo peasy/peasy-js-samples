@@ -8,13 +8,10 @@ import { ProductListViewModel } from './product-list-viewmodel';
 })
 export class ProductListComponent implements OnInit {
 
-  public viewModel: ProductListViewModel;
-
-  constructor(vm: ProductListViewModel) {
-    this.viewModel = vm;
+  constructor(private viewModel: ProductListViewModel) {
   }
 
-  public async ngOnInit() {
+  public ngOnInit(): void {
     this.viewModel.loadData();
   }
 
