@@ -2,7 +2,7 @@ import { ListViewModelBase } from '../../list-view-model-base';
 import { InventoryItem } from '../../contracts';
 import { InventoryService } from '../../services/inventory.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
-import { Injectable } from '../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryListViewModel extends ListViewModelBase<InventoryItem> {
@@ -15,9 +15,12 @@ export class InventoryListViewModel extends ListViewModelBase<InventoryItem> {
     return super['isBusy'] || this.productListVM.isBusy;
   }
 
-  loadData() {
-    super.loadData();
-    this.productListVM.loadData();
+  async loadData(): Promise<boolean> {
+    const results = await Promise.all([
+      super.loadData(),
+      this.productListVM.loadData()
+    ]);
+    return results.every(r => r === true);
   }
 
   getProductNameFor(productId: string): string {

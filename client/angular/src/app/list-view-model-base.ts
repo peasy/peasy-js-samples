@@ -10,8 +10,8 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
     super();
   }
 
-  public loadData() {
-    this.handle(() => this.service.getAll());
+  public loadData(): Promise<boolean> {
+    return this.handle(() => this.service.getAll());
   }
 
   protected async handle(command: Function): Promise<boolean> {

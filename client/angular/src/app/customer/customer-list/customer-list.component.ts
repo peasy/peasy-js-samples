@@ -17,8 +17,4 @@ export class CustomerListComponent implements OnInit {
   public async ngOnInit() {
     this.viewModel.loadData();
   }
-
-  public async destroy(id: string): Promise<void> {
-    await this.viewModel.destroy(id);
-  }
 }

@@ -20,9 +20,13 @@
   </div>
 </div>
 
-<div *ngIf="viewModel.id">
+<div *ngIf="!viewModel.isNew">
   <app-order-item-list [orderId]="viewModel.id"></app-order-item-list>
 </div>
 
-<button (click)="goBack()">go back</button>
-<button [disabled]="!viewModel.isDirty" (click)="save()">save</button>
+<div>
+  <label>Total:</label>{{ viewModel.orderTotal }}
+</div>
+
+<button [disabled]="!viewModel.isDirty" (click)="viewModel.save()">Save</button>
+<button (click)="goBack()">Done</button>

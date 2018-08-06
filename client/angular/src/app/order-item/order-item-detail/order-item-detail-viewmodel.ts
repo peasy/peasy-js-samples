@@ -21,11 +21,18 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
     super(orderItemService);
   }
 
-  loadData(args: ViewModelArgs<OrderItem>): any {
-    super.loadData(args);
-    this.categoryListVM.loadData();
-    this.productListVM.loadData();
-    this.inventoryItemListVM.loadData();
+  async loadData(args: ViewModelArgs<OrderItem>): Promise<boolean> {
+    const results = await Promise.all([
+      super.loadData(args),
+      this.categoryListVM.loadData(),
+      this.productListVM.loadData(),
+      this.inventoryItemListVM.loadData()
+    ]);
+    if (args.entityID) {
+      this._currentProduct = this.productListVM.data.find(p => p.id === this.CurrentEntity.productId);
+      this._currentInventory = this.inventoryItemListVM.data.find(i => i.productId === this._currentProduct.id);
+    }
+    return results.every(r => r === true);
   }
 
   get isBusy() {
@@ -37,6 +44,7 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
 
   set orderId(value: string) {
     this.CurrentEntity.orderId = value;
+    console.log('SETTING CURRENT ENTITY', this.CurrentEntity);
   }
 
   get inStock(): number {
@@ -72,7 +80,7 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
     this._currentCategoryId = value;
     this._currentProduct = null;
     this._currentInventory = null;
-    this.CurrentEntity.orderId = this.orderId;
+    // this.CurrentEntity.orderId = this.orderId;
   }
 
   get productId(): string {

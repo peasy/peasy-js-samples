@@ -21,6 +21,7 @@ export class OrderItemDetailComponent implements OnInit {
     let orderItemId = this.route.snapshot.params['itemid'];
     if (orderItemId.toLowerCase() === 'new') { orderItemId = null; }
     await this.viewModel.loadData({ entityID: orderItemId, } as ViewModelArgs<OrderItem>);
+    console.log('ORDER ID', orderId);
     this.viewModel.orderId = orderId;
   }
 

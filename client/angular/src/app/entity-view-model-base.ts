@@ -1,7 +1,6 @@
 import { Entity, ViewModelArgs } from './contracts';
 import { ServiceBase } from './services/service-base';
 import { ViewModelBase } from './view-model-base';
-import { promise } from '../../node_modules/protractor';
 
 export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
 
@@ -46,6 +45,7 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
   }
 
   public async save(): Promise<boolean> {
+    console.log('IN SAVE', this.CurrentEntity);
     if (this.isDirty) {
       this._errors = [];
       if (this.isNew) {

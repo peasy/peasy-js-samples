@@ -33,5 +33,4 @@ export class CategoryDetailComponent implements OnInit {
       this.goBack();
     }
   }
-
 }

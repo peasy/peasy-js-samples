@@ -6,7 +6,7 @@
   <tbody>
     <tr *ngFor="let category of viewModel.data">
       <td><a routerLink="/categories/{{category.id}}">{{ category.name }}</a></td>
-      <td><button (click)="destroy(category.id)">Delete</button>
+      <td><button (click)="viewModel.destroy(category.id)">Delete</button>
     </tr>
   </tbody>
 </table>

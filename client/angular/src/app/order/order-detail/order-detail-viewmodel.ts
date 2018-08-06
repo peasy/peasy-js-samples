@@ -4,6 +4,7 @@ import { CustomerListViewModel } from '../../customer/customer-list/customer-lis
 import { OrderItemListViewModel } from '../../order-item/order-item-list/order-item-list-viewmodel';
 import { Injectable } from '@angular/core';
 import { OrderService } from '../../services/order.service';
+import { OrderItemDetailViewModel } from '../../order-item/order-item-detail/order-item-detail-viewmodel';
 
 @Injectable({ providedIn: 'root' })
 export class OrderDetailViewModel extends EntityViewModelBase<Order> {
@@ -16,7 +17,8 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   }
 
   get isBusy() {
-    return super['isBusy'] || this.customersVM.isBusy || this.orderItemsVM.isBusy;
+    return super['isBusy'] || this.customersVM.isBusy;
+    // return super['isBusy'] || this.customersVM.isBusy || this.orderItemsVM.isBusy;
   }
 
   loadData(args: ViewModelArgs<Order>): any {
@@ -41,4 +43,15 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   get orderItems(): OrderItem[] {
     return this.orderItemsVM.data;
   }
+
+  get orderTotal(): number {
+    if (this.orderItemsVM.data && this.orderItemsVM.data.length) {
+      return this.orderItemsVM.data.map(i => i.amount).reduce((a = 0, b) => a + b);
+    }
+    return 0;
+  }
+
+  // deleteOrderItem(id) {
+  //   this.orderItemsVM.destroy(id);
+  // }
 }

@@ -3,7 +3,7 @@ import { Order } from '../../contracts';
 import { OrderService } from '../../services/order.service';
 import { CustomerListViewModel } from '../../customer/customer-list/customer-list-viewmodel';
 import { OrderItemListViewModel } from '../../order-item/order-item-list/order-item-list-viewmodel';
-import { Injectable } from '../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class OrderListViewModel extends ListViewModelBase<Order> {
@@ -15,10 +15,17 @@ export class OrderListViewModel extends ListViewModelBase<Order> {
       super(service);
   }
 
-  loadData() {
-    super.loadData();
-    this.customersVM.loadData();
-    this.orderItemsVM.loadData();
+  async loadData(): Promise<boolean> {
+    // super.loadData();
+    // this.customersVM.loadData();
+    // this.orderItemsVM.loadData();
+    const results = await Promise.all
+    ([
+      super.loadData(),
+      this.customersVM.loadData(),
+      this.orderItemsVM.loadData()
+    ]);
+    return results.every(r => r === true);
   }
 
   getCustomerNameFor(customerId: string): string {

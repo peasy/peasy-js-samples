@@ -27,11 +27,4 @@ export class OrderDetailComponent implements OnInit {
   public goBack(): void {
     this.location.back();
   }
-
-  public async save(): Promise<void> {
-    if (await this.viewModel.save()) {
-      this.goBack();
-    }
-  }
-
 }
