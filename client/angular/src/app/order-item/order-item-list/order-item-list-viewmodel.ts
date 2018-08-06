@@ -2,7 +2,7 @@ import { ListViewModelBase } from '../../list-view-model-base';
 import { OrderItem } from '../../contracts';
 import { OrderItemService } from '../../services/order-item.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
-import { Injectable } from '../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {

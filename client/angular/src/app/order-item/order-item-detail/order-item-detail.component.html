@@ -1,3 +1,39 @@
-<p>
-  order-item-detail works!
-</p>
+<div>
+  <div>
+    <label *ngIf="viewModel.isBusy">Loading ....</label>
+    <ul *ngIf="viewModel.errors">
+      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+    </ul>
+
+    <label for="categoryId">Category</label>
+    <div>
+      <select id="categoryId" [(ngModel)]="viewModel.categoryId">
+        <option *ngFor="let category of viewModel.categories" value="{{category.id}}">{{category.name}}</option>
+      </select>
+      <label>{{viewModel.getErrorMessageFor('categoryId')}}</label>
+    </div>
+
+    <label for="productId">Product</label>
+    <div>
+      <select id="productId" [(ngModel)]="viewModel.productId">
+        <option *ngFor="let product of viewModel.products" value="{{product.id}}">{{product.name}}</option>
+      </select>
+      <label>{{viewModel.getErrorMessageFor('productId')}}</label>
+    </div>
+
+    <label>In Stock</label>{{ viewModel.inStock }}
+
+    <label>Price</label>{{ viewModel.price }}
+
+    <label for="quantity">Quantity</label>
+    <div>
+      <input id="name" [(ngModel)] = "viewModel.quantity">
+      <label>{{viewModel.getErrorMessageFor('quantity')}}</label>
+    </div>
+
+    <label>Amount</label>{{ viewModel.amount }}
+
+  </div>
+</div>
+<button (click)="goBack()">go back</button>
+<button [disabled]="!viewModel.isDirty" (click)="save()">save</button>

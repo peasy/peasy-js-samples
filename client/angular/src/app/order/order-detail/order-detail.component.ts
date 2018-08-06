@@ -3,10 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ViewModelArgs, Order } from '../../contracts';
 import { OrderDetailViewModel } from './order-detail-viewmodel';
-import { OrderService } from '../../services/order.service';
-import { CustomerService } from '../../services/customer.service';
-import { OrderItemService } from '../../services/order-item.service';
-import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-order-detail',

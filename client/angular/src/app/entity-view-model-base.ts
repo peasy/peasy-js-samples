@@ -1,36 +1,22 @@
 import { Entity, ViewModelArgs } from './contracts';
 import { ServiceBase } from './services/service-base';
 import { ViewModelBase } from './view-model-base';
+import { promise } from '../../node_modules/protractor';
 
 export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
 
   protected CurrentEntity: T;
 
-  // protected service: ServiceBase<T>;
-
   constructor(protected service: ServiceBase<T>) {
     super();
   }
 
-  loadData(args: ViewModelArgs<T>): any {
+  loadData(args: ViewModelArgs<T>): Promise<boolean> {
     this.CurrentEntity = args.entity || {} as T;
     if (!this.CurrentEntity.id && args.entityID) {
-      this.handle(() => this.service.getById(args.entityID));
+      return this.handle(() => this.service.getById(args.entityID));
     }
   }
-
-  // constructor(args: ViewModelArgs<T>) {
-  //   super();
-  //   this.service = args.service;
-  //   this.CurrentEntity = args.entity || {} as T;
-  //   if (!this.CurrentEntity.id && args.entityID) {
-  //     this.loadData(args.entityID);
-  //   }
-  // }
-
-  // loadData(entityId: string): any {
-  //   this.handle(() => this.service.getById(entityId));
-  // }
 
   get isNew(): boolean {
     return !this.CurrentEntity.id;

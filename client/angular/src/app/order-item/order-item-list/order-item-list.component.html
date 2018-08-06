@@ -1,5 +1,6 @@
 <table>
   <thead>
+    <td><a routerLink="/orders/{{orderId}}/orderitems/new">Add Item</a></td>
     <td>Product</td>
     <td>Price</td>
     <td>Quantity</td>
@@ -11,6 +12,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of viewModel.data">
+      <td></td>
       <td><a routerLink="/orderItem/{{item.id}}">{{ viewModel.getProductNameFor(item.productId) }}</a></td>
       <td>{{ item.price }}</td>
       <td>{{ item.quantity }}</td>

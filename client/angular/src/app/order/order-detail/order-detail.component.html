@@ -5,7 +5,9 @@
       <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
     </ul>
 
-    <label for="id">Id:</label>{{ viewModel.id }}
+    <div>
+      <label for="id">Id:</label>{{ viewModel.id }}
+    </div>
 
     <label for="customerId">Customer</label>
     <div>

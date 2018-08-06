@@ -10,6 +10,7 @@ import { ProductListComponent } from './app/product/product-list/product-list.co
 import { InventoryDetailComponent } from './app/inventory/inventory-detail/inventory-detail.component';
 import { InventoryListComponent } from './app/inventory/inventory-list/inventory-list.component';
 import { OrderDetailComponent } from './app/order/order-detail/order-detail.component';
+import { OrderItemDetailComponent } from './app/order-item/order-item-detail/order-item-detail.component';
 
 const Routes: Routes = [
   { path: '', redirectTo: '/orders', pathMatch: 'full' },
@@ -22,7 +23,8 @@ const Routes: Routes = [
   { path: 'inventory/:id', component: InventoryDetailComponent },
   { path: 'inventory', component: InventoryListComponent },
   { path: 'orders', component: OrderListComponent },
-  { path: 'orders/:id', component: OrderDetailComponent }
+  { path: 'orders/:id', component: OrderDetailComponent },
+  { path: 'orders/:id/orderitems/:itemid', component: OrderItemDetailComponent }
 ];
 
 @NgModule({

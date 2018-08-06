@@ -2,7 +2,7 @@ import { EntityViewModelBase } from '../../entity-view-model-base';
 import { ViewModelArgs, Order, Customer, OrderItem } from '../../contracts';
 import { CustomerListViewModel } from '../../customer/customer-list/customer-list-viewmodel';
 import { OrderItemListViewModel } from '../../order-item/order-item-list/order-item-list-viewmodel';
-import { Injectable } from '../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 
 @Injectable({ providedIn: 'root' })
@@ -41,5 +41,4 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   get orderItems(): OrderItem[] {
     return this.orderItemsVM.data;
   }
-
 }
