@@ -5,6 +5,7 @@ import { OrderItemListViewModel } from '../../order-item/order-item-list/order-i
 import { Injectable } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { OrderItemDetailViewModel } from '../../order-item/order-item-detail/order-item-detail-viewmodel';
+import { OrderItemService } from '../../services/order-item.service';
 
 @Injectable({ providedIn: 'root' })
 export class OrderDetailViewModel extends EntityViewModelBase<Order> {
@@ -12,7 +13,8 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   constructor(
     protected service: OrderService,
     private customersVM: CustomerListViewModel,
-    private orderItemsVM: OrderItemListViewModel) {
+    private orderItemsVM: OrderItemListViewModel,
+    private orderItemService: OrderItemService) {
       super(service);
   }
 
@@ -49,6 +51,19 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
       return this.orderItemsVM.data.map(i => i.amount).reduce((a = 0, b) => a + b);
     }
     return 0;
+  }
+
+  get canSubmit(): boolean {
+    return this.orderItemService.anySubmittable(this.orderItems);
+  }
+
+  async submitOrder() {
+    if (this.canSubmit) {
+      const items = this.orderItemsVM.data.filter(i => this.orderItemService.canSubmit(i));
+      // TODO: figure out how to make this part of the view model handle chain (ie setting busy status, handling errors, etc)
+      await items.map(i => this.orderItemService.submit(i.id));
+      this.orderItemsVM.loadDataFor(this.id);
+    }
   }
 
   // deleteOrderItem(id) {

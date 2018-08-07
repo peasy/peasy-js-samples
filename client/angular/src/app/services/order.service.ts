@@ -14,4 +14,8 @@ export class OrderService extends ServiceBase<Order> {
     return ordersDotCom.services.orderService.status(orderItems);
   }
 
+  hasPendingItems(orderItems: OrderItem[]) {
+    return orderItems.some(i => i.status === 'PENDING');
+  }
+
 }

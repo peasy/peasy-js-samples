@@ -29,5 +29,16 @@ export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
     }
     return null;
   }
+
+  canShip(orderItem: OrderItem) {
+    return this.service.canShip(orderItem);
+  }
+
+  async ship(orderItem: OrderItem) {
+    if (this.canShip(orderItem)) {
+      const result = await this.service.ship(orderItem.id);
+      this.handle(() => this.service.getByOrder(result.value.orderId));
+    }
+  }
 }
 

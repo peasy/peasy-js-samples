@@ -28,5 +28,6 @@
   <label>Total:</label>{{ viewModel.orderTotal }}
 </div>
 
-<button [disabled]="!viewModel.isDirty" (click)="viewModel.save()">Save</button>
+<button [disabled]="!viewModel.isDirty" (click)="saveOrder()">Save</button>
 <button (click)="goBack()">Done</button>
+<button [disabled]="!viewModel.canSubmit" (click)="viewModel.submitOrder()">Submit</button>

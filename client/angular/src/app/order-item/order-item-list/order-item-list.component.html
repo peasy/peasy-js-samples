@@ -1,6 +1,7 @@
 <table>
   <thead>
     <td><a routerLink="/orders/{{orderId}}/orderitems/new">Add Item</a></td>
+    <td></td>
     <td>Product</td>
     <td>Price</td>
     <td>Quantity</td>
@@ -13,6 +14,7 @@
   <tbody>
     <tr *ngFor="let item of viewModel.data">
       <td></td>
+      <td><button [disabled]="!viewModel.canShip(item)" (click)="viewModel.ship(item)">Ship</button></td>
       <td><a routerLink="/orders/{{orderId}}/orderitems/{{item.id}}">{{ viewModel.getProductNameFor(item.productId) }}</a></td>
       <td>{{ item.price }}</td>
       <td>{{ item.quantity }}</td>

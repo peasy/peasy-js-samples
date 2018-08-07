@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ViewModelArgs, Order } from '../../contracts';
 import { OrderDetailViewModel } from './order-detail-viewmodel';
@@ -13,6 +13,7 @@ export class OrderDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     public viewModel: OrderDetailViewModel) { }
 
@@ -25,6 +26,14 @@ export class OrderDetailComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.location.back();
+    this.router.navigate(['orders']);
   }
+
+  async saveOrder() {
+    const result = await this.viewModel.save();
+    if (result) {
+      this.location.go(`orders/${this.viewModel.id}`);
+    }
+  }
+
 }

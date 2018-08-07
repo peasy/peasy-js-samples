@@ -1,6 +1,6 @@
 <table>
   <thead>
-    <td><a routerLink="/orders/new">Add Item</a></td>
+    <td><a routerLink="/orders/new">Create New</a></td>
     <td>Id</td>
     <td>Order Date</td>
     <td>Customer</td>
@@ -16,6 +16,7 @@
       <td>{{ viewModel.getCustomerNameFor(item.customerId) }}</td>
       <td>{{ viewModel.getTotalFor(item.id) }}</td>
       <td>{{ viewModel.getStatusFor(item.id) }}</td>
+      <td><button (click)="viewModel.destroy(item.id)">Delete</button></td>
     </tr>
   </tbody>
 </table>
