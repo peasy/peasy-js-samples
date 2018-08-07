@@ -1,20 +1,32 @@
-<table>
+<table class="table">
   <thead>
-    <td><a routerLink="/orders/{{orderId}}/orderitems/new">Add Item</a></td>
-    <td></td>
-    <td>Product</td>
-    <td>Price</td>
-    <td>Quantity</td>
-    <td>Amount</td>
-    <td>Status</td>
-    <td>Submitted On</td>
-    <td>Shipped On</td>
-    <td></td>
+    <tr>
+      <th scope="col">
+        <a
+          routerLink="/orders/{{orderId}}/orderitems/new"
+          class="badge badge-success normalfont">
+          Add Item
+        </a>
+      </th>
+      <th scope="col">Product</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Status</th>
+      <th scope="col">Submitted On</th>
+      <th scope="col">Shipped On</th>
+      <th scope="col"></th>
+    </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of viewModel.data">
-      <td></td>
-      <td><button [disabled]="!viewModel.canShip(item)" (click)="viewModel.ship(item)">Ship</button></td>
+      <td>
+        <button [disabled]="!viewModel.canShip(item)"
+          (click)="viewModel.ship(item)"
+          class="badge badge-info normalfont">
+          Ship
+        </button>
+      </td>
       <td><a routerLink="/orders/{{orderId}}/orderitems/{{item.id}}">{{ viewModel.getProductNameFor(item.productId) }}</a></td>
       <td>{{ item.price }}</td>
       <td>{{ item.quantity }}</td>
@@ -22,7 +34,13 @@
       <td>{{ item.status }}</td>
       <td>{{ item.submittedOn }}</td>
       <td>{{ item.shippedOn }}</td>
-      <td><button (click)="viewModel.destroy(item.id)">Delete</button></td>
+      <td>
+        <button
+          (click)="viewModel.destroy(item.id)"
+          class="badge badge-secondary normalfont">
+          Delete
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

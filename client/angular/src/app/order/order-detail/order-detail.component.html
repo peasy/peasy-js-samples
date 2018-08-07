@@ -1,6 +1,7 @@
+<h1>Manage Order</h1>
 <div>
   <div>
-    <label *ngIf="viewModel.isBusy">Loading ....</label>
+    <!-- <label *ngIf="viewModel.isBusy">Loading ....</label> -->
     <ul *ngIf="viewModel.errors">
       <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
     </ul>
@@ -28,6 +29,22 @@
   <label>Total:</label>{{ viewModel.orderTotal }}
 </div>
 
-<button [disabled]="!viewModel.isDirty" (click)="saveOrder()">Save</button>
-<button (click)="goBack()">Done</button>
-<button [disabled]="!viewModel.canSubmit" (click)="viewModel.submitOrder()">Submit</button>
+<button
+  [disabled]="!viewModel.isDirty"
+  (click)="saveOrder()"
+  class="btn btn-primary btn-sm">
+  Save
+</button>
+
+<button
+  (click)="goBack()"
+  class="btn btn-secondary btn-sm">
+  Done
+</button>
+
+<button
+  [disabled]="!viewModel.canSubmit"
+  (click)="viewModel.submitOrder()"
+  class="btn btn-info btn-sm">
+  Submit Order
+</button>

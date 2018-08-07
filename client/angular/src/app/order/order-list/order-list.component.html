@@ -1,12 +1,21 @@
-<table>
+<h1>Orders</h1>
+<table class="table">
   <thead>
-    <td><a routerLink="/orders/new">Create New</a></td>
-    <td>Id</td>
-    <td>Order Date</td>
-    <td>Customer</td>
-    <td>Total</td>
-    <td>Status</td>
-    <td></td>
+    <tr>
+      <th>
+        <a
+          routerLink="/orders/new"
+          class="badge badge-success normalfont">
+          Create New
+        </a>
+      </th>
+      <th>Id</th>
+      <th>Order Date</th>
+      <th>Customer</th>
+      <th>Total</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of viewModel.data">
@@ -16,7 +25,13 @@
       <td>{{ viewModel.getCustomerNameFor(item.customerId) }}</td>
       <td>{{ viewModel.getTotalFor(item.id) }}</td>
       <td>{{ viewModel.getStatusFor(item.id) }}</td>
-      <td><button (click)="viewModel.destroy(item.id)">Delete</button></td>
+      <td>
+        <button
+          (click)="viewModel.destroy(item.id)"
+          class="btn btn-secondary btn-sm">
+          Delete
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

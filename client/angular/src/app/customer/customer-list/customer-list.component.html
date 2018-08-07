@@ -1,13 +1,27 @@
-<table>
+<h1>Customers</h1>
+<table class="table">
   <thead>
-    <td>Name</td>
-    <td></td>
+    <th>
+      <a
+        routerLink="/customers/new"
+        class="badge badge-success normalfont">
+        Create New
+      </a>
+    </th>
+    <th>Name</th>
+    <th></th>
   </thead>
   <tbody>
     <tr *ngFor="let customer of viewModel.data">
+      <td></td>
       <td><a routerLink="/customers/{{customer.id}}">{{ customer.name }}</a></td>
-      <td><button (click)="viewModel.destroy(customer.id)">Delete</button>
+      <td>
+        <button
+          (click)="viewModel.destroy(customer.id)"
+          class="btn btn-secondary btn-sm">
+          Delete
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
-<a routerLink="/customers/new">New Customer</a>

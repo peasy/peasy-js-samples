@@ -1,10 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<nav>
-  <a routerLink="/orders">Orders</a>
-  <a routerLink="/customers">Customers</a>
-  <a routerLink="/categories">Categories</a>
-  <a routerLink="/products">Products</a>
-  <a routerLink="/inventory">Inventory</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" [ngClass]="{'active': isActive('orders')}">
+      <a routerLink="orders" class="nav-link">Orders</a>
+    </li>
+    <li class="nav-item" [ngClass]="{'active': isActive('customers')}">
+      <a routerLink="customers" class="nav-link">Customers</a>
+    </li>
+    <li class="nav-item" [ngClass]="{'active': isActive('categories')}">
+      <a routerLink="categories" class="nav-link">Categories</a>
+    </li>
+    <li class="nav-item" [ngClass]="{'active': isActive('products')}">
+      <a routerLink="products" class="nav-link">Products</a>
+    </li>
+    <li class="nav-item" [ngClass]="{'active': isActive('inventory')}">
+      <a routerLink="inventory" class="nav-link">Inventory</a>
+    </li>
+  </ul>
 </nav>
 <router-outlet></router-outlet>
-

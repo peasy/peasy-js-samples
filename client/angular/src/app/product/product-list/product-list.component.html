@@ -1,13 +1,26 @@
-<table>
+<h1>Products</h1>
+<table class="table">
   <thead>
-    <td>Name</td>
-    <td></td>
+    <th>
+      <a routerLink="/products/new"
+        class="badge badge-success normalfont">
+        Create New
+      </a>
+    </th>
+    <th>Name</th>
+    <th></th>
   </thead>
   <tbody>
     <tr *ngFor="let product of viewModel.data">
+      <td></td>
       <td><a routerLink="/products/{{product.id}}">{{ product.name }}</a></td>
-      <td><button (click)="viewModel.destroy(product.id)">Delete</button>
+      <td>
+        <button
+          (click)="viewModel.destroy(product.id)"
+          class="btn btn-secondary btn-sm">
+          Delete
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
-<a routerLink="/products/new">New Product</a>
