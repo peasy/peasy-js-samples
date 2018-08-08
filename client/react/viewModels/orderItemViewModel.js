@@ -111,7 +111,7 @@ class OrderItemViewModel extends ViewModelBase {
     var product = this._products.find(p => p.id === this.entity.productId);
     if (product) {
       return product.name;
-    } 
+    }
     return "";
   }
 }
