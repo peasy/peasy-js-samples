@@ -2,7 +2,7 @@ import { EntityViewModelBase } from '../../entity-view-model-base';
 import { Product, ViewModelArgs, Category } from '../../contracts';
 import { CategoryListViewModel } from '../../category/category-list/category-list-viewmodel';
 import { ProductService } from '../../services/product.service';
-import { Injectable } from '../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class ProductDetailViewModel extends EntityViewModelBase<Product> {
@@ -39,7 +39,7 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
   }
 
   get categoryId(): string {
-    return this.CurrentEntity.categoryId;
+    return this.CurrentEntity.categoryId || '';
   }
 
   set categoryId(value: string) {
@@ -48,7 +48,8 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
   }
 
   get categories(): Category[] {
-    return this.categoryListVM.data;
+    const defaultItem = { name: 'Select Category ...', id: '' } as Category;
+    return [defaultItem, ...this.categoryListVM.data];
   }
 
 }

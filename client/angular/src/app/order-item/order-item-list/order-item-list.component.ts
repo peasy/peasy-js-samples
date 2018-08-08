@@ -11,16 +11,13 @@ export class OrderItemListComponent implements OnInit {
   @Input()
   public orderId: string;
 
-  constructor(public viewModel: OrderItemListViewModel) {
-  }
+  @Input()
+  public viewModel: OrderItemListViewModel;
 
   public async ngOnInit() {
-    if (this.orderId) {
-      // this.viewModel.loadDataFor(this.orderId);
-    }
   }
 
-  public async destroy(id: string): Promise<void> {
-    await this.viewModel.destroy(id);
+  public onDestroyClicked(itemId: string) {
+    console.log('DESTROY CLICKED', itemId);
   }
 }

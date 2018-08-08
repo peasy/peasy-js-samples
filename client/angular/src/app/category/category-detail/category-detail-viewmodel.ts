@@ -1,7 +1,7 @@
 import { Category } from '../../contracts';
 import { EntityViewModelBase } from '../../entity-view-model-base';
 import { CategoryService } from '../../services/category.service';
-import { Injectable } from '../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryDetailViewModel extends EntityViewModelBase<Category> {

@@ -71,19 +71,18 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
     return price * quantity;
   }
 
-  // get categoryId(): string {
-  //   return this.CurrentEntity.categoryId;
-  // }
+  get categoryId(): string {
+    return this._currentProduct ? this._currentProduct.categoryId : '';
+  }
 
   set categoryId(value: string) {
     this._currentCategoryId = value;
     this._currentProduct = null;
     this._currentInventory = null;
-    // this.CurrentEntity.orderId = this.orderId;
   }
 
   get productId(): string {
-    return this.CurrentEntity.productId;
+    return this.CurrentEntity.productId || '';
   }
 
   set productId(value: string) {
@@ -92,11 +91,10 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
     this.CurrentEntity.productId = value;
     this.CurrentEntity.price = this._currentProduct.price;
     this.CurrentEntity.amount = this.amount;
-    this._isDirty = true;
   }
 
   get categories(): Category[] {
-    const defaultItem = { name: 'Select Category ...', id: null } as Category;
+    const defaultItem = { name: 'Select Category ...', id: '' } as Category;
     if (this.categoryListVM.data) {
       return [defaultItem, ...this.categoryListVM.data];
     }
@@ -104,7 +102,7 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
   }
 
   get products(): Product[] {
-    const defaultItem = { name: 'Select Product ...', id: null } as Product;
+    const defaultItem = { name: 'Select Product ...', id: '' } as Product;
     if (this._currentCategoryId) {
       return [defaultItem, ...this.productListVM.data.filter(p => p.categoryId === this._currentCategoryId)];
     }

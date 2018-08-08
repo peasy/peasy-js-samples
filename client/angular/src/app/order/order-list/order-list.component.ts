@@ -8,7 +8,7 @@ import { OrderListViewModel } from './order-list-viewmodel';
 })
 export class OrderListComponent implements OnInit {
 
-  constructor(public viewModel: OrderListViewModel) {
+  constructor(private viewModel: OrderListViewModel) {
   }
 
   public ngOnInit(): void {

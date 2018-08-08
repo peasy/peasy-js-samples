@@ -2,7 +2,7 @@ import { EntityViewModelBase } from '../../entity-view-model-base';
 import { ViewModelArgs, InventoryItem } from '../../contracts';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
 import { InventoryService } from '../../services/inventory.service';
-import { Injectable } from '../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryDetailViewModel extends EntityViewModelBase<InventoryItem> {

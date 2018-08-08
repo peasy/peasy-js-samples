@@ -4,7 +4,6 @@ import { CustomerListViewModel } from '../../customer/customer-list/customer-lis
 import { OrderItemListViewModel } from '../../order-item/order-item-list/order-item-list-viewmodel';
 import { Injectable } from '@angular/core';
 import { OrderService } from '../../services/order.service';
-import { OrderItemDetailViewModel } from '../../order-item/order-item-detail/order-item-detail-viewmodel';
 import { OrderItemService } from '../../services/order-item.service';
 
 @Injectable({ providedIn: 'root' })
@@ -13,24 +12,23 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   constructor(
     protected service: OrderService,
     private customersVM: CustomerListViewModel,
-    private orderItemsVM: OrderItemListViewModel,
+    public orderItemsVM: OrderItemListViewModel,
     private orderItemService: OrderItemService) {
       super(service);
   }
 
   get isBusy() {
-    return super['isBusy'] || this.customersVM.isBusy;
-    // return super['isBusy'] || this.customersVM.isBusy || this.orderItemsVM.isBusy;
+    return super['isBusy'] || this.customersVM.isBusy || this.orderItemsVM.isBusy;
   }
 
   loadData(args: ViewModelArgs<Order>): any {
     super.loadData(args);
     this.customersVM.loadData();
-    // this.orderItemsVM.loadDataFor(args.entityID);
+    this.orderItemsVM.loadDataFor(args.entityID);
   }
 
   get customerId(): string {
-    return this.CurrentEntity.customerId;
+    return this.CurrentEntity.customerId || '';
   }
 
   set customerId(value: string) {
@@ -39,7 +37,11 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   }
 
   get customers(): Customer[] {
-    return this.customersVM.data;
+    const defaultItem = { name: 'Select Customer ...', id: '' } as Customer;
+    if (this.customersVM.data) {
+      return [defaultItem, ...this.customersVM.data];
+    }
+    return [defaultItem];
   }
 
   get orderItems(): OrderItem[] {
@@ -65,8 +67,4 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
       this.orderItemsVM.loadDataFor(this.id);
     }
   }
-
-  // deleteOrderItem(id) {
-  //   this.orderItemsVM.destroy(id);
-  // }
 }

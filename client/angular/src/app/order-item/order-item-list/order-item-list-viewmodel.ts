@@ -31,8 +31,11 @@ export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
   }
 
   canShip(orderItem: OrderItem) {
-    console.log('ORDER ITEM', orderItem);
     return this.service.canShip(orderItem);
+  }
+
+  canDelete(orderItem: OrderItem) {
+    return this.service.canDelete(orderItem);
   }
 
   async ship(orderItem: OrderItem) {
