@@ -16,9 +16,6 @@ export class OrderListViewModel extends ListViewModelBase<Order> {
   }
 
   async loadData(): Promise<boolean> {
-    // super.loadData();
-    // this.customersVM.loadData();
-    // this.orderItemsVM.loadData();
     const results = await Promise.all
     ([
       super.loadData(),

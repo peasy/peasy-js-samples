@@ -30,6 +30,9 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     this.loadStarted();
     try  {
       const result = await command();
+      if (!result) {
+        console.warn('the result in handle() was null.  are you sure you have a return statement in your command function?');
+      }
       this.CurrentEntity = result.value;
       this._isDirty = false;
     } catch (e) {

@@ -1,5 +1,6 @@
-import { OnInit, Component, Input } from '@angular/core';
+import { OnInit, Component, Input, EventEmitter, Output } from '@angular/core';
 import { OrderItemListViewModel } from './order-item-list-viewmodel';
+import { OrderItem } from '../../contracts';
 
 @Component({
   selector: 'app-order-item-list',
@@ -14,10 +15,13 @@ export class OrderItemListComponent implements OnInit {
   @Input()
   public viewModel: OrderItemListViewModel;
 
+  @Output()
+  destroyClicked = new EventEmitter<OrderItem>();
+
   public async ngOnInit() {
   }
 
-  public onDestroyClicked(itemId: string) {
-    console.log('DESTROY CLICKED', itemId);
+  public onDestroyClicked(orderItem: OrderItem): void {
+    this.destroyClicked.emit(orderItem);
   }
 }

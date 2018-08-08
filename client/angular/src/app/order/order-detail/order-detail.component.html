@@ -17,7 +17,11 @@
 </div>
 
 <div *ngIf="!viewModel.isNew">
-  <app-order-item-list [orderId]="viewModel.id" [viewModel]="viewModel.orderItemsVM"></app-order-item-list>
+  <app-order-item-list
+    (destroyClicked)="viewModel.destroyOrderItem($event)"
+    [orderId]="viewModel.id"
+    [viewModel]="viewModel.orderItemsVM">
+  </app-order-item-list>
 </div>
 
 <div>

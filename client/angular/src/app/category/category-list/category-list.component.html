@@ -1,14 +1,15 @@
 <h1>Categories</h1>
-<table class="table">
+<table class="table table-hover">
   <thead>
-    <th>
-      <a routerLink="/categories/new"
-        class="badge badge-success normalfont">
-        Create New
-      </a>
-    </th>
-    <th>Name</th>
-    <th></th>
+    <tr>
+      <th>
+        <a routerLink="/categories/new" class="badge badge-success normalfont">
+          Create New
+        </a>
+      </th>
+      <th>Name</th>
+      <th></th>
+    </tr>
   </thead>
   <tbody>
     <tr *ngFor="let category of viewModel.data">

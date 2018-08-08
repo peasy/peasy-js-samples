@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">
@@ -19,26 +19,26 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of viewModel.data">
+    <tr *ngFor="let item of viewModel.items">
       <td>
         <button
-          [hidden]="!viewModel.canShip(item)"
-          (click)="viewModel.ship(item)"
+          [hidden]="!item.canShip"
+          (click)="item.ship()"
           class="btn btn-info small-button">
           Ship
         </button>
       </td>
-      <td><a routerLink="/orders/{{orderId}}/orderitems/{{item.id}}">{{ viewModel.getProductNameFor(item.productId) }}</a></td>
-      <td>{{ item.price | currency }}</td>
-      <td>{{ item.quantity }}</td>
-      <td>{{ item.amount | currency }}</td>
-      <td>{{ item.status }}</td>
-      <td>{{ item.submittedOn | date:'short' }}</td>
-      <td>{{ item.shippedOn | date:'short'}}</td>
+      <td><a routerLink="/orders/{{orderId}}/orderitems/{{item.id}}">{{ item.productName }}</a></td>
+      <td>{{ item.CurrentEntity.price | currency }}</td>
+      <td>{{ item.CurrentEntity.quantity }}</td>
+      <td>{{ item.CurrentEntity.amount | currency }}</td>
+      <td>{{ item.CurrentEntity.status }}</td>
+      <td>{{ item.CurrentEntity.submittedOn | date:'short' }}</td>
+      <td>{{ item.CurrentEntity.shippedOn | date:'short'}}</td>
       <td>
         <button
-          (click)="viewModel.destroy(item.id)"
-          [hidden]="!viewModel.canDelete(item)"
+          (click)="onDestroyClicked(item.id)"
+          [hidden]="!item.canDelete"
           class="btn btn-secondary small-button">
           Delete
         </button>

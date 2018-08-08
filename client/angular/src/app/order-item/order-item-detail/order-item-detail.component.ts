@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { OrderItemDetailViewModel } from './order-item-detail-viewmodel';
 import { ViewModelArgs, OrderItem } from '../../contracts';
 

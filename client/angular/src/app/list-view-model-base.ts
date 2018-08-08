@@ -32,10 +32,12 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
     return success;
   }
 
-  async destroy(id: string) {
-    if (await this.handle(() => this.service.destroy(id))) {
+  async destroy(id: string): Promise<boolean> {
+    const result = await this.handle(() => this.service.destroy(id));
+    if (result) {
       this.data = this.data.filter(entity => entity.id !== id);
     }
+    return result;
   }
 
 }

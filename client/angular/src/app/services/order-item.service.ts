@@ -34,7 +34,7 @@ export class OrderItemService extends ServiceBase<OrderItem> {
     return ordersDotCom.services.orderItemService.canShip(item);
   }
 
-  public anySubmittable(orderItems: OrderItem[]) {
+  public anySubmittable(orderItems: OrderItem[]): boolean {
     return orderItems.some(i => i.status === 'PENDING');
   }
 

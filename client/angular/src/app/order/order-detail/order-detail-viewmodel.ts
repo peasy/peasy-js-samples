@@ -49,8 +49,8 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   }
 
   get orderTotal(): number {
-    if (this.orderItemsVM.data && this.orderItemsVM.data.length) {
-      return this.orderItemsVM.data.map(i => i.amount).reduce((a = 0, b) => a + b);
+    if (this.orderItems && this.orderItems.length) {
+      return this.orderItems.map(i => i.amount).reduce((a = 0, b) => a + b);
     }
     return 0;
   }
@@ -61,10 +61,11 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
 
   async submitOrder() {
     if (this.canSubmit) {
-      const items = this.orderItemsVM.data.filter(i => this.orderItemService.canSubmit(i));
-      // TODO: figure out how to make this part of the view model handle chain (ie setting busy status, handling errors, etc)
-      await items.map(i => this.orderItemService.submit(i.id));
-      this.orderItemsVM.loadDataFor(this.id);
+      this.orderItemsVM.submitAllSubmittable();
     }
+  }
+
+  public async destroyOrderItem(orderItem: OrderItem): Promise<void> {
+    await this.orderItemsVM.destroy(orderItem.id || orderItem.toString());
   }
 }

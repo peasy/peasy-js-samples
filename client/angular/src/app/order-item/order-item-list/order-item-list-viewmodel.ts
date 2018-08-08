@@ -3,6 +3,7 @@ import { OrderItem } from '../../contracts';
 import { OrderItemService } from '../../services/order-item.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
 import { Injectable } from '@angular/core';
+import { OrderItemViewModel } from '../order-item-viewmodel';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
@@ -13,36 +14,37 @@ export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
       super(service);
   }
 
-  get isBusy() {
-    return super['isBusy'] || this.productsVM.isBusy;
+  public items: OrderItemViewModel[];
+
+  public get isBusy() {
+    return super['isBusy'] ||
+      this.productsVM.isBusy ||
+      this.items.some(vm => vm.isBusy);
   }
 
-  async loadDataFor(orderId: string) {
-    super.handle(() => this.service.getByOrder(orderId));
-    this.productsVM.loadData();
+  public async loadDataFor(orderId: string): Promise<boolean> {
+    const results = await Promise.all
+    ([
+      super.handle(() => this.service.getByOrder(orderId)),
+      this.productsVM.loadData()
+    ]);
+    this.items = this.data.map(i => new OrderItemViewModel(this.service, this.productsVM.data, i));
+    return results.every(r => r === true);
   }
 
-  getProductNameFor(productId: string): string {
-    const products = this.productsVM.data;
-    if (products) {
-      return products.find(p => p.id === productId).name;
+  public async destroy(id: string): Promise<boolean> {
+    const result = await super.destroy(id);
+    if (result) {
+      this.items = [...this.items.filter(vm => vm.id !== id)];
     }
-    return null;
+    return result;
   }
 
-  canShip(orderItem: OrderItem) {
-    return this.service.canShip(orderItem);
-  }
-
-  canDelete(orderItem: OrderItem) {
-    return this.service.canDelete(orderItem);
-  }
-
-  async ship(orderItem: OrderItem) {
-    if (this.canShip(orderItem)) {
-      const result = await this.service.ship(orderItem.id);
-      this.handle(() => this.service.getByOrder(result.value.orderId));
-    }
+  public async submitAllSubmittable(): Promise<boolean> {
+    const submittableItems = this.data.filter(i => this.service.canSubmit(i));
+    const vms = submittableItems.map(i => this.items.find(vm => vm.id === i.id));
+    const results = await Promise.all(vms.map(vm => vm.submit()));
+    return results.every(result => result === true);
   }
 }
 
