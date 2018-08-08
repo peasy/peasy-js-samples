@@ -28,12 +28,12 @@
         </button>
       </td>
       <td><a routerLink="/orders/{{orderId}}/orderitems/{{item.id}}">{{ viewModel.getProductNameFor(item.productId) }}</a></td>
-      <td>{{ item.price }}</td>
+      <td>{{ item.price | currency }}</td>
       <td>{{ item.quantity }}</td>
-      <td>{{ item.amount }}</td>
+      <td>{{ item.amount | currency }}</td>
       <td>{{ item.status }}</td>
-      <td>{{ item.submittedOn }}</td>
-      <td>{{ item.shippedOn }}</td>
+      <td>{{ item.submittedOn | date:'short' }}</td>
+      <td>{{ item.shippedOn | date:'short'}}</td>
       <td>
         <button
           (click)="viewModel.destroy(item.id)"

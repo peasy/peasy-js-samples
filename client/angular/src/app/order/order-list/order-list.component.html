@@ -23,7 +23,7 @@
       <td><a routerLink="/orders/{{item.id}}">{{ item.id }}</a></td>
       <td>{{ item.orderDate }}</td>
       <td>{{ viewModel.getCustomerNameFor(item.customerId) }}</td>
-      <td>{{ viewModel.getTotalFor(item.id) }}</td>
+      <td>{{ viewModel.getTotalFor(item.id) | currency }}</td>
       <td>{{ viewModel.getStatusFor(item.id) }}</td>
       <td>
         <button

@@ -44,7 +44,6 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
 
   set orderId(value: string) {
     this.CurrentEntity.orderId = value;
-    console.log('SETTING CURRENT ENTITY', this.CurrentEntity);
   }
 
   get inStock(): number {

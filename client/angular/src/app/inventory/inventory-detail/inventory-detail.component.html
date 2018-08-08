@@ -1,33 +1,24 @@
 <h1>Manage Inventory Item</h1>
+
+<ul *ngIf="viewModel.errors">
+  <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+</ul>
+
 <div>
-  <div>
-    <label *ngIf="viewModel.isBusy">Loading ....</label>
-    <ul *ngIf="viewModel.errors">
-      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-    </ul>
-
-    <label>Name</label>
-    <div>
-      <label>{{viewModel.name}}</label>
-      <label>{{viewModel.getErrorMessageFor('name')}}</label>
-    </div>
-
-    <label for="quantityOnHand">Quantity</label>
-    <div>
-      <input id="quantityOnHand" [(ngModel)] = "viewModel.quantityOnHand">
-      <label>{{viewModel.getErrorMessageFor('quantityOnHand')}}</label>
-    </div>
-
-  </div>
+  <label class="form-label">Name</label> {{viewModel.name}}
 </div>
-<button
-  [disabled]="!viewModel.isDirty"
-  (click)="save()"
-  class="btn btn-primary btn-sm">
-  Save
-</button>
-<button
-  (click)="goBack()"
-  class="btn btn-secondary btn-sm">
-  Cancel
-</button>
+
+<div>
+  <label for="quantityOnHand" class="form-label">Quantity</label>
+  <input id="quantityOnHand" [(ngModel)]="viewModel.quantityOnHand" class="form-control">
+  <label>{{viewModel.getErrorMessageFor('quantityOnHand')}}</label>
+</div>
+
+<div class="button-grouping">
+  <button [disabled]="!viewModel.isDirty" (click)="save()" class="btn btn-primary btn-sm">
+    Save
+  </button>
+  <button (click)="goBack()" class="btn btn-secondary btn-sm">
+    Cancel
+  </button>
+</div>

@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+.normalfont {
+  font-weight: normal;
+}
+
+.main {
+  padding: 10px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.button-grouping button {
+  margin-right: 5px;
+}

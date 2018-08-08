@@ -1,49 +1,51 @@
 <h1>Manage Order Item</h1>
+
 <div>
-  <div>
-    <label *ngIf="viewModel.isBusy">Loading ....</label>
-    <ul *ngIf="viewModel.errors">
-      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-    </ul>
-
-    <label for="categoryId">Category</label>
-    <div>
-      <select id="categoryId" [(ngModel)]="viewModel.categoryId">
-        <option *ngFor="let category of viewModel.categories" value="{{category.id}}">{{category.name}}</option>
-      </select>
-      <label>{{viewModel.getErrorMessageFor('categoryId')}}</label>
-    </div>
-
-    <label for="productId">Product</label>
-    <div>
-      <select id="productId" [(ngModel)]="viewModel.productId">
-        <option *ngFor="let product of viewModel.products" value="{{product.id}}">{{product.name}}</option>
-      </select>
-      <label>{{viewModel.getErrorMessageFor('productId')}}</label>
-    </div>
-
-    <label>In Stock</label>{{ viewModel.inStock }}
-
-    <label>Price</label>{{ viewModel.price }}
-
-    <label for="quantity">Quantity</label>
-    <div>
-      <input id="name" [(ngModel)] = "viewModel.quantity">
-      <label>{{viewModel.getErrorMessageFor('quantity')}}</label>
-    </div>
-
-    <label>Amount</label>{{ viewModel.amount }}
-
-  </div>
+  <label *ngIf="viewModel.isBusy">Loading ....</label>
+  <ul *ngIf="viewModel.errors">
+    <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+  </ul>
 </div>
-<button
-  [disabled]="!viewModel.isDirty"
-  (click)="save()"
-  class="btn btn-primary btn-sm">
-  Save
-</button>
-<button
-  (click)="goBack()"
-  class="btn btn-secondary btn-sm">
-  Cancel
-</button>
+
+<div>
+  <label for="categoryId" class="form-label">Category</label>
+  <select id="categoryId" [(ngModel)]="viewModel.categoryId" class="form-control">
+    <option *ngFor="let category of viewModel.categories" value="{{category.id}}">{{category.name}}</option>
+  </select>
+  <label>{{viewModel.getErrorMessageFor('categoryId')}}</label>
+</div>
+
+<div>
+  <label for="productId" class="form-label">Product</label>
+  <select id="productId" [(ngModel)]="viewModel.productId" class="form-control">
+    <option *ngFor="let product of viewModel.products" value="{{product.id}}">{{product.name}}</option>
+  </select>
+  <label>{{viewModel.getErrorMessageFor('productId')}}</label>
+</div>
+
+<div>
+  <label class="form-label">In Stock:</label> {{ viewModel.inStock }}
+</div>
+
+<div>
+  <label class="form-label">Price:</label> {{ viewModel.price | currency }}
+</div>
+
+<div>
+  <label for="quantity" class="form-label">Quantity</label>
+  <input id="name" [(ngModel)]="viewModel.quantity" class="form-control">
+  <label>{{viewModel.getErrorMessageFor('quantity')}}</label>
+</div>
+
+<div>
+  <label class="form-label">Amount:</label> {{ viewModel.amount | currency }}
+</div>
+
+<div class="button-grouping">
+  <button [disabled]="!viewModel.isDirty" (click)="save()" class="btn btn-primary btn-sm">
+    Save
+  </button>
+  <button (click)="goBack()" class="btn btn-secondary btn-sm">
+    Cancel
+  </button>
+</div>

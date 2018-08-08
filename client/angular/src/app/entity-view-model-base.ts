@@ -45,7 +45,6 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
   }
 
   public async save(): Promise<boolean> {
-    console.log('IN SAVE', this.CurrentEntity);
     if (this.isDirty) {
       this._errors = [];
       if (this.isNew) {

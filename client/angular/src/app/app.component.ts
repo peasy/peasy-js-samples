@@ -11,11 +11,6 @@ export class AppComponent {
   constructor(private router: Router) {}
 
   isActive(path) {
-    console.log('PATH', path);
-    const x = this.router.url.indexOf(path) > -1;
-    console.log('INDEX OF', x);
-
-    return x;
-    // return this.router.url.indexOf(path) > -1;
+    return this.router.url.indexOf(path) > -1;
   }
 }

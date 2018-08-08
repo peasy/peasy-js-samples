@@ -16,7 +16,7 @@ export class OrderItemListComponent implements OnInit {
 
   public async ngOnInit() {
     if (this.orderId) {
-      this.viewModel.loadDataFor(this.orderId);
+      // this.viewModel.loadDataFor(this.orderId);
     }
   }
 

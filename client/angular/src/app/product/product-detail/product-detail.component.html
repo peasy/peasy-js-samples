@@ -1,41 +1,34 @@
 <h1>Manage Product</h1>
+
+<ul *ngIf="viewModel.errors">
+  <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+</ul>
+
 <div>
-  <div>
-    <label *ngIf="viewModel.isBusy">Loading ....</label>
-    <ul *ngIf="viewModel.errors">
-      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-    </ul>
-
-    <label for="name">Name</label>
-    <div>
-      <input id="name" [(ngModel)] = "viewModel.name">
-      <label>{{viewModel.getErrorMessageFor('name')}}</label>
-    </div>
-
-    <label for="price">Price</label>
-    <div>
-      <input id="price" [(ngModel)] = "viewModel.price">
-      <label>{{viewModel.getErrorMessageFor('price')}}</label>
-    </div>
-
-    <label for="categoryId">Category</label>
-    <div>
-      <select id="categoryId" [(ngModel)]="viewModel.categoryId">
-        <option *ngFor="let category of viewModel.categories" value="{{category.id}}">{{category.name}}</option>
-      </select>
-      <label>{{viewModel.getErrorMessageFor('categoryId')}}</label>
-    </div>
-
-  </div>
+  <label for="name" class="form-label">Name</label>
+  <input id="name" [(ngModel)]="viewModel.name" class="form-control">
+  <label>{{viewModel.getErrorMessageFor('name')}}</label>
 </div>
-<button
-  [disabled]="!viewModel.isDirty"
-  (click)="save()"
-  class="btn btn-primary btn-sm">
-  Save
-</button>
-<button
-  (click)="goBack()"
-  class="btn btn-secondary btn-sm">
-  Cancel
-</button>
+
+<div>
+  <label for="price" class="form-label">Price</label>
+  <input id="price" [(ngModel)]="viewModel.price" class="form-control">
+  <label>{{viewModel.getErrorMessageFor('price')}}</label>
+</div>
+
+<div>
+  <label for="categoryId" class="form-label">Category</label>
+  <select id="categoryId" [(ngModel)]="viewModel.categoryId" class="form-control">
+    <option *ngFor="let category of viewModel.categories" value="{{category.id}}">{{category.name}}</option>
+  </select>
+  <label>{{viewModel.getErrorMessageFor('categoryId')}}</label>
+</div>
+
+<div class="button-grouping">
+  <button [disabled]="!viewModel.isDirty" (click)="save()" class="btn btn-primary btn-sm">
+    Save
+  </button>
+  <button (click)="goBack()" class="btn btn-secondary btn-sm">
+    Cancel
+  </button>
+</div>

@@ -1,25 +1,20 @@
 <h1>Manage Customer</h1>
+
+<ul *ngIf="viewModel.errors">
+  <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+</ul>
+
 <div>
-  <div>
-    <!-- <label *ngIf="viewModel.isBusy">Loading ....</label> -->
-    <ul *ngIf="viewModel.errors">
-      <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-    </ul>
-    <label for="name">Name</label>
-    <div>
-      <input id="name" [(ngModel)] = "viewModel.name">
-      <label>{{viewModel.getErrorMessageFor('name')}}</label>
-    </div>
-  </div>
+  <label for="name" class="form-label">Name</label>
+  <input id="name" [(ngModel)]="viewModel.name" class="form-control">
+  <label>{{viewModel.getErrorMessageFor('name')}}</label>
 </div>
-<button
-  [disabled]="!viewModel.isDirty"
-  (click)="save()"
-  class="btn btn-primary btn-sm">
-  Save
-</button>
-<button
-  (click)="goBack()"
-  class="btn btn-secondary btn-sm">
-  Cancel
-</button>
+
+<div class="button-grouping">
+  <button [disabled]="!viewModel.isDirty" (click)="save()" class="btn btn-primary btn-sm">
+    Save
+  </button>
+  <button (click)="goBack()" class="btn btn-secondary btn-sm">
+    Cancel
+  </button>
+</div>
