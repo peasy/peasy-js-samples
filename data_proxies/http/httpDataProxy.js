@@ -52,6 +52,7 @@ HttpDataProxy.prototype._handleGetListByIdFrom = function(promise, done) {
 }
 
 HttpDataProxy.prototype._getError = function(err) {
+  if (!err.response) return err;
   switch (err.response.status) {
     case HttpDataProxy.httpStatusCodes.BAD_REQUEST:
       var serviceException = new ServiceException(err.message);

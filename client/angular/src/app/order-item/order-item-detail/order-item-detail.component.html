@@ -1,8 +1,7 @@
 <h1>Manage Order Item</h1>
 
-<div>
-  <label *ngIf="viewModel.isBusy">Loading ....</label>
-  <ul *ngIf="viewModel.errors">
+<div *ngIf="viewModel.errors.length">
+  <ul class="text-danger">
     <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
   </ul>
 </div>

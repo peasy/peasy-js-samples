@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CustomerDetailViewModel } from './customer-detail-viewmodel';
-import { Customer, ViewModelArgs, INotificationMessenger } from '../../contracts';
+import { Customer, ViewModelArgs } from '../../contracts';
 import { NotificationMessenger } from '../../notification-messenger';
 
 @Component({
@@ -34,6 +34,8 @@ export class CustomerDetailComponent implements OnInit {
     if (await this.viewModel.save()) {
       this.notificationMessenger.info('Save successful');
       this.goBack();
+    } else {
+      this.notificationMessenger.error('Save failed.  Please try again.');
     }
   }
 

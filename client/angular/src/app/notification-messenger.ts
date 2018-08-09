@@ -9,12 +9,14 @@ export class NotificationMessenger implements INotificationMessenger {
   }
 
   info(message: string): void {
-    this.toastr.success('Hello world!', message);
+    this.toastr.success(message);
   }
 
   warning(message: string): void {
+    this.toastr.warning(message);
   }
 
   error(message: string): void {
+    this.toastr.error(message);
   }
 }

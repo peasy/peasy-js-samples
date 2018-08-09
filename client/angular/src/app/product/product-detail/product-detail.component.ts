@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProductDetailViewModel } from './product-detail-viewmodel';
 import { Product, ViewModelArgs } from '../../contracts';
+import { NotificationMessenger } from '../../notification-messenger';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,7 +15,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    public viewModel: ProductDetailViewModel) { }
+    public viewModel: ProductDetailViewModel,
+    private notificationMessenger: NotificationMessenger) { }
 
   public async ngOnInit(): Promise<void> {
     let productId = this.route.snapshot.params['id'];
@@ -30,7 +32,10 @@ export class ProductDetailComponent implements OnInit {
 
   public async save(): Promise<void> {
     if (await this.viewModel.save()) {
+      this.notificationMessenger.info('Save successful');
       this.goBack();
+    } else {
+      this.notificationMessenger.error('Save failed.  Please try again.');
     }
   }
 }

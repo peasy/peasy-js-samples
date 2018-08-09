@@ -52,7 +52,7 @@ export interface ExecutionResult<T> {
 }
 
 export interface ViewModelArgs<T> {
-  service: ServiceBase<T>;
+  // service: ServiceBase<T>;
   entity?: T;
   entityID: string;
 }

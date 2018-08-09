@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ViewModelArgs, Order } from '../../contracts';
 import { OrderDetailViewModel } from './order-detail-viewmodel';
+import { NotificationMessenger } from '../../notification-messenger';
 
 @Component({
   selector: 'app-order-detail',
@@ -15,7 +16,8 @@ export class OrderDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    public viewModel: OrderDetailViewModel) { }
+    public viewModel: OrderDetailViewModel,
+    private notificationMessenger: NotificationMessenger) { }
 
   public async ngOnInit(): Promise<void> {
     let orderId: string = this.route.snapshot.params['id'];
@@ -32,7 +34,15 @@ export class OrderDetailComponent implements OnInit {
   async saveOrder() {
     const result = await this.viewModel.save();
     if (result) {
+    }
+  }
+
+  public async save(): Promise<void> {
+    if (await this.viewModel.save()) {
+      this.notificationMessenger.info('Save successful');
       this.location.go(`orders/${this.viewModel.id}`);
+    } else {
+      this.notificationMessenger.error('Save failed.  Please try again.');
     }
   }
 

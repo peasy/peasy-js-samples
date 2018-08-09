@@ -1,8 +1,10 @@
 <h1>Manage Inventory Item</h1>
 
-<ul *ngIf="viewModel.errors">
-  <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-</ul>
+<div *ngIf="viewModel.errors.length">
+  <ul class="text-danger">
+    <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
+  </ul>
+</div>
 
 <div>
   <label class="form-label">Name</label> {{viewModel.name}}
