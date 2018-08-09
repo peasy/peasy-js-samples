@@ -37,7 +37,7 @@
       <td>{{ item.CurrentEntity.shippedOn | date:'short'}}</td>
       <td>
         <button
-          (click)="onDestroyClicked(item.id)"
+          (click)="onDestroyClicked(item)"
           [hidden]="!item.canDelete"
           class="btn btn-secondary small-button">
           Delete

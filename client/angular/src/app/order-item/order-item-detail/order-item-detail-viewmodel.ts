@@ -58,7 +58,6 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
     return this.CurrentEntity.quantity;
   }
 
-  // Show how middle tier will correctly parse the input into a number and error if fails
   set quantity(value: number) {
     this.CurrentEntity.quantity = value;
     this.CurrentEntity.amount = this.amount;

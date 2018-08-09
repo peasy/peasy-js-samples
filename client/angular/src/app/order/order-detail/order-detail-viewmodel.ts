@@ -66,6 +66,6 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   }
 
   public async destroyOrderItem(orderItem: OrderItem): Promise<void> {
-    await this.orderItemsVM.destroy(orderItem.id || orderItem.toString());
+    await this.orderItemsVM.destroy(orderItem.id);
   }
 }
