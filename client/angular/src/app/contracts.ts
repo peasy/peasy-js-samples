@@ -56,3 +56,9 @@ export interface ViewModelArgs<T> {
   entity?: T;
   entityID: string;
 }
+
+export interface INotificationMessenger {
+  info(message: string): void;
+  warning(message: string): void;
+  error(message: string): void;
+}
