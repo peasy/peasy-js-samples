@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CustomerDetailViewModel } from './customer-detail-viewmodel';
-import { CustomerService } from '../../services/customer.service';
-import { Customer, ViewModelArgs } from '../../contracts';
+import { Customer, ViewModelArgs, INotificationMessenger } from '../../contracts';
+import { NotificationMessenger } from '../../notification-messenger';
 
 @Component({
   selector: 'app-customer-detail',
@@ -15,7 +15,8 @@ export class CustomerDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    public viewModel: CustomerDetailViewModel) { }
+    public viewModel: CustomerDetailViewModel,
+    private notificationMessenger: NotificationMessenger) { }
 
   public async ngOnInit(): Promise<void> {
     let customerId = this.route.snapshot.params['id'];
@@ -31,6 +32,7 @@ export class CustomerDetailComponent implements OnInit {
 
   public async save(): Promise<void> {
     if (await this.viewModel.save()) {
+      this.notificationMessenger.info('Save successful');
       this.goBack();
     }
   }

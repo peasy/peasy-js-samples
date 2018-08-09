@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
@@ -16,7 +17,8 @@ import { InventoryDetailComponent } from './inventory/inventory-detail/inventory
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
 import { OrderItemDetailComponent } from './order-item/order-item-detail/order-item-detail.component';
 import { OrderItemListComponent } from './order-item/order-item-list/order-item-list.component';
-
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,12 @@ import { OrderItemListComponent } from './order-item/order-item-list/order-item-
     OrderItemListComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
     FormsModule,
-    AppRoutingModule
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
