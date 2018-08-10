@@ -1,28 +1,57 @@
-import { ExecutionResult } from '../contracts';
+import { ExecutionResult, Entity } from '../contracts';
+import { Store } from '../app.store';
 
-export class ServiceBase<T> {
+export class ServiceBase<T extends Entity> {
 
-  constructor(protected service) {
+  constructor(protected store: Store<T>, protected service) {
   }
 
-  public getAll(): Promise<ExecutionResult<T[]>> {
-    return this.handle(this.service.getAllCommand());
+  public async getAll(): Promise<ExecutionResult<T[]>> {
+    const data = this.store.getAll();
+    if (!data.length) {
+      const result = await this.handle<T[]>(this.service.getAllCommand());
+      this.store.insertBulk(result.value);
+      return result;
+    }
+    return {
+      success: true,
+      value: data,
+      errors: []
+    } as ExecutionResult<T[]>;
   }
 
-  public getById(id: string): Promise<ExecutionResult<T>> {
-    return this.handle(this.service.getByIdCommand(id));
+  public async getById(id: string): Promise<ExecutionResult<T>> {
+    const data = this.store.getById(id);
+    if (!data) {
+      const foo = await this.handle<T>(this.service.getByIdCommand(id));
+      if (foo.value) {
+        this.store.insertBulk([foo.value]);
+        return foo;
+      }
+    }
+    return {
+      success: true,
+      value: data,
+      errors: []
+    } as ExecutionResult<T>;
   }
 
-  public update(entity: T): Promise<ExecutionResult<T>> {
-    return this.handle(this.service.updateCommand(entity));
+  public async update(entity: T): Promise<ExecutionResult<T>> {
+    const result = await this.handle<T>(this.service.updateCommand(entity));
+    this.store.update(result.value);
+    return result;
   }
 
-  public insert(entity: T): Promise<ExecutionResult<T>> {
-    return this.handle(this.service.insertCommand(entity));
+  public async insert(entity: T): Promise<ExecutionResult<T>> {
+    const result = await this.handle<T>(this.service.insertCommand(entity));
+    this.store.insert(result.value);
+    return result;
   }
 
-  public destroy(id: string): Promise<ExecutionResult<T>> {
-    return this.handle(this.service.destroyCommand(id));
+  public async destroy(id: string): Promise<ExecutionResult<T>> {
+    const result = this.handle<T>(this.service.destroyCommand(id));
+    this.store.destroy(id);
+    return result;
   }
 
   protected handle<P>(command): Promise<ExecutionResult<P>> {
