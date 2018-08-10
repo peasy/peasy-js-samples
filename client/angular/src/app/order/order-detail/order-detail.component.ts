@@ -31,13 +31,7 @@ export class OrderDetailComponent implements OnInit {
     this.router.navigate(['orders']);
   }
 
-  async saveOrder() {
-    const result = await this.viewModel.save();
-    if (result) {
-    }
-  }
-
-  public async save(): Promise<void> {
+  public async saveOrder(): Promise<void> {
     if (await this.viewModel.save()) {
       this.notificationMessenger.info('Save successful');
       this.location.go(`orders/${this.viewModel.id}`);

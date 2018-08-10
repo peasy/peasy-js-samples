@@ -11,6 +11,7 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
   }
 
   loadData(args: ViewModelArgs<T>): Promise<boolean> {
+    this._errors = [];
     this.CurrentEntity = args.entity || {} as T;
     if (!this.CurrentEntity.id && args.entityID) {
       return this.handle(() => this.service.getById(args.entityID));
