@@ -4,25 +4,23 @@ import { ActivatedRoute } from '@angular/router';
 import { ViewModelArgs, Customer } from '../../contracts';
 import { EventAggregator } from '../../event-aggregator';
 import { Subscription } from '../../../../node_modules/rxjs';
-import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-custtest',
   templateUrl: './custtest.component.html',
-  styleUrls: ['./custtest.component.css']
+  styleUrls: ['./custtest.component.css'],
+  providers: [CustomerDetailViewModel]
 })
 export class CusttestComponent implements OnInit {
 
   private updateSubscription: Subscription;
-  public viewModel: CustomerDetailViewModel;
 
   constructor(
     private route: ActivatedRoute,
-    public service: CustomerService,
-    private eventAggregator: EventAggregator<Customer>) {
+    private eventAggregator: EventAggregator<Customer>,
+    public viewModel: CustomerDetailViewModel) {
       this.onCustomerChanged = this.onCustomerChanged.bind(this);
       this.updateSubscription = this.eventAggregator.update.subscribe(this.onCustomerChanged);
-      this.viewModel = new CustomerDetailViewModel(service);
     }
 
   private onCustomerChanged(customer: Customer): void {

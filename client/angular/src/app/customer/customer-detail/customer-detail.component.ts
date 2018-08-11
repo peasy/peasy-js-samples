@@ -9,18 +9,16 @@ import { CustomerService } from '../../services/customer.service';
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
-  styleUrls: ['./customer-detail.component.css']
+  styleUrls: ['./customer-detail.component.css'],
+  providers: [CustomerDetailViewModel]
 })
 export class CustomerDetailComponent implements OnInit {
-
-  public viewModel: CustomerDetailViewModel;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    public service: CustomerService,
+    public viewModel: CustomerDetailViewModel,
     private notificationMessenger: NotificationMessenger) {
-      this.viewModel = new CustomerDetailViewModel(service);
   }
 
   public async ngOnInit(): Promise<void> {
