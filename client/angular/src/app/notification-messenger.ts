@@ -1,6 +1,6 @@
 import { INotificationMessenger } from './contracts';
 import { ToastrService } from 'ngx-toastr';
-import { Injectable } from '../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationMessenger implements INotificationMessenger {

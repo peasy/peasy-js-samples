@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { CustomerDetailViewModel } from './customer-detail-viewmodel';
 import { Customer, ViewModelArgs } from '../../contracts';
 import { NotificationMessenger } from '../../notification-messenger';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-customer-detail',
@@ -12,11 +13,15 @@ import { NotificationMessenger } from '../../notification-messenger';
 })
 export class CustomerDetailComponent implements OnInit {
 
+  public viewModel: CustomerDetailViewModel;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    public viewModel: CustomerDetailViewModel,
-    private notificationMessenger: NotificationMessenger) { }
+    public service: CustomerService,
+    private notificationMessenger: NotificationMessenger) {
+      this.viewModel = new CustomerDetailViewModel(service);
+  }
 
   public async ngOnInit(): Promise<void> {
     let customerId = this.route.snapshot.params['id'];
@@ -33,7 +38,7 @@ export class CustomerDetailComponent implements OnInit {
   public async save(): Promise<void> {
     if (await this.viewModel.save()) {
       this.notificationMessenger.info('Save successful');
-      this.goBack();
+      // this.goBack();
     } else {
       this.notificationMessenger.error('Save failed.  Please try again.');
     }
