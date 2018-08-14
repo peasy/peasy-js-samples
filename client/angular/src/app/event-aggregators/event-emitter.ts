@@ -1,4 +1,4 @@
-import { Subject } from '../../node_modules/rxjs';
+import { Subject } from 'rxjs';
 
 export class EventEmitter<T> extends Subject<T> {
   constructor() {

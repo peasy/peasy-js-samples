@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { EventEmitter } from 'src/app/event-emitter';
+import { EventEmitter } from './event-emitter';
+import { Entity } from '../contracts';
 
 @Injectable({ providedIn: 'root' })
-export class EventAggregator<T> {
+export class EventAggregator<T extends Entity> {
 
   public insert: EventEmitter<T>;
   public update: EventEmitter<T>;

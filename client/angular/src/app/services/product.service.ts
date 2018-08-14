@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Product } from '../contracts';
 import ordersDotCom from '../../../../businessLogic.js';
 import { ServiceBase } from './service-base';
-import { ProductStore } from '../app.store';
+import { ProductStore } from '../stores/product-store';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService extends ServiceBase<Product> {

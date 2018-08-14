@@ -1,5 +1,5 @@
 import { ExecutionResult, Entity } from '../contracts';
-import { Store } from '../app.store';
+import { Store } from '../stores/store';
 
 export class ServiceBase<T extends Entity> {
 

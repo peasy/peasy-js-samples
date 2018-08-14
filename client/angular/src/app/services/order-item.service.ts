@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { OrderItem, ExecutionResult } from '../contracts';
 import ordersDotCom from '../../../../businessLogic.js';
 import { ServiceBase } from './service-base';
-import { OrderItemStore } from '../app.store';
+import { OrderItemStore } from '../stores/order-item-store';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemService extends ServiceBase<OrderItem> {
@@ -17,10 +17,13 @@ export class OrderItemService extends ServiceBase<OrderItem> {
 
   public submit(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
     return super.handle(ordersDotCom.services.orderItemService.submitCommand(orderItemId));
+    // TODO: refresh inventory
   }
 
-  public ship(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
-    return super.handle(ordersDotCom.services.orderItemService.shipCommand(orderItemId));
+  public async ship(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
+    const result = await super.handle<OrderItem>(ordersDotCom.services.orderItemService.shipCommand(orderItemId));
+    this.store.update(result.value);
+    return result;
   }
 
   public canDelete(item: OrderItem): boolean {
