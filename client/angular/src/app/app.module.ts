@@ -20,6 +20,7 @@ import { OrderItemListComponent } from './order-item/order-item-list/order-item-
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CusttestComponent } from './customer/custtest/custtest.component';
+import { StoreManager } from './stores/store-manager';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { CusttestComponent } from './customer/custtest/custtest.component';
     InventoryListComponent,
     OrderItemDetailComponent,
     OrderItemListComponent,
-    CusttestComponent
+    CusttestComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +47,7 @@ import { CusttestComponent } from './customer/custtest/custtest.component';
     FormsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [StoreManager],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

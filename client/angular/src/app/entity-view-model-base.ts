@@ -1,12 +1,13 @@
 import { Entity, ViewModelArgs } from './contracts';
 import { ServiceBase } from './services/service-base';
 import { ViewModelBase } from './view-model-base';
+import { ServiceBaseII } from './services/customer.service-II';
 
 export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
 
   protected CurrentEntity: T;
 
-  constructor(protected service: ServiceBase<T>) {
+  constructor(protected service: ServiceBaseII<T>) {
     super();
   }
 
@@ -14,7 +15,7 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     this._errors = [];
     this.CurrentEntity = args.entity || {} as T;
     if (!this.CurrentEntity.id && args.entityID) {
-      return this.handle(() => this.service.getById(args.entityID));
+      return this.handle(() => this.service.getByIdCommand(args.entityID));
     }
   }
 
@@ -30,7 +31,7 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     let success = true;
     this.loadStarted();
     try  {
-      const result = await command();
+      const result = await command().execute();
       if (!result) {
         console.warn('the result in handle() was null.  are you sure you have a return statement in your command function?');
       }
@@ -52,9 +53,9 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     if (this.isDirty) {
       this._errors = [];
       if (this.isNew) {
-        return await this.handle(() => this.service.insert(this.CurrentEntity));
+        return await this.handle(() => this.service.insertCommand(this.CurrentEntity));
       } else {
-        return await this.handle(() => this.service.update(this.CurrentEntity));
+        return await this.handle(() => this.service.updateCommand(this.CurrentEntity));
       }
     }
   }

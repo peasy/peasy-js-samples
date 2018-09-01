@@ -11,12 +11,11 @@ export class InventoryStore extends Store<InventoryItem> {
     protected eventAggregator: InventoryEventAggregator,
     protected orderItemEventAggregator: OrderItemEventAggregator) {
       super(eventAggregator);
-      this.orderItemEventAggregator.update.subscribe(this.onOrderItemUpdated);
+      this.orderItemEventAggregator.update.subscribe(this.onOrderItemUpdated.bind(this));
   }
 
   private onOrderItemUpdated(orderItem: OrderItem) {
-    console.log('ORDER ITEM UPDATED', orderItem);
     this._data.clear();
-    this.getAll();
+    // this.getById()
   }
 }

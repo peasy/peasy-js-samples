@@ -3,27 +3,33 @@ import { OrderItem, ExecutionResult } from '../contracts';
 import ordersDotCom from '../../../../businessLogic.js';
 import { ServiceBase } from './service-base';
 import { OrderItemStore } from '../stores/order-item-store';
+import { OrderItemDataProxy } from '../data-proxies/http/event-emitter';
+import { ServiceBaseII } from './customer.service-II';
 
 @Injectable({ providedIn: 'root' })
-export class OrderItemService extends ServiceBase<OrderItem> {
+export class OrderItemService extends ServiceBaseII<OrderItem> {
 
-  constructor(store: OrderItemStore) {
-    super(store, ordersDotCom.services.orderItemService);
+  constructor(dataProxy: OrderItemDataProxy) {
+    super(dataProxy);
   }
 
   public getByOrder(orderId: string): Promise<ExecutionResult<OrderItem[]>> {
-    return super.handle(ordersDotCom.services.orderItemService.getByOrderCommand(orderId));
+    // return super.handle(ordersDotCom.services.orderItemService.getByOrderCommand(orderId));
+    return null;
   }
 
-  public submit(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
-    return super.handle(ordersDotCom.services.orderItemService.submitCommand(orderItemId));
-    // TODO: refresh inventory
+  public async submit(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
+    // const result = await super.handle<OrderItem>(ordersDotCom.services.orderItemService.submitCommand(orderItemId));
+    // this.store.update(result.value);
+    // return result;
+    return null;
   }
 
   public async ship(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
-    const result = await super.handle<OrderItem>(ordersDotCom.services.orderItemService.shipCommand(orderItemId));
-    this.store.update(result.value);
-    return result;
+    // const result = await super.handle<OrderItem>(ordersDotCom.services.orderItemService.shipCommand(orderItemId));
+    // this.store.update(result.value);
+    // return result;
+    return null;
   }
 
   public canDelete(item: OrderItem): boolean {

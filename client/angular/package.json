@@ -20,10 +20,12 @@
     "@angular/platform-browser": "^6.1.2",
     "@angular/platform-browser-dynamic": "^6.1.2",
     "@angular/router": "^6.1.2",
+    "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "core-js": "^2.5.7",
     "jquery": "^3.3.1",
     "ngx-toastr": "^8.10.0",
+    "peasy-js": "file:../../../peasy-js/peasy-js-2.0.0.tgz",
     "popper": "^1.0.1",
     "rxjs": "^6.2.2",
     "zone.js": "^0.8.26"

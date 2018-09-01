@@ -1,5 +1,6 @@
 class ViewModelBase {
   constructor(id, list) {
+    debugger;
     this._id = id;
     this._list = list;
     this._currentEntity;

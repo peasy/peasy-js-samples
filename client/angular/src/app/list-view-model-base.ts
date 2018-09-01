@@ -1,24 +1,25 @@
 import { Entity } from './contracts';
 import { ServiceBase } from './services/service-base';
 import { ViewModelBase } from './view-model-base';
+import { ServiceBaseII } from './services/customer.service-II';
 
 export class ListViewModelBase<T extends Entity> extends ViewModelBase {
 
   public data: T[];
 
-  constructor(protected service: ServiceBase<T>) {
+  constructor(protected service: ServiceBaseII<T>) {
     super();
   }
 
   public loadData(): Promise<boolean> {
-    return this.handle(() => this.service.getAll());
+    return this.handle(() => this.service.getAllCommand());
   }
 
-  protected async handle(command: Function): Promise<boolean> {
+  protected async handle(command: any): Promise<boolean> {
     let success = true;
     this.loadStarted();
     try  {
-      const result = await command();
+      const result = await command().execute();
       this.data = result.value || this.data;
     } catch (e) {
       success = false;
@@ -33,7 +34,7 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
   }
 
   async destroy(id: string): Promise<boolean> {
-    const result = await this.handle(() => this.service.destroy(id));
+    const result = await this.handle(() => this.service.destroyCommand(id));
     if (result) {
       this.data = this.data.filter(entity => entity.id !== id);
     }
