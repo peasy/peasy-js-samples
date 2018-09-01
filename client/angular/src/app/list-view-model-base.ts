@@ -1,13 +1,12 @@
 import { Entity } from './contracts';
 import { ServiceBase } from './services/service-base';
 import { ViewModelBase } from './view-model-base';
-import { ServiceBaseII } from './services/customer.service-II';
 
 export class ListViewModelBase<T extends Entity> extends ViewModelBase {
 
   public data: T[];
 
-  constructor(protected service: ServiceBaseII<T>) {
+  constructor(protected service: ServiceBase<T>) {
     super();
   }
 

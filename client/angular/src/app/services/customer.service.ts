@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../contracts';
-import { ServiceBaseII } from './customer.service-II';
-import { CustomerDataProxy } from '../data-proxies/http/event-emitter';
+import { CustomerDataProxy } from '../data-proxies/http/customer-data-proxy';
+import { ServiceBase } from './service-base';
 
 @Injectable({ providedIn: 'root' })
-export class CustomerService extends ServiceBaseII<Customer> {
+export class CustomerService extends ServiceBase<Customer> {
 
   constructor(dataProxy: CustomerDataProxy) {
     super(dataProxy);

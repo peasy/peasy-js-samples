@@ -62,3 +62,11 @@ export interface INotificationMessenger {
   warning(message: string): void;
   error(message: string): void;
 }
+
+export interface IDataProxy<T extends Entity> {
+  getAll(): Promise<T[]>;
+  getById(id: string): Promise<T>;
+  insert(data: T): Promise<T>;
+  update(data: T):  Promise<T>;
+  destroy(id: string): Promise<void>;
+}

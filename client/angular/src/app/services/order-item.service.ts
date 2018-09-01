@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { OrderItem, ExecutionResult } from '../contracts';
-import ordersDotCom from '../../../../businessLogic.js';
+import { OrderItemDataProxy } from '../data-proxies/http/order-item-data-proxy';
 import { ServiceBase } from './service-base';
-import { OrderItemStore } from '../stores/order-item-store';
-import { OrderItemDataProxy } from '../data-proxies/http/event-emitter';
-import { ServiceBaseII } from './customer.service-II';
 
 @Injectable({ providedIn: 'root' })
-export class OrderItemService extends ServiceBaseII<OrderItem> {
+export class OrderItemService extends ServiceBase<OrderItem> {
 
   constructor(dataProxy: OrderItemDataProxy) {
     super(dataProxy);
@@ -33,7 +30,8 @@ export class OrderItemService extends ServiceBaseII<OrderItem> {
   }
 
   public canDelete(item: OrderItem): boolean {
-    return ordersDotCom.services.orderItemService.canDelete(item);
+    // return ordersDotCom.services.orderItemService.canDelete(item);
+    return false;
   }
 
   public canSubmit(item: OrderItem): boolean {
@@ -41,7 +39,8 @@ export class OrderItemService extends ServiceBaseII<OrderItem> {
   }
 
   public canShip(item: OrderItem): boolean {
-    return ordersDotCom.services.orderItemService.canShip(item);
+    // return ordersDotCom.services.orderItemService.canShip(item);
+    return false;
   }
 
   public anySubmittable(orderItems: OrderItem[]): boolean {

@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Order, OrderItem } from '../contracts';
-import ordersDotCom from '../../../../businessLogic.js';
+import { OrderDataProxy } from '../data-proxies/http/order-data-proxy';
 import { ServiceBase } from './service-base';
-import { OrderStore } from '../stores/order-store';
-import { ServiceBaseII } from './customer.service-II';
-import { OrderDataProxy } from '../data-proxies/http/event-emitter';
 
 @Injectable({ providedIn: 'root' })
-export class OrderService extends ServiceBaseII<Order> {
+export class OrderService extends ServiceBase<Order> {
 
   constructor(dataProxy: OrderDataProxy) {
     super(dataProxy);
   }
 
   getStatusFor(orderItems: OrderItem[]): string {
-    return ordersDotCom.services.orderService.status(orderItems);
+    // return ordersDotCom.services.orderService.status(orderItems);
+    return null;
   }
 
   hasPendingItems(orderItems: OrderItem[]) {
