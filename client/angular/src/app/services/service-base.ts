@@ -1,7 +1,7 @@
 import { ExecutionResult, Entity, IDataProxy } from '../contracts';
 import { Store } from '../stores/store';
 import { BusinessService, Command, Rule } from 'peasy-js';
-import { CommandBase } from '../data-proxies/http/event-emitter';
+import { CommandBase } from '../commands/command-base';
 
 export abstract class ServiceBase<T extends Entity> extends BusinessService {
 
