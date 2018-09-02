@@ -1,10 +1,11 @@
 import { Entity, IDataProxy } from '../../contracts';
+import { EventAggregator } from '../../event-aggregators/event-aggregator';
 
 export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> {
 
   protected _data: Map<string, T> = new Map<string, T>();
 
-  constructor(protected dataProxy: IDataProxy<T>) {
+  constructor(protected dataProxy: IDataProxy<T>, protected eventAggregator: EventAggregator<T>) {
   }
 
   public async getAll(): Promise<T[]> {
@@ -38,14 +39,14 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
   public async insert(data: T): Promise<T> {
     const result = await this.dataProxy.insert(data);
     this._data.set(data.id, Object.assign({}, data));
-    // this.eventAggregator.insert.publish(data);
+    this.eventAggregator.insert.publish(data);
     return result;
   }
 
   public async update(data: T): Promise<T> {
     const result = await this.dataProxy.update(data);
-    this._data.set(data.id, Object.assign({}, data));
-    // this.eventAggregator.update.publish(data);
+    this._data.set(data.id, Object.assign({}, result));
+    this.eventAggregator.update.publish(data);
     return result;
   }
 
@@ -53,7 +54,7 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
     const result = await this.dataProxy.destroy(id);
     const data = this._data.get(id);
     this._data.delete(id);
-    // this.eventAggregator.delete.publish(data);
+    this.eventAggregator.delete.publish(data);
   }
 }
 

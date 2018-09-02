@@ -10,7 +10,7 @@ import { CustomerService } from '../../services/customer.service';
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
   styleUrls: ['./customer-detail.component.css'],
-  providers: [CustomerService, CustomerDetailViewModel]
+  // providers: [CustomerService, CustomerDetailViewModel]
 })
 export class CustomerDetailComponent implements OnInit {
 
