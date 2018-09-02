@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
-import { OrderItem, ExecutionResult } from '../contracts';
+import { OrderItem, ExecutionResult, IOrderItemDataProxy } from '../contracts';
 import { ServiceBase } from './service-base';
 import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
+import { ServiceCommand } from '../commands/service-command';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemService extends ServiceBase<OrderItem> {
 
-  constructor(proxyFactory: DataProxyFactory) {
+  constructor(protected proxyFactory: DataProxyFactory) {
     super(proxyFactory.orderItemDataProxy);
   }
 
-  public getByOrder(orderId: string): Promise<ExecutionResult<OrderItem[]>> {
-    // return super.handle(ordersDotCom.services.orderItemService.getByOrderCommand(orderId));
-    return null;
+  public getByOrderCommand(orderId: string): ServiceCommand<OrderItem[]> {
+    const service = this;
+    return new ServiceCommand<OrderItem[]>({
+      _onValidationSuccess: function() {
+        return service.proxyFactory.orderItemDataProxy.getByOrder(orderId);
+      }
+    });
   }
 
   public async submit(orderItemId: string): Promise<ExecutionResult<OrderItem>> {

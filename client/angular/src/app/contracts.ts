@@ -70,3 +70,22 @@ export interface IDataProxy<T extends Entity> {
   update(data: T):  Promise<T>;
   destroy(id: string): Promise<void>;
 }
+
+export interface ICategoryDataProxy extends IDataProxy<Category> {
+}
+
+export interface ICustomerDataProxy extends IDataProxy<Customer> {
+}
+
+export interface IInventoryDataProxy extends IDataProxy<InventoryItem> {
+}
+
+export interface IProductDataProxy extends IDataProxy<Product> {
+}
+
+export interface IOrderDataProxy extends IDataProxy<Order> {
+}
+
+export interface IOrderItemDataProxy extends IDataProxy<OrderItem> {
+  getByOrder(orderId: string): Promise<OrderItem[]>;
+}

@@ -1,4 +1,12 @@
-import { IDataProxy, Customer, Category, InventoryItem, Product, Order, OrderItem } from '../contracts';
+import {
+  IOrderItemDataProxy,
+  ICustomerDataProxy,
+  ICategoryDataProxy,
+  IInventoryDataProxy,
+  IProductDataProxy,
+  IOrderDataProxy
+} from '../contracts';
+
 import { CustomerDataProxy } from './http/customer-data-proxy';
 import { CategoryDataProxy } from './http/category-data-proxy';
 import { InventoryDataProxy } from './http/inventory-data-proxy';
@@ -6,32 +14,38 @@ import { ProductDataProxy } from './http/product-data-proxy';
 import { OrderDataProxy } from './http/order-data-proxy';
 import { OrderItemDataProxy } from './http/order-item-data-proxy';
 import { Injectable } from '@angular/core';
+import { CustomerCacheDataProxy } from './cache/customer-cache-data-proxy';
+import { CategoryCacheDataProxy } from './cache/category-cache-data-proxy';
+import { InventoryCacheDataProxy } from './cache/inventory-cache-data-proxy';
+import { ProductCacheDataProxy } from './cache/product-cache-data-proxy';
+import { OrderCacheDataProxy } from './cache/order-cache-data-proxy';
+import { OrderItemCacheDataProxy } from './cache/order-item-cache-data-proxy';
 
 @Injectable({ providedIn: 'root' })
 export class DataProxyFactory {
 
-  get customerDataProxy(): IDataProxy<Customer> {
-    return new CustomerDataProxy();
+  get customerDataProxy(): ICustomerDataProxy {
+    return new CustomerCacheDataProxy(new CustomerDataProxy());
   }
 
-  get categoryDataProxy(): IDataProxy<Category> {
-    return new CategoryDataProxy();
+  get categoryDataProxy(): ICategoryDataProxy {
+    return new CategoryCacheDataProxy(new CategoryDataProxy());
   }
 
-  get inventoryDataProxy(): IDataProxy<InventoryItem> {
-    return new InventoryDataProxy();
+  get inventoryDataProxy(): IInventoryDataProxy {
+    return new InventoryCacheDataProxy(new InventoryDataProxy());
   }
 
-  get productDataProxy(): IDataProxy<Product> {
-    return new ProductDataProxy();
+  get productDataProxy(): IProductDataProxy {
+    return new ProductCacheDataProxy(new ProductDataProxy());
   }
 
-  get orderDataProxy(): IDataProxy<Order> {
-    return new OrderDataProxy();
+  get orderDataProxy(): IOrderDataProxy {
+    return new OrderCacheDataProxy(new OrderDataProxy());
   }
 
-  get orderItemDataProxy(): IDataProxy<OrderItem> {
-    return new OrderItemDataProxy();
+  get orderItemDataProxy(): IOrderItemDataProxy {
+    return new OrderItemCacheDataProxy(new OrderItemDataProxy());
   }
 
 }

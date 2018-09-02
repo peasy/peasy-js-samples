@@ -25,9 +25,10 @@ export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
   public async loadDataFor(orderId: string): Promise<boolean> {
     const results = await Promise.all
     ([
-      super.handle(() => this.service.getByOrder(orderId)),
+      super.handle(() => this.service.getByOrderCommand(orderId)),
       this.productsVM.loadData()
     ]);
+    // this.items = this.data.filter(i => i.orderId === orderId).map(i => new OrderItemViewModel(this.service, this.productsVM.data, i));
     this.items = this.data.map(i => new OrderItemViewModel(this.service, this.productsVM.data, i));
     return results.every(r => r === true);
   }
