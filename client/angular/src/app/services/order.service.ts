@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Order, OrderItem } from '../contracts';
-import { OrderDataProxy } from '../data-proxies/http/order-data-proxy';
 import { ServiceBase } from './service-base';
+import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService extends ServiceBase<Order> {
 
-  constructor(dataProxy: OrderDataProxy) {
-    super(dataProxy);
+  constructor(proxyFactory: DataProxyFactory) {
+    super(proxyFactory.orderDataProxy);
   }
 
   getStatusFor(orderItems: OrderItem[]): string {

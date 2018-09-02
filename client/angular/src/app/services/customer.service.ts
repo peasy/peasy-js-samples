@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../contracts';
-import { CustomerDataProxy } from '../data-proxies/http/customer-data-proxy';
 import { ServiceBase } from './service-base';
+import { utils } from '../../../../../business_logic/shared/utils';
+import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerService extends ServiceBase<Customer> {
 
-  constructor(dataProxy: CustomerDataProxy) {
-    super(dataProxy);
+  constructor(proxyFactory: DataProxyFactory) {
+    super(proxyFactory.customerDataProxy);
   }
 
   // protected _onInsertCommandInitialization(context): Promise<void> {

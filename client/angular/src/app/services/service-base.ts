@@ -1,4 +1,4 @@
-import { ExecutionResult, Entity, IDataProxy } from '../contracts';
+import { Entity, IDataProxy } from '../contracts';
 import { Store } from '../stores/store';
 import { BusinessService, Command, Rule } from 'peasy-js';
 import { CommandBase } from '../commands/command-base';

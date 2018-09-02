@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../contracts';
-import { CategoryDataProxy } from '../data-proxies/http/category-data-proxy';
 import { ServiceBase } from './service-base';
+import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService extends ServiceBase<Category> {
 
-  constructor(dataProxy: CategoryDataProxy) {
-    super(dataProxy);
+  constructor(proxyFactory: DataProxyFactory) {
+    super(proxyFactory.categoryDataProxy);
   }
 }
