@@ -12,7 +12,7 @@ var convert = utils.convert;
 var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var NotFoundError = require('../shared/notFoundError');
 var ShipOrderItemCommand = require('../commands/shipOrderItemCommand');
-var BaseService = require('../services/baseService');
+var BaseService = require('./baseService');
 
 var OrderItemService = BusinessService.extendService(BaseService, {
   params: ['dataProxy', 'productDataProxy', 'inventoryItemService'],
