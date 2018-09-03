@@ -28,6 +28,7 @@
     "peasy-js": "file:../../../peasy-js/peasy-js-2.0.0.tgz",
     "popper": "^1.0.1",
     "rxjs": "^6.2.2",
+    "socket.io-client": "^2.1.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
