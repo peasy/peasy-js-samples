@@ -10,7 +10,7 @@ export class OrderItemDataProxy
 
   protected baseUri = '/orderitems';
 
-  getByOrder(orderId: string): Promise<OrderItem[]> {
+  public getByOrder(orderId: string): Promise<OrderItem[]> {
     return axios.get(`${this.baseUri}?orderid=${orderId}`)
       .then(result => result.data)
       .catch(e => {
@@ -19,6 +19,14 @@ export class OrderItemDataProxy
         }
         return Promise.reject(e);
       });
+  }
+
+  public submit(itemId: string): Promise<OrderItem> {
+    return axios.post(`${this.baseUri}/${itemId}/submit`).then(result => result.data);
+  }
+
+  public ship(itemId: string): Promise<OrderItem> {
+    return axios.post(`${this.baseUri}/${itemId}/ship`).then(result => result.data);
   }
 }
 

@@ -12,8 +12,21 @@ export class OrderItemCacheDataProxy
     super(dataProxy, eventAggregator);
   }
 
-  getByOrder(orderId: string): Promise<OrderItem[]> {
+  public getByOrder(orderId: string): Promise<OrderItem[]> {
     return this.dataProxy.getByOrder(orderId);
   }
 
+  public async submit(itemId: string): Promise<OrderItem> {
+    const result = await this.dataProxy.submit(itemId);
+    this._data.set(result.id, Object.assign({}, result));
+    this.eventAggregator.update.publish(result);
+    return result;
+  }
+
+  public async ship(itemId: string): Promise<OrderItem> {
+    const result = await this.dataProxy.ship(itemId);
+    this._data.set(result.id, Object.assign({}, result));
+    this.eventAggregator.update.publish(result);
+    return result;
+  }
 }

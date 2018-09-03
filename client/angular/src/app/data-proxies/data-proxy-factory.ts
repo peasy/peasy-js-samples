@@ -30,6 +30,13 @@ import { OrderItemEventAggregator } from '../event-aggregators/order-item-event-
 @Injectable({ providedIn: 'root' })
 export class DataProxyFactory {
 
+  private _categoryDataProxy: ICategoryDataProxy;
+  private _customerDataProxy: ICustomerDataProxy;
+  private _inventoryDataProxy: IInventoryDataProxy;
+  private _productDataProxy: IProductDataProxy;
+  private _orderDataProxy: IOrderDataProxy;
+  private _orderItemDataProxy: IOrderItemDataProxy;
+
   constructor(
     protected categoryEventAggregator: CategoryEventAggregator,
     protected customerEventAggregator: CustomerEventAggregator,
@@ -37,30 +44,37 @@ export class DataProxyFactory {
     protected producteEventAggregator: ProductEventAggregator,
     protected orderEventAggregator: OrderEventAggregator,
     protected orderItemEventAggregator: OrderItemEventAggregator
-  ) {}
+  ) {
+    this._categoryDataProxy = new CategoryCacheDataProxy(new CategoryDataProxy(), this.categoryEventAggregator);
+    this._customerDataProxy = new CustomerCacheDataProxy(new CustomerDataProxy(), this.customerEventAggregator);
+    this._inventoryDataProxy = new InventoryCacheDataProxy(new InventoryDataProxy(), this.inventoryEventAggregator);
+    this._productDataProxy = new ProductCacheDataProxy(new ProductDataProxy(), this.producteEventAggregator);
+    this._orderDataProxy = new OrderCacheDataProxy(new OrderDataProxy(), this.orderEventAggregator);
+    this._orderItemDataProxy = new OrderItemCacheDataProxy(new OrderItemDataProxy(), this.orderItemEventAggregator);
+  }
 
   get categoryDataProxy(): ICategoryDataProxy {
-    return new CategoryCacheDataProxy(new CategoryDataProxy(), this.categoryEventAggregator);
+    return this._categoryDataProxy;
   }
 
   get customerDataProxy(): ICustomerDataProxy {
-    return new CustomerCacheDataProxy(new CustomerDataProxy(), this.customerEventAggregator);
+    return this._customerDataProxy;
   }
 
   get inventoryDataProxy(): IInventoryDataProxy {
-    return new InventoryCacheDataProxy(new InventoryDataProxy(), this.inventoryEventAggregator);
+    return this._inventoryDataProxy;
   }
 
   get productDataProxy(): IProductDataProxy {
-    return new ProductCacheDataProxy(new ProductDataProxy(), this.producteEventAggregator);
+    return this._productDataProxy;
   }
 
   get orderDataProxy(): IOrderDataProxy {
-    return new OrderCacheDataProxy(new OrderDataProxy(), this.orderEventAggregator);
+    return this._orderDataProxy;
   }
 
   get orderItemDataProxy(): IOrderItemDataProxy {
-    return new OrderItemCacheDataProxy(new OrderItemDataProxy(), this.orderItemEventAggregator);
+    return this._orderItemDataProxy;
   }
 
 }

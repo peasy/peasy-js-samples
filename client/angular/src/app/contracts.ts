@@ -88,4 +88,6 @@ export interface IOrderDataProxy extends IDataProxy<Order> {
 
 export interface IOrderItemDataProxy extends IDataProxy<OrderItem> {
   getByOrder(orderId: string): Promise<OrderItem[]>;
+  submit(itemId: string): Promise<OrderItem>;
+  ship(itemId: string): Promise<OrderItem>;
 }

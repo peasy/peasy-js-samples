@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { OrderItem, ExecutionResult, IOrderItemDataProxy } from '../contracts';
+import { OrderItem } from '../contracts';
 import { ServiceBase } from './service-base';
 import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
 import { ServiceCommand } from '../commands/service-command';
+import ordersDotCom from '../../../../businessLogic.js';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemService extends ServiceBase<OrderItem> {
@@ -20,23 +21,26 @@ export class OrderItemService extends ServiceBase<OrderItem> {
     });
   }
 
-  public async submit(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
-    // const result = await super.handle<OrderItem>(ordersDotCom.services.orderItemService.submitCommand(orderItemId));
-    // this.store.update(result.value);
-    // return result;
-    return null;
+  public submitCommand(orderItemId: string): ServiceCommand<OrderItem> {
+    const service = this;
+    return new ServiceCommand<OrderItem>({
+      _onValidationSuccess: function(context) {
+        return service.proxyFactory.orderItemDataProxy.submit(orderItemId);
+      }
+    });
   }
 
-  public async ship(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
-    // const result = await super.handle<OrderItem>(ordersDotCom.services.orderItemService.shipCommand(orderItemId));
-    // this.store.update(result.value);
-    // return result;
-    return null;
+  public shipCommand(orderItemId: string): ServiceCommand<OrderItem> {
+    const service = this;
+    return new ServiceCommand<OrderItem>({
+      _onValidationSuccess: function(context) {
+        return service.proxyFactory.orderItemDataProxy.ship(orderItemId);
+      }
+    });
   }
 
   public canDelete(item: OrderItem): boolean {
-    // return ordersDotCom.services.orderItemService.canDelete(item);
-    return false;
+    return ordersDotCom.services.orderItemService.canDelete(item);
   }
 
   public canSubmit(item: OrderItem): boolean {
@@ -44,8 +48,7 @@ export class OrderItemService extends ServiceBase<OrderItem> {
   }
 
   public canShip(item: OrderItem): boolean {
-    // return ordersDotCom.services.orderItemService.canShip(item);
-    return false;
+    return ordersDotCom.services.orderItemService.canShip(item);
   }
 
   public anySubmittable(orderItems: OrderItem[]): boolean {

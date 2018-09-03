@@ -38,15 +38,15 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
 
   public async insert(data: T): Promise<T> {
     const result = await this.dataProxy.insert(data);
-    this._data.set(data.id, Object.assign({}, data));
-    this.eventAggregator.insert.publish(data);
+    this._data.set(result.id, Object.assign({}, result));
+    this.eventAggregator.insert.publish(result);
     return result;
   }
 
   public async update(data: T): Promise<T> {
     const result = await this.dataProxy.update(data);
-    this._data.set(data.id, Object.assign({}, result));
-    this.eventAggregator.update.publish(data);
+    this._data.set(result.id, Object.assign({}, result));
+    this.eventAggregator.update.publish(result);
     return result;
   }
 

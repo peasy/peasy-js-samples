@@ -11,12 +11,12 @@ OrderItemDataProxy.prototype.getByOrder = function(orderId, done) {
   this._handleGetListByIdFrom(axios.get(`${this._url}?orderid=${orderId}`), done);
 };
 
-OrderItemDataProxy.prototype.submit = function(orderId, done) {
-  this._handleResponseFrom(axios.post(`${this._url}/${orderId}/submit`, orderId), done);
+OrderItemDataProxy.prototype.submit = function(itemId, done) {
+  this._handleResponseFrom(axios.post(`${this._url}/${itemId}/submit`, itemId), done);
 };
 
-OrderItemDataProxy.prototype.ship = function(orderId, done) {
-  this._handleResponseFrom(axios.post(`${this._url}/${orderId}/ship`, orderId), done);
+OrderItemDataProxy.prototype.ship = function(itemId, done) {
+  this._handleResponseFrom(axios.post(`${this._url}/${itemId}/ship`, itemId), done);
 };
 
 module.exports = OrderItemDataProxy;

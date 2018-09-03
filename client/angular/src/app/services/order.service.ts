@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Order, OrderItem } from '../contracts';
 import { ServiceBase } from './service-base';
 import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
+import ordersDotCom from '../../../../businessLogic.js';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService extends ServiceBase<Order> {
@@ -11,8 +12,7 @@ export class OrderService extends ServiceBase<Order> {
   }
 
   getStatusFor(orderItems: OrderItem[]): string {
-    // return ordersDotCom.services.orderService.status(orderItems);
-    return null;
+    return ordersDotCom.services.orderService.status(orderItems);
   }
 
   hasPendingItems(orderItems: OrderItem[]) {
