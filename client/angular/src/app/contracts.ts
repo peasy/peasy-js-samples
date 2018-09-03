@@ -78,6 +78,7 @@ export interface ICustomerDataProxy extends IDataProxy<Customer> {
 }
 
 export interface IInventoryDataProxy extends IDataProxy<InventoryItem> {
+  getByProduct(productId: string): Promise<InventoryItem>;
 }
 
 export interface IProductDataProxy extends IDataProxy<Product> {

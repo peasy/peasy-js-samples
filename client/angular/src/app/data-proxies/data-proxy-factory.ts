@@ -47,7 +47,11 @@ export class DataProxyFactory {
   ) {
     this._categoryDataProxy = new CategoryCacheDataProxy(new CategoryDataProxy(), this.categoryEventAggregator);
     this._customerDataProxy = new CustomerCacheDataProxy(new CustomerDataProxy(), this.customerEventAggregator);
-    this._inventoryDataProxy = new InventoryCacheDataProxy(new InventoryDataProxy(), this.inventoryEventAggregator);
+    this._inventoryDataProxy = new InventoryCacheDataProxy(
+      new InventoryDataProxy(),
+      this.inventoryEventAggregator,
+      this.orderItemEventAggregator
+    );
     this._productDataProxy = new ProductCacheDataProxy(new ProductDataProxy(), this.producteEventAggregator);
     this._orderDataProxy = new OrderCacheDataProxy(new OrderDataProxy(), this.orderEventAggregator);
     this._orderItemDataProxy = new OrderItemCacheDataProxy(new OrderItemDataProxy(), this.orderItemEventAggregator);
