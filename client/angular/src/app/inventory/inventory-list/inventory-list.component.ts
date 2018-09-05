@@ -1,18 +1,21 @@
 import { OnInit, Component } from '@angular/core';
 import { InventoryListViewModel } from './inventory-list-viewmodel';
+import { InventoryEventAggregator } from '../../event-aggregators/inventory-event-aggregator';
 
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
   styleUrls: ['./inventory-list.component.css'],
-  providers: [InventoryListViewModel]
+  // providers: [InventoryListViewModel]
 })
 export class InventoryListComponent implements OnInit {
 
   public viewModel: InventoryListViewModel;
 
-  constructor(vm: InventoryListViewModel) {
+  constructor(vm: InventoryListViewModel, x: InventoryEventAggregator) {
     this.viewModel = vm;
+    x.insert.subscribe(() => this.viewModel.loadData());
+    x.update.subscribe(() => this.viewModel.loadData());
   }
 
   public ngOnInit() {

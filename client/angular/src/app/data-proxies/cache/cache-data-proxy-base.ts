@@ -6,15 +6,21 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
   protected _data: Map<string, T> = new Map<string, T>();
 
   constructor(protected dataProxy: IDataProxy<T>, protected eventAggregator: EventAggregator<T>) {
+    eventAggregator.remoteUpdate.subscribe(data => {
+      this._data.set(data.id, Object.assign({}, data));
+      this.eventAggregator.update.publish(data);
+    });
+    eventAggregator.remoteInsert.subscribe(data => {
+      this._data.set(data.id, Object.assign({}, data));
+      this.eventAggregator.insert.publish(data);
+    });
   }
 
   public async getAll(): Promise<T[]> {
     const results = Array.from(this._data.values(), i => {
       return Object.assign({}, i);
     });
-
     if (results.length) { return results; }
-
     const result = await this.dataProxy.getAll();
     this.insertBulk(result);
     return result;
@@ -27,7 +33,6 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
   public async getById(id: string): Promise<T> {
     const data = this._data.get(id);
     if (data) { return Object.assign({}, data); }
-
     const result = await this.dataProxy.getById(id);
     if (result) {
       this.insertBulk([result]);
@@ -39,19 +44,19 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
   public async insert(data: T): Promise<T> {
     const result = await this.dataProxy.insert(data);
     this._data.set(result.id, Object.assign({}, result));
-    this.eventAggregator.insert.publish(result);
+    this.eventAggregator.insert.publish(Object.assign({}, result));
     return result;
   }
 
   public async update(data: T): Promise<T> {
     const result = await this.dataProxy.update(data);
     this._data.set(result.id, Object.assign({}, result));
-    this.eventAggregator.update.publish(result);
+    this.eventAggregator.update.publish(Object.assign({}, result));
     return result;
   }
 
   public async destroy(id: string): Promise<void> {
-    const result = await this.dataProxy.destroy(id);
+    await this.dataProxy.destroy(id);
     const data = this._data.get(id);
     this._data.delete(id);
     this.eventAggregator.delete.publish(data);
