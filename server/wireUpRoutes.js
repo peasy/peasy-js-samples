@@ -20,11 +20,11 @@ var productService = new ProductService(proxyFactory.productDataProxy, orderServ
 var customerService = new CustomerService(proxyFactory.customerDataProxy, orderService);
 var categoryService = new CategoryService(proxyFactory.categoryDataProxy, productService);
 
-var wireUpRoutes = function(app) {
+var wireUpRoutes = function(app, io) {
   // ROUTES AND CONTROLLERS
-  routeHelper.createController('/customers', app, customerService);
+  routeHelper.createController('/customers', app, customerService, io);
 
-  routeHelper.createController('/categories', app, categoryService);
+  routeHelper.createController('/categories', app, categoryService, io);
 
   routeHelper.addGetRouteHandler(app, '/products', function(request) {
     var service = productService;
@@ -34,7 +34,7 @@ var wireUpRoutes = function(app) {
     }
     return command;
   });
-  routeHelper.createController('/products', app, productService);
+  routeHelper.createController('/products', app, productService, io);
 
   routeHelper.addGetRouteHandler(app, '/inventoryItems', function(request) {
     var service = inventoryItemService;
@@ -44,7 +44,7 @@ var wireUpRoutes = function(app) {
     }
     return command;
   });
-  routeHelper.createController('/inventoryItems', app, inventoryItemService);
+  routeHelper.createController('/inventoryItems', app, inventoryItemService, io);
 
   routeHelper.addGetRouteHandler(app, '/orders', function(request) {
     var service = orderService;
@@ -56,7 +56,7 @@ var wireUpRoutes = function(app) {
       return service.getByProductCommand(request.query.productid);
     }
     return command;
-  });
+  }, io);
   routeHelper.addGetRouteHandler(app, '/orders/:id/orderitems', function(request) {
     return orderItemService.getByOrderCommand(request.params.id);
   });
@@ -64,15 +64,15 @@ var wireUpRoutes = function(app) {
     var item = request.body;
     item.orderId = request.params.id;
     return orderItemService.insertCommand(item);
-  });
-  routeHelper.createController('/orders', app, orderService);
+  }, io);
+  routeHelper.createController('/orders', app, orderService, io);
 
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
     return orderItemService.submitCommand(request.params.id);
-  });
+  }, io, 'update');
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
     return orderItemService.shipCommand(request.params.id);
-  });
+  }, io, 'update', 'inventoryitems');
   routeHelper.addGetRouteHandler(app, '/orderItems', function(request) {
     var service = orderItemService;
     var command = service.getAllCommand();
@@ -81,7 +81,7 @@ var wireUpRoutes = function(app) {
     }
     return command;
   });
-  routeHelper.createController('/orderItems', app, orderItemService);
+  routeHelper.createController('/orderItems', app, orderItemService, io);
 
   app.get('/', function(req, res, next) {
     res.render('../../views/index', { title: 'orders.com' });

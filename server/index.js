@@ -7,21 +7,24 @@ var open = require('open');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-applySettings(app);
-applyMiddleware(app);
-wireUpRoutes(app);
-
 var port = 3000;
 
 io.on('connection', function(socket){
   console.log('a user connected');
+  // io.emit('test', 'hello from server');
 });
 
-app.listen(port, function(err) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("server running ...");
-    open(`http://localhost:${port}/`);
-  }
-});
+applySettings(app);
+applyMiddleware(app);
+wireUpRoutes(app, io);
+
+http.listen(port);
+
+// app.listen(port, function(err) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("server running ...");
+//     open(`http://localhost:${port}/`);
+//   }
+// });
