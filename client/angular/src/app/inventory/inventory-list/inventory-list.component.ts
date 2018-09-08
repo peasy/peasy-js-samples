@@ -10,12 +10,7 @@ import { InventoryEventAggregator } from '../../event-aggregators/inventory-even
 })
 export class InventoryListComponent implements OnInit {
 
-  public viewModel: InventoryListViewModel;
-
-  constructor(vm: InventoryListViewModel, x: InventoryEventAggregator) {
-    this.viewModel = vm;
-    x.insert.subscribe(() => this.viewModel.loadData());
-    x.update.subscribe(() => this.viewModel.loadData());
+  constructor(private viewModel: InventoryListViewModel) {
   }
 
   public ngOnInit() {

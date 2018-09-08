@@ -44,6 +44,14 @@ export class SocketManager {
           products: productEventAggregator.remoteUpdate,
           orders: orderEventAggregator.remoteUpdate,
           orderItems: orderItemEventAggregator.remoteUpdate
+        },
+        destroy: {
+          categories: categoryEventAggregator.remoteDelete,
+          customers: customerEventAggregator.remoteDelete,
+          inventoryItems: inventoryEventAggregator.remoteDelete,
+          products: productEventAggregator.remoteDelete,
+          orders: orderEventAggregator.remoteDelete,
+          orderItems: orderItemEventAggregator.remoteDelete
         }
       };
     }

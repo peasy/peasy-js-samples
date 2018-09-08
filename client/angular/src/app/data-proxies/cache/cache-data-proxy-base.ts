@@ -6,13 +6,29 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
   protected _data: Map<string, T> = new Map<string, T>();
 
   constructor(protected dataProxy: IDataProxy<T>, protected eventAggregator: EventAggregator<T>) {
-    eventAggregator.remoteUpdate.subscribe(data => {
+
+    eventAggregator.remoteUpdate.subscribe(async data => {
+      console.log('remote update', data);
+      await this.getAll(); // force initialization of data
       this._data.set(data.id, Object.assign({}, data));
       this.eventAggregator.update.publish(data);
     });
-    eventAggregator.remoteInsert.subscribe(data => {
+
+    eventAggregator.remoteInsert.subscribe(async data => {
+      console.log('remote insert', data);
+      await this.getAll(); // force initialization of data
       this._data.set(data.id, Object.assign({}, data));
       this.eventAggregator.insert.publish(data);
+    });
+
+    eventAggregator.remoteDelete.subscribe(async data => {
+      console.log('remote delete', data);
+      await this.getAll(); // force initialization of data
+      const item = this._data.get(data.id);
+      if (item) {
+        this._data.delete(item.id);
+        this.eventAggregator.delete.publish(item);
+      }
     });
   }
 
@@ -20,6 +36,7 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
     const results = Array.from(this._data.values(), i => {
       return Object.assign({}, i);
     });
+    console.log('getall results', results);
     if (results.length) { return results; }
     const result = await this.dataProxy.getAll();
     this.insertBulk(result);
@@ -58,8 +75,10 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
   public async destroy(id: string): Promise<void> {
     await this.dataProxy.destroy(id);
     const data = this._data.get(id);
-    this._data.delete(id);
-    this.eventAggregator.delete.publish(data);
+    if (data) {
+      this._data.delete(id);
+      this.eventAggregator.delete.publish(data);
+    }
   }
 }
 

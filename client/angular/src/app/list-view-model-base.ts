@@ -4,7 +4,7 @@ import { ViewModelBase } from './view-model-base';
 
 export class ListViewModelBase<T extends Entity> extends ViewModelBase {
 
-  public data: T[];
+  public data: T[] = [];
 
   constructor(protected service: ServiceBase<T>) {
     super();

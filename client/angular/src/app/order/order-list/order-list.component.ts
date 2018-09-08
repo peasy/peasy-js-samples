@@ -10,13 +10,7 @@ import { OrderEventAggregator } from '../../event-aggregators/order-event-aggreg
 })
 export class OrderListComponent implements OnInit {
 
-  constructor(
-    private viewModel: OrderListViewModel,
-    orderItemEventAggregator: OrderItemEventAggregator,
-    orderEventAggregator: OrderEventAggregator) {
-      orderItemEventAggregator.insert.subscribe(() => this.viewModel.loadData());
-      orderItemEventAggregator.update.subscribe(() => this.viewModel.loadData());
-      orderEventAggregator.insert.subscribe(() => this.viewModel.loadData());
+  constructor(protected viewModel: OrderListViewModel) {
   }
 
   public ngOnInit(): void {

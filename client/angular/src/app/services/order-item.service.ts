@@ -52,6 +52,7 @@ export class OrderItemService extends ServiceBase<OrderItem> {
   }
 
   public anySubmittable(orderItems: OrderItem[]): boolean {
+    orderItems = orderItems || [];
     return orderItems.some(i => i.status === 'PENDING');
   }
 

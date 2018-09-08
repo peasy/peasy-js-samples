@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { OrderItemService } from '../../services/order-item.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
 import { InventoryListViewModel } from '../../inventory/inventory-list/inventory-list-viewmodel';
+import { InventoryEventAggregator } from '../../event-aggregators/inventory-event-aggregator';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
@@ -14,11 +15,15 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
   private _currentInventory: InventoryItem;
 
   constructor(
-    orderItemService: OrderItemService,
+    protected orderItemService: OrderItemService,
     private productListVM: ProductListViewModel,
     private categoryListVM: CategoryListViewModel,
-    private inventoryItemListVM: InventoryListViewModel) {
-    super(orderItemService);
+    private inventoryItemListVM: InventoryListViewModel,
+    private inventoryEventAggregator: InventoryEventAggregator) {
+      super(orderItemService);
+      inventoryEventAggregator.update.subscribe((item) => {
+        this._currentInventory = item;
+      });
   }
 
   async loadData(args: ViewModelArgs<OrderItem>): Promise<boolean> {

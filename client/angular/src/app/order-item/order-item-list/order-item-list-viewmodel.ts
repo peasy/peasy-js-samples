@@ -4,14 +4,20 @@ import { OrderItemService } from '../../services/order-item.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
 import { Injectable } from '@angular/core';
 import { OrderItemViewModel } from '../order-item-viewmodel';
+import { OrderItemEventAggregator } from '../../event-aggregators/order-item-event-aggregator';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
 
   constructor(
     protected service: OrderItemService,
-    private productsVM: ProductListViewModel) {
+    private productsVM: ProductListViewModel,
+    private orderItemEventAggregator: OrderItemEventAggregator
+  ) {
       super(service);
+      orderItemEventAggregator.insert.subscribe((i) => this.loadDataFor(i.orderId));
+      orderItemEventAggregator.update.subscribe((i) => this.loadDataFor(i.orderId));
+      orderItemEventAggregator.delete.subscribe((i) => this.loadDataFor(i.orderId));
   }
 
   public items: OrderItemViewModel[];

@@ -4,6 +4,7 @@ import { OrderService } from '../../services/order.service';
 import { CustomerListViewModel } from '../../customer/customer-list/customer-list-viewmodel';
 import { OrderItemListViewModel } from '../../order-item/order-item-list/order-item-list-viewmodel';
 import { Injectable } from '@angular/core';
+import { OrderEventAggregator } from '../../event-aggregators/order-event-aggregator';
 
 @Injectable({ providedIn: 'root' })
 export class OrderListViewModel extends ListViewModelBase<Order> {
@@ -11,8 +12,10 @@ export class OrderListViewModel extends ListViewModelBase<Order> {
   constructor(
     protected service: OrderService,
     private customersVM: CustomerListViewModel,
-    private orderItemsVM: OrderItemListViewModel) {
+    private orderItemsVM: OrderItemListViewModel,
+    private orderEventAggregator: OrderEventAggregator) {
       super(service);
+      orderEventAggregator.insert.subscribe(() => super.loadData());
   }
 
   async loadData(): Promise<boolean> {
