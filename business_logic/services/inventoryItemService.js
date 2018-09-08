@@ -8,6 +8,7 @@ var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var BaseService = require('../services/baseService');
 
 var InventoryItemService = BusinessService.extendService(BaseService, {
+  params: ['dataProxy', 'eventPublisher'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;

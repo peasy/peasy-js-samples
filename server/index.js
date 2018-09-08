@@ -3,7 +3,6 @@ var app = express();
 var applySettings = require('./applySettings');
 var applyMiddleware = require('./applyMiddleware');
 var wireUpRoutes = require('./wireUpRoutes');
-var open = require('open');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 

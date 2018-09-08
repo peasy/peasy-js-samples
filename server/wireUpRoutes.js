@@ -13,18 +13,38 @@ var OrderItemService = require('../business_logic/services/orderItemService');
 //IN-MEMORY DATA PROXIES
 var proxyFactory = require('../data_proxies/in-memory/inMemoryDataProxyFactory');
 
-var inventoryItemService = new InventoryItemService(proxyFactory.inventoryItemDataProxy);
-var orderItemService = new OrderItemService(proxyFactory.orderItemDataProxy, proxyFactory.productDataProxy, inventoryItemService);
-var orderService = new OrderService(proxyFactory.orderDataProxy, orderItemService);
-var productService = new ProductService(proxyFactory.productDataProxy, orderService, inventoryItemService);
-var customerService = new CustomerService(proxyFactory.customerDataProxy, orderService);
-var categoryService = new CategoryService(proxyFactory.categoryDataProxy, productService);
+class EventAggregator {
+
+  constructor(io, route) {
+    this.io = io;
+    this.route = route;
+  }
+
+  publish(e) {
+    e.route = this.route;
+    this.io.emit('test', e);
+  }
+}
 
 var wireUpRoutes = function(app, io) {
-  // ROUTES AND CONTROLLERS
-  routeHelper.createController('/customers', app, customerService, io);
 
-  routeHelper.createController('/categories', app, categoryService, io);
+  var inventoryItemService =
+    new InventoryItemService(proxyFactory.inventoryItemDataProxy, new EventAggregator(io, 'inventoryItems'));
+  var orderItemService =
+    new OrderItemService(proxyFactory.orderItemDataProxy, proxyFactory.productDataProxy, inventoryItemService, new EventAggregator(io, 'orderItems'));
+  var orderService =
+    new OrderService(proxyFactory.orderDataProxy, orderItemService, new EventAggregator(io, 'orders'));
+  var productService =
+    new ProductService(proxyFactory.productDataProxy, orderService, inventoryItemService, new EventAggregator(io, 'products'));
+  var customerService =
+    new CustomerService(proxyFactory.customerDataProxy, orderService, new EventAggregator(io, 'customers'));
+  var categoryService =
+    new CategoryService(proxyFactory.categoryDataProxy, productService, new EventAggregator(io, 'categories'));
+
+  // ROUTES AND CONTROLLERS
+  routeHelper.createController('/customers', app, customerService);
+
+  routeHelper.createController('/categories', app, categoryService);
 
   routeHelper.addGetRouteHandler(app, '/products', function(request) {
     var service = productService;
@@ -34,7 +54,7 @@ var wireUpRoutes = function(app, io) {
     }
     return command;
   });
-  routeHelper.createController('/products', app, productService, io);
+  routeHelper.createController('/products', app, productService);
 
   routeHelper.addGetRouteHandler(app, '/inventoryItems', function(request) {
     var service = inventoryItemService;
@@ -44,7 +64,7 @@ var wireUpRoutes = function(app, io) {
     }
     return command;
   });
-  routeHelper.createController('/inventoryItems', app, inventoryItemService, io);
+  routeHelper.createController('/inventoryItems', app, inventoryItemService);
 
   routeHelper.addGetRouteHandler(app, '/orders', function(request) {
     var service = orderService;
@@ -56,7 +76,7 @@ var wireUpRoutes = function(app, io) {
       return service.getByProductCommand(request.query.productid);
     }
     return command;
-  }, io);
+  });
   routeHelper.addGetRouteHandler(app, '/orders/:id/orderitems', function(request) {
     return orderItemService.getByOrderCommand(request.params.id);
   });
@@ -64,15 +84,15 @@ var wireUpRoutes = function(app, io) {
     var item = request.body;
     item.orderId = request.params.id;
     return orderItemService.insertCommand(item);
-  }, io);
-  routeHelper.createController('/orders', app, orderService, io);
+  });
+  routeHelper.createController('/orders', app, orderService);
 
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/submit', function(request) {
     return orderItemService.submitCommand(request.params.id);
-  }, io, 'update');
+  });
   routeHelper.addPostRouteHandler(app, '/orderItems/:id/ship', function(request) {
     return orderItemService.shipCommand(request.params.id);
-  }, io, 'update', 'inventoryitems');
+  });
   routeHelper.addGetRouteHandler(app, '/orderItems', function(request) {
     var service = orderItemService;
     var command = service.getAllCommand();
@@ -81,7 +101,7 @@ var wireUpRoutes = function(app, io) {
     }
     return command;
   });
-  routeHelper.createController('/orderItems', app, orderItemService, io);
+  routeHelper.createController('/orderItems', app, orderItemService);
 
   app.get('/', function(req, res, next) {
     res.render('../../views/index', { title: 'orders.com' });

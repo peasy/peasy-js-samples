@@ -8,7 +8,7 @@ var BaseService = require('../services/baseService');
 var CanDeleteCategoryRule = require('../rules/canDeleteCategoryRule');
 
 var CategoryService = BusinessService.extendService(BaseService, {
-  params: ['dataProxy', 'productService'],
+  params: ['dataProxy', 'productService', 'eventPublisher'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var category = this.data;

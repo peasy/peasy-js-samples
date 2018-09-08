@@ -9,7 +9,7 @@ var FieldLengthRule = require('../rules/fieldLengthRule');
 var FieldTypeRule = require('../rules/fieldTypeRule');
 
 var CreateProductCommand = Command.extend({
-  params: ['product', 'productDataProxy', 'inventoryItemService'],
+  params: ['product', 'productDataProxy', 'inventoryItemService', 'eventPublisher'],
   functions: {
     _onInitialization: function(context, done) {
       var product = this.product;
@@ -30,8 +30,13 @@ var CreateProductCommand = Command.extend({
     _onValidationSuccess: function(context, done) {
       var inventoryService = this.inventoryItemService;
       var newProduct;
+      var eventPublisher = this.eventPublisher || { publish: () => {} };
       this.productDataProxy.insert(this.product, function(err, result) {
         if (err) { return done(err); }
+        eventPublisher.publish({
+          type: 'insert',
+          data: result
+        });
         newProduct = result;
         var inventoryItem = {
           productId: newProduct.id,

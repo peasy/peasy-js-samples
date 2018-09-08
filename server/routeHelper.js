@@ -8,7 +8,7 @@ var BAD_REQUEST = 400;
 var NOT_FOUND = 404;
 var CONFLICT = 409;
 
-function createController(route, app, service, io) {
+function createController(route, app, service) {
 
   addGetRouteHandler(app, `${route}`, function(request) {
     return service.getAllCommand();
@@ -20,15 +20,15 @@ function createController(route, app, service, io) {
 
   addPostRouteHandler(app, `${route}`, function(request) {
     return service.insertCommand(request.body);
-  }, io);
+  });
 
   addPutRouteHandler(app, `${route}/:id`, function(request) {
     return service.updateCommand(request.body);
-  }, io);
+  });
 
   addDeleteRouteHandler(app, `${route}/:id`, function(request) {
     return service.destroyCommand(request.params.id);
-  }, io);
+  });
 };
 
 function addGetRouteHandler(app, route, commandFactory) {
@@ -55,7 +55,7 @@ function addGetRouteHandler(app, route, commandFactory) {
   });
 }
 
-function addPostRouteHandler(app, route, commandFactory, io, actionType) {
+function addPostRouteHandler(app, route, commandFactory) {
   app.post(route, (req, res) => {
     var command = commandFactory(req);
     command.execute((err, result) => {
@@ -67,11 +67,6 @@ function addPostRouteHandler(app, route, commandFactory, io, actionType) {
         return res.status(BAD_REQUEST).json(err.message);
       }
       if (result.success) {
-        if (io) io.emit('test', {
-          type: actionType || 'insert',
-          route: route.split('/')[1],
-          data: result.value
-        });
         res.status(CREATED).json(result.value);
       } else {
         res.status(BAD_REQUEST).json(result.errors);
@@ -80,7 +75,7 @@ function addPostRouteHandler(app, route, commandFactory, io, actionType) {
   });
 }
 
-function addPutRouteHandler(app, route, commandFactory, io) {
+function addPutRouteHandler(app, route, commandFactory) {
   app.put(route, (req, res) => {
     if (!req.params.id) return res.status(NOT_FOUND).end();
     req.body.id = req.params.id;
@@ -97,11 +92,6 @@ function addPutRouteHandler(app, route, commandFactory, io) {
         return res.status(BAD_REQUEST).json(err.message);
       }
       if (result.success) {
-        if (io) io.emit('test', {
-          type: 'update',
-          route: route.split('/')[1],
-          data: result.value
-        });
         res.status(OK).json(result.value);
       } else {
         res.status(BAD_REQUEST).json(result.errors);
@@ -110,17 +100,12 @@ function addPutRouteHandler(app, route, commandFactory, io) {
   });
 }
 
-function addDeleteRouteHandler(app, route, commandFactory, io) {
+function addDeleteRouteHandler(app, route, commandFactory) {
   app.delete(route, (req, res) => {
     if (!req.params.id) return res.status(NOT_FOUND).end();
     var command = commandFactory(req);
     command.execute((err, result) => {
       if (result.success) {
-        if (io) io.emit('test', {
-          type: 'delete',
-          route: route.split('/')[1],
-          data: { id: eq.params.id }
-        });
         res.status(NO_CONTENT).end();
       } else {
         res.status(BAD_REQUEST).json(result.errors);

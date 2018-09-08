@@ -15,7 +15,7 @@ var ShipOrderItemCommand = require('../commands/shipOrderItemCommand');
 var BaseService = require('./baseService');
 
 var OrderItemService = BusinessService.extendService(BaseService, {
-  params: ['dataProxy', 'productDataProxy', 'inventoryItemService'],
+  params: ['dataProxy', 'productDataProxy', 'inventoryItemService', 'eventPublisher'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var item = this.data;
@@ -121,9 +121,15 @@ var OrderItemService = BusinessService.extendService(BaseService, {
     },
     _onValidationSuccess: function(context, done) {
       var orderItem = context.orderItem;
+      var eventPublisher = this.eventPublisher || { publish: () => {} };
       orderItem.status = "SUBMITTED";
       orderItem.submittedOn = new Date();
       this.dataProxy.update(orderItem, function(err, result) {
+        if (err) return done(err);
+        eventPublisher.publish({
+          type: 'update',
+          data: result
+        });
         done(null, result);
       });
     }
@@ -131,7 +137,7 @@ var OrderItemService = BusinessService.extendService(BaseService, {
 }).service;
 
 OrderItemService.prototype.shipCommand = function(orderItemId) {
-  return new ShipOrderItemCommand(orderItemId, this.dataProxy, this.inventoryItemService);
+  return new ShipOrderItemCommand(orderItemId, this.dataProxy, this.inventoryItemService, this.eventPublisher);
 }
 
 OrderItemService.prototype.canDelete = function(orderItem) {

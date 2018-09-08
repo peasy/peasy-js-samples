@@ -10,7 +10,7 @@ var DeleteProductCommand = require('../commands/deleteProductCommand');
 var CreateProductCommand = require('../commands/createProductCommand');
 
 var ProductService = BusinessService.extendService(BaseService, {
-  params: ['dataProxy', 'orderService', 'inventoryItemService'],
+  params: ['dataProxy', 'orderService', 'inventoryItemService', 'eventPublisher'],
   functions: {
     _onUpdateCommandInitialization: function(context, done) {
       var product = this.data;
@@ -39,11 +39,11 @@ var ProductService = BusinessService.extendService(BaseService, {
 }).service;
 
 ProductService.prototype.insertCommand = function(product) {
-  return new CreateProductCommand(product, this.dataProxy, this.inventoryItemService);
+  return new CreateProductCommand(product, this.dataProxy, this.inventoryItemService, this.eventPublisher);
 };
 
 ProductService.prototype.destroyCommand = function(productId) {
-  return new DeleteProductCommand(productId, this.dataProxy, this.orderService, this.inventoryItemService);
+  return new DeleteProductCommand(productId, this.dataProxy, this.orderService, this.inventoryItemService, this.eventPublisher);
 };
 
 module.exports = ProductService;

@@ -10,7 +10,7 @@ var ValidOrderStatusForUpdateRule = require('../rules/validOrderStatusForUpdateR
 var DeleteOrderCommand = require('../commands/deleteOrderCommand');
 
 var OrderService = BusinessService.extendService(BaseService, {
-  params: ['dataProxy', 'orderItemService'],
+  params: ['dataProxy', 'orderItemService', 'eventPublisher'],
   functions: {
     _onInsertCommandInitialization: function(context, done) {
       var order = this.data;
