@@ -25,7 +25,7 @@ export class CusttestComponent implements OnInit {
 
   private onCustomerChanged(customer: Customer): void {
     this.viewModel.loadData({
-      entity: customer
+      entityID: customer.id
     } as ViewModelArgs<Customer>);
   }
 

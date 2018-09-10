@@ -36,7 +36,6 @@ export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> 
     const results = Array.from(this._data.values(), i => {
       return Object.assign({}, i);
     });
-    console.log('getall results', results);
     if (results.length) { return results; }
     const result = await this.dataProxy.getAll();
     this.insertBulk(result);

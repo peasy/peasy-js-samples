@@ -5,6 +5,7 @@ import { OrderItemListViewModel } from '../../order-item/order-item-list/order-i
 import { Injectable } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { OrderItemService } from '../../services/order-item.service';
+import { OrderItemEventAggregator } from '../../event-aggregators/order-item-event-aggregator';
 
 @Injectable({ providedIn: 'root' })
 export class OrderDetailViewModel extends EntityViewModelBase<Order> {
@@ -13,8 +14,12 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
     protected service: OrderService,
     private customersVM: CustomerListViewModel,
     public orderItemsVM: OrderItemListViewModel,
-    private orderItemService: OrderItemService) {
+    private orderItemService: OrderItemService,
+    private orderItemEventAggregator: OrderItemEventAggregator) {
       super(service);
+      orderItemEventAggregator.insert.subscribe((i) => this.orderItemsVM.loadDataFor(i.orderId));
+      orderItemEventAggregator.update.subscribe((i) => this.orderItemsVM.loadDataFor(i.orderId));
+      orderItemEventAggregator.delete.subscribe((i) => this.orderItemsVM.loadDataFor(i.orderId));
   }
 
   get isBusy() {

@@ -21,10 +21,10 @@ export class SocketManager {
   ) {
     this.functionMaps = buildFunctionMaps();
     this.socket = io();
-    const x = this;
-    this.socket.on('test', function(msg) {
+    const self = this;
+    this.socket.on('serverchange', function(msg) {
       console.log('msg', msg);
-      x.functionMaps[msg.type][msg.route].publish(msg.data);
+      self.functionMaps[msg.type][msg.route].publish(msg.data);
     });
 
     function buildFunctionMaps() {

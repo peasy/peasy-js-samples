@@ -10,14 +10,8 @@ import { OrderItemEventAggregator } from '../../event-aggregators/order-item-eve
 export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
 
   constructor(
-    protected service: OrderItemService,
-    private productsVM: ProductListViewModel,
-    private orderItemEventAggregator: OrderItemEventAggregator
-  ) {
+    protected service: OrderItemService, private productsVM: ProductListViewModel) {
       super(service);
-      orderItemEventAggregator.insert.subscribe((i) => this.loadDataFor(i.orderId));
-      orderItemEventAggregator.update.subscribe((i) => this.loadDataFor(i.orderId));
-      orderItemEventAggregator.delete.subscribe((i) => this.loadDataFor(i.orderId));
   }
 
   public items: OrderItemViewModel[];
