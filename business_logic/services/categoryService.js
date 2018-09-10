@@ -27,10 +27,10 @@ var CategoryService = BusinessService.extendService(BaseService, {
     _getRulesForUpdateCommand: function(context, done) {
       var category = this.data;
       done(null, [
-        new FieldRequiredRule('id', category)
-          .ifValidThenValidate(new FieldTypeRule('id', category.id, "number")),
+        new FieldRequiredRule('id', category),
+          // .ifValidThenValidate(new FieldTypeRule('id', category.id, "number")),
         new FieldRequiredRule("name", category)
-      ]); 
+      ]);
     },
     _getRulesForDestroyCommand: function(context, done) {
       var categoryId = this.id;

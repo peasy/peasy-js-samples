@@ -22,7 +22,7 @@ class EventAggregator {
 
   publish(e) {
     e.route = this.route;
-    this.io.emit('test', e);
+    this.io.emit('serverchange', e);
   }
 }
 
