@@ -92,3 +92,7 @@ export interface IOrderItemDataProxy extends IDataProxy<OrderItem> {
   submit(itemId: string): Promise<OrderItem>;
   ship(itemId: string): Promise<OrderItem>;
 }
+
+export interface ISubscription {
+  unsubscribe();
+}

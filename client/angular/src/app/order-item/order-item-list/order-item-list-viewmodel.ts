@@ -4,7 +4,6 @@ import { OrderItemService } from '../../services/order-item.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
 import { Injectable } from '@angular/core';
 import { OrderItemViewModel } from '../order-item-viewmodel';
-import { OrderItemEventAggregator } from '../../event-aggregators/order-item-event-aggregator';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
@@ -20,10 +19,6 @@ export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
     return super['isBusy'] ||
       this.productsVM.isBusy ||
       this.items.some(vm => vm.isBusy);
-  }
-
-  protected async handle(command: any): Promise<boolean> {
-    return super.handle(command);
   }
 
   public async loadDataFor(orderId: string): Promise<boolean> {
@@ -45,9 +40,8 @@ export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
   }
 
   public async submitAllSubmittable(): Promise<boolean> {
-    const submittableItems = this.data.filter(i => this.service.canSubmit(i));
-    const vms = submittableItems.map(i => this.items.find(vm => vm.id === i.id));
-    const results = await Promise.all(vms.map(vm => vm.submit()));
+    const submittableItems = this.items.filter(vm => vm.canSubmit);
+    const results = await Promise.all(submittableItems.map(vm => vm.submit()));
     return results.every(result => result === true);
   }
 }

@@ -6,10 +6,13 @@ import { CustomerEventAggregator } from '../../event-aggregators/customer-event-
 
 @Injectable({ providedIn: 'root' })
 export class CustomerListViewModel extends ListViewModelBase<Customer> {
-  constructor(protected service: CustomerService, customerEventAggregator: CustomerEventAggregator) {
+  constructor(protected service: CustomerService, private customerEventAggregator: CustomerEventAggregator) {
     super(service);
-    customerEventAggregator.update.subscribe(() => super.loadData());
-    customerEventAggregator.insert.subscribe(() => super.loadData());
-    customerEventAggregator.delete.subscribe(() => super.loadData());
+  }
+
+  public listen(): void {
+    this.customerEventAggregator.update.subscribe(() => super.loadData());
+    this.customerEventAggregator.insert.subscribe(() => super.loadData());
+    this.customerEventAggregator.delete.subscribe(() => super.loadData());
   }
 }

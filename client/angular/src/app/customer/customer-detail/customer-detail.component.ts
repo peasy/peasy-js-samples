@@ -36,7 +36,7 @@ export class CustomerDetailComponent implements OnInit {
   public async save(): Promise<void> {
     if (await this.viewModel.save()) {
       this.notificationMessenger.info('Save successful');
-      // this.goBack();
+      this.goBack();
     } else {
       this.notificationMessenger.error('Save failed.  Please try again.');
     }

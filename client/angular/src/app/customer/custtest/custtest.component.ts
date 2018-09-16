@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerDetailViewModel } from '../customer-detail/customer-detail-viewmodel';
 import { ActivatedRoute } from '@angular/router';
 import { ViewModelArgs, Customer } from '../../contracts';
-import { Subscription } from 'rxjs';
 import { CustomerEventAggregator } from '../../event-aggregators/customer-event-aggregator';
 
 @Component({
@@ -13,7 +12,7 @@ import { CustomerEventAggregator } from '../../event-aggregators/customer-event-
 })
 export class CusttestComponent implements OnInit {
 
-  private updateSubscription: Subscription;
+  private updateSubscription;
 
   constructor(
     private route: ActivatedRoute,

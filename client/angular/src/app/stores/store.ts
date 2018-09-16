@@ -37,7 +37,6 @@ export abstract class Store<T extends Entity> {
   }
 
   public update(data: T): void {
-    console.log('UPDATE!!!', data);
     this._data.set(data.id, Object.assign({}, data));
     this.eventAggregator.update.publish(data);
   }

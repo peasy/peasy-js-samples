@@ -17,7 +17,7 @@ export class InventoryCacheDataProxy
       this.orderItemEventAggregator.update.subscribe(this.handleOrderItemUpdate.bind(this));
   }
 
-  private handleOrderItemUpdate(orderItem: OrderItem) {
+  private async handleOrderItemUpdate(orderItem: OrderItem) {
     this.getByProduct(orderItem.productId);
   }
 
