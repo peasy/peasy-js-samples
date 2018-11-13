@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../contracts';
-import { ServiceBase } from './service-base';
+import { BusinessService } from 'peasy-js';
 import { utils } from '../../../../../business_logic/shared/utils';
 import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
 
 @Injectable({ providedIn: 'root' })
-export class CustomerService extends ServiceBase<Customer> {
+export class CustomerService extends BusinessService<Customer, string> {
 
   constructor(proxyFactory: DataProxyFactory) {
     super(proxyFactory.customerDataProxy);

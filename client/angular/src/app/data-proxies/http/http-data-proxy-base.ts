@@ -1,7 +1,8 @@
-import { Entity, IDataProxy } from '../../contracts';
+import { Entity } from '../../contracts';
+import { IDataProxy } from 'peasy-js';
 import axios from 'axios';
 
-export abstract class HttpDataProxy<T extends Entity> implements IDataProxy<T> {
+export abstract class HttpDataProxy<T extends Entity> implements IDataProxy<T, string> {
 
   protected abstract baseUri: string;
 

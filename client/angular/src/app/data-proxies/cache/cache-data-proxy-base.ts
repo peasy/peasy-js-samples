@@ -1,12 +1,13 @@
-import { Entity, IDataProxy } from '../../contracts';
+import { Entity } from '../../contracts';
+import { IDataProxy } from 'peasy-js';
 import { EventAggregator } from '../../event-aggregators/event-aggregator';
 
-export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T> {
+export abstract class CacheDataProxy<T extends Entity> implements IDataProxy<T, string> {
 
   private _getAllPerformed = false;
   protected _data: Map<string, T> = new Map<string, T>();
 
-  constructor(protected dataProxy: IDataProxy<T>, protected eventAggregator: EventAggregator<T>) {
+  constructor(protected dataProxy: IDataProxy<T, string>, protected eventAggregator: EventAggregator<T>) {
 
     eventAggregator.remoteUpdate.subscribe(async data => {
       // await this.getAll(); // force initialization of data

@@ -1,12 +1,12 @@
 import { Entity, ViewModelArgs } from './contracts';
-import { ServiceBase } from './services/service-base';
 import { ViewModelBase } from './view-model-base';
+import { BusinessService } from 'peasy-js';
 
 export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
 
   protected CurrentEntity: T;
 
-  constructor(protected service: ServiceBase<T>) {
+  constructor(protected service: BusinessService<T, string>) {
     super();
   }
 

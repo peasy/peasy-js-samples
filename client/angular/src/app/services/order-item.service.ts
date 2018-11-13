@@ -1,39 +1,38 @@
 import { Injectable } from '@angular/core';
 import { OrderItem } from '../contracts';
-import { ServiceBase } from './service-base';
 import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
-import { ServiceCommand } from '../commands/service-command';
+import { BusinessService, Command } from 'peasy-js';
 import ordersDotCom from '../../../../businessLogic.js';
 
 @Injectable({ providedIn: 'root' })
-export class OrderItemService extends ServiceBase<OrderItem> {
+export class OrderItemService extends BusinessService<OrderItem, string> {
 
   constructor(protected proxyFactory: DataProxyFactory) {
     super(proxyFactory.orderItemDataProxy);
   }
 
-  public getByOrderCommand(orderId: string): ServiceCommand<OrderItem[]> {
+  public getByOrderCommand(orderId: string): Command<OrderItem[]> {
     const service = this;
-    return new ServiceCommand<OrderItem[]>({
+    return new Command<OrderItem[]>({
       _onValidationSuccess: function() {
         return service.proxyFactory.orderItemDataProxy.getByOrder(orderId);
       }
     });
   }
 
-  public submitCommand(orderItemId: string): ServiceCommand<OrderItem> {
+  public submitCommand(orderItemId: string): Command<OrderItem> {
     const service = this;
-    return new ServiceCommand<OrderItem>({
-      _onValidationSuccess: function(context) {
+    return new Command<OrderItem>({
+      _onValidationSuccess: function() {
         return service.proxyFactory.orderItemDataProxy.submit(orderItemId);
       }
     });
   }
 
-  public shipCommand(orderItemId: string): ServiceCommand<OrderItem> {
+  public shipCommand(orderItemId: string): Command<OrderItem> {
     const service = this;
-    return new ServiceCommand<OrderItem>({
-      _onValidationSuccess: function(context) {
+    return new Command<OrderItem>({
+      _onValidationSuccess: function() {
         return service.proxyFactory.orderItemDataProxy.ship(orderItemId);
       }
     });
