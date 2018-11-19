@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Order, OrderItem } from '../contracts';
-import { BusinessService } from 'peasy-js';
+import { BusinessService, Rule } from 'peasy-js';
 import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
 import ordersDotCom from '../../../../businessLogic.js';
 

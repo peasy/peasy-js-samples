@@ -11,24 +11,22 @@ var FieldTypeRule = require('../rules/fieldTypeRule');
 var CreateProductCommand = Command.extend({
   params: ['product', 'productDataProxy', 'inventoryItemService', 'eventPublisher'],
   functions: {
-    _onInitialization: function(context, done) {
-      var product = this.product;
+    _onInitialization: function(product, productDataProxy, inventoryItemService, eventPublisher, context, done) {
+      console.log(arguments);
       convert(product, "price").toFloat();
       stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
       done();
     },
-    _getRules: function(context, done) {
-      var product = this.product;
+    _getRules: function(product, productDataProxy, inventoryItemService, eventPublisher, context, done) {
       done(null, [
         new FieldRequiredRule("name", product)
-             .ifValidThenValidate(new FieldLengthRule("name", product.name, 50)),
+          .ifValidThenValidate(new FieldLengthRule("name", product.name, 50)),
         new FieldRequiredRule("price", product)
-             .ifValidThenValidate(new FieldTypeRule("price", product.price, "number")),
+          .ifValidThenValidate(new FieldTypeRule("price", product.price, "number")),
         new FieldRequiredRule("categoryId", product)
       ]);
     },
-    _onValidationSuccess: function(context, done) {
-      var inventoryService = this.inventoryItemService;
+    _onValidationSuccess: function(product, productDataProxy, inventoryItemService, eventPublisher, context, done) {
       var newProduct;
       var eventPublisher = this.eventPublisher || { publish: () => {} };
       this.productDataProxy.insert(this.product, function(err, result) {
@@ -42,7 +40,7 @@ var CreateProductCommand = Command.extend({
           productId: newProduct.id,
           quantityOnHand: 0
         };
-        inventoryService.insertCommand(inventoryItem).execute(function(err, result) {
+        inventoryItemService.insertCommand(inventoryItem).execute(function(err, result) {
           if (err) { return done(err); }
           done(null, newProduct);
         });

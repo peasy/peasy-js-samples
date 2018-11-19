@@ -1,16 +1,13 @@
 var BusinessService = require('peasy-js').BusinessService;
-var FieldRequiredRule = require('../rules/fieldRequiredRule');
-var utils = require('../shared/utils');
-var _ = require('lodash');
 var NotFoundError = require('../shared/notFoundError');
+var _ = require('lodash');
 
 var BaseService = BusinessService.extend({
   params: ['dataProxy', 'eventPublisher'],
   functions: {
-    _update: function(context, done) {
+    _update: function(data, context, done) {
       var dataProxy = this.dataProxy;
       var eventPublisher = this.eventPublisher || { publish: () => {} };
-      var data = this.data;
       dataProxy.getById(data.id, function(err, result) {
         if (err) { return done(err); }
         if (!result) { return done(new NotFoundError(`item ${data.id} not found`)); }
@@ -25,10 +22,10 @@ var BaseService = BusinessService.extend({
         });
       });
     },
-    _insert: function(context, done) {
+    _insert: function(data, context, done) {
       var dataProxy = this.dataProxy;
       var eventPublisher = this.eventPublisher || { publish: () => {} };
-      dataProxy.insert(this.data, function(err, result) {
+      dataProxy.insert(data, function(err, result) {
         if (err) { return done(err); }
         eventPublisher.publish({
           type: 'insert',
@@ -37,10 +34,9 @@ var BaseService = BusinessService.extend({
         done(null, result);
       });
     },
-    _destroy: function(context, done) {
+    _destroy: function(id, context, done) {
       var dataProxy = this.dataProxy;
       var eventPublisher = this.eventPublisher || { publish: () => {} };
-      var id = this.id;
       dataProxy.destroy(id, function(err, result) {
         if (err) { return done(err); }
         eventPublisher.publish({

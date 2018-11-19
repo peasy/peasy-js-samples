@@ -6,7 +6,7 @@ var CanDeleteProductRule = require('../rules/canDeleteProductRule');
 var DeleteOrderCommand = Command.extend({
   params: ['orderId', 'orderDataProxy', 'orderItemService', 'eventPublisher'],
   functions: {
-    _getRules: function(context, done) {
+    _getRules: function(orderId, orderDataProxy, orderItemService, eventPublisher, context, done) {
       var orderItemService = this.orderItemService;
       orderItemService.getByOrderCommand(this.orderId).execute(function(err, result) {
         if (err) { return done(err); }
@@ -19,7 +19,7 @@ var DeleteOrderCommand = Command.extend({
         })
       });
     },
-    _onValidationSuccess: function(context, done) {
+    _onValidationSuccess: function(orderId, orderDataProxy, orderItemService, eventPublisher, context, done) {
       var currentOrderItems = context.currentOrderItems;
       var commands = currentOrderItems.map(i => { return this.orderItemService.destroyCommand(i.id); });
       var orderDataProxy = this.orderDataProxy;

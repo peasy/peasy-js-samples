@@ -1,14 +1,13 @@
 var Command = require('peasy-js').Command;
-var CanShipOrderItemRule = require('../rules/canShipOrderItemRule');
 var CanDeleteProductRule = require('../rules/canDeleteProductRule');
 
 var DeleteProductCommand = Command.extend({
   params: ['productId', 'productDataProxy', 'orderService', 'inventoryItemService', 'eventPublisher'],
   functions: {
-    _getRules: function(context, done) {
+    _getRules: function(productId, productDataProxy, orderService, inventoryItemService, eventPublisher, context, done) {
       done(null, new CanDeleteProductRule(this.productId, this.orderService));
     },
-    _onValidationSuccess: function(context, done) {
+    _onValidationSuccess: function(productId, productDataProxy, orderService, inventoryItemService, eventPublisher, context, done) {
       var inventoryItemService = this.inventoryItemService;
       var productDataProxy = this.productDataProxy;
       var productId = this.productId;
