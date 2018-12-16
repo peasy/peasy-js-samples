@@ -1,6 +1,4 @@
 var Command = require('peasy-js').Command;
-var CanShipOrderItemRule = require('../rules/canShipOrderItemRule');
-var CanDeleteProductRule = require('../rules/canDeleteProductRule');
 var utils = require('../shared/utils');
 var convert = utils.convert;
 var stripAllFieldsFrom = utils.stripAllFieldsFrom;
@@ -12,7 +10,6 @@ var CreateProductCommand = Command.extend({
   params: ['product', 'productDataProxy', 'inventoryItemService', 'eventPublisher'],
   functions: {
     _onInitialization: function(product, productDataProxy, inventoryItemService, eventPublisher, context, done) {
-      console.log(arguments);
       convert(product, "price").toFloat();
       stripAllFieldsFrom(product).except(['name', 'description', 'price', 'categoryId']);
       done();

@@ -71,7 +71,6 @@ var OrderItemService = BusinessService.extendService(BaseService, {
             var savedItem = result;
             productDataProxy.getById(item.productId, function(err, product) {
               if (err) { return done(err); }
-              console.log("AEGHHHHH", done)
               done(null, new ValidOrderItemStatusForUpdateRule(savedItem)
                 .ifValidThenValidate([
                   new OrderItemPriceValidityRule(item, product),

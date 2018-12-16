@@ -81,6 +81,7 @@ export interface IInventoryDataProxy extends IDataProxy<InventoryItem, string> {
 }
 
 export interface IProductDataProxy extends IDataProxy<Product, string> {
+  getByCategory(categoryId: string): Promise<Product[]>;
 }
 
 export interface IOrderDataProxy extends IDataProxy<Order, string> {

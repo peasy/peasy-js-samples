@@ -17,7 +17,7 @@
       <td><a routerLink="/categories/{{category.id}}">{{ category.name }}</a></td>
       <td>
         <button
-          (click)="viewModel.destroy(category.id)"
+          (click)="destroy(category.id)"
           class="btn btn-secondary btn-sm">
           Delete
         </button>

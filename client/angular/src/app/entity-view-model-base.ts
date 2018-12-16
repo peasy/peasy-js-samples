@@ -1,6 +1,6 @@
 import { Entity, ViewModelArgs } from './contracts';
 import { ViewModelBase } from './view-model-base';
-import { BusinessService } from 'peasy-js';
+import { BusinessService, ICommand } from 'peasy-js';
 
 export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
 
@@ -14,7 +14,7 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     this._errors = [];
     this.CurrentEntity = args.entity || {} as T;
     if (!this.CurrentEntity.id && args.entityID) {
-      return this.handle(() => this.service.getByIdCommand(args.entityID));
+      return this.handle(this.service.getByIdCommand(args.entityID));
     }
   }
 
@@ -26,13 +26,15 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     return this.CurrentEntity.id;
   }
 
-  protected async handle(command): Promise<boolean> {
+  protected async handle(command: ICommand<T>): Promise<boolean> {
     let success = true;
     this.loadStarted();
     try  {
-      const result = await command().execute();
-      if (!result) {
-        console.warn('the result in handle() was null.  are you sure you have a return statement in your command function?');
+      const result = await command.execute();
+      this.loadCompleted();
+      if (!result.success) {
+        this._errors = result.errors;
+        return;
       }
       this.CurrentEntity = result.value;
       this._isDirty = false;
@@ -44,7 +46,6 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
         this._errors.push(e);
       }
     }
-    this.loadCompleted();
     return success;
   }
 
@@ -52,9 +53,9 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     if (this.isDirty) {
       this._errors = [];
       if (this.isNew) {
-        return await this.handle(() => this.service.insertCommand(this.CurrentEntity));
+        return await this.handle(this.service.insertCommand(this.CurrentEntity));
       } else {
-        return await this.handle(() => this.service.updateCommand(this.CurrentEntity));
+        return await this.handle(this.service.updateCommand(this.CurrentEntity));
       }
     }
   }

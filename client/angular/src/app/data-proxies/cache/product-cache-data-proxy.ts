@@ -12,5 +12,8 @@ export class ProductCacheDataProxy
     super(dataProxy, eventAggreator);
   }
 
+  public getByCategory(categoryId: string): Promise<Product[]> {
+    return this.dataProxy.getByCategory(categoryId);
+  }
 
 }

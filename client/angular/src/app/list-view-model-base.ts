@@ -19,7 +19,14 @@ export class ListViewModelBase<T extends Entity> extends ViewModelBase {
     this.loadStarted();
     try  {
       const result = await command().execute();
-      this.data = result.value || this.data;
+      if (result.success) {
+        this.data = result.value || this.data;
+      } else {
+        success = false;
+        result.errors.forEach(e => {
+          this._errors.push(e.message);
+        });
+      }
     } catch (e) {
       success = false;
       if (Array.isArray(e)) {
