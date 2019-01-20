@@ -12,4 +12,8 @@ export class OrderCacheDataProxy
     super(dataProxy, eventAggregator);
   }
 
+  public getByCustomer(customerId: string): Promise<Order[]> {
+    return this.dataProxy.getByCustomer(customerId);
+  }
+
 }

@@ -26,6 +26,10 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     return this.CurrentEntity.id;
   }
 
+  public fieldValid(fieldName: string): boolean {
+    return this.getErrorMessageFor(fieldName) === null;
+  }
+
   protected async handle(command: ICommand<T>): Promise<boolean> {
     let success = true;
     this.loadStarted();
@@ -49,14 +53,28 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     return success;
   }
 
+  protected async validate() {
+    this._errors = await this.saveCommand.getErrors();
+  }
+
+  protected get saveCommand(): ICommand<T> {
+    if (this.isNew) {
+      return this.service.insertCommand(this.CurrentEntity);
+    }
+    return this.service.updateCommand(this.CurrentEntity);
+  }
+
+  protected setValue(field: string, value: any): void {
+    this.CurrentEntity[field] = value;
+    this._isDirty = true;
+    this.validate();
+  }
+
   public async save(): Promise<boolean> {
     if (this.isDirty) {
       this._errors = [];
-      if (this.isNew) {
-        return await this.handle(this.service.insertCommand(this.CurrentEntity));
-      } else {
-        return await this.handle(this.service.updateCommand(this.CurrentEntity));
-      }
+      return await this.handle(this.saveCommand);
     }
   }
+
 }

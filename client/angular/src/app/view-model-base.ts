@@ -31,7 +31,7 @@ export abstract class ViewModelBase {
     return this._errors;
   }
 
-  protected getErrorMessageFor(field: string): string {
+  public getErrorMessageFor(field: string): string {
     const error = this._errors.find(e => e.association === field);
     return error ? error.message : null;
   }

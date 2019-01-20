@@ -3,6 +3,7 @@ import { Product, ViewModelArgs, Category } from '../../contracts';
 import { CategoryListViewModel } from '../../category/category-list/category-list-viewmodel';
 import { ProductService } from '../../services/product.service';
 import { Injectable } from '@angular/core';
+import { _getComponentHostLElementNode } from '@angular/core/src/render3/instructions';
 
 @Injectable({ providedIn: 'root' })
 export class ProductDetailViewModel extends EntityViewModelBase<Product> {
@@ -11,9 +12,10 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
     super(productService);
   }
 
-  loadData(args: ViewModelArgs<Product>): any {
-    super.loadData(args);
+  async loadData(args: ViewModelArgs<Product>): Promise<any> {
+    await super.loadData(args);
     this.categoryListVM.loadData();
+    this.validate();
   }
 
   get isBusy() {
@@ -25,8 +27,7 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
   }
 
   set name(value: string) {
-    this.CurrentEntity.name = value;
-    this._isDirty = true;
+    this.setValue('name', value);
   }
 
   get price(): number {
@@ -34,8 +35,7 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
   }
 
   set price(value: number) {
-    this.CurrentEntity.price = value;
-    this._isDirty = true;
+    this.setValue('price', value);
   }
 
   get categoryId(): string {
@@ -43,13 +43,11 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
   }
 
   set categoryId(value: string) {
-    this.CurrentEntity.categoryId = value;
-    this._isDirty = true;
+    this.setValue('categoryId', value);
   }
 
   get categories(): Category[] {
     const defaultItem = { name: 'Select Category ...', id: '' } as Category;
     return [defaultItem, ...this.categoryListVM.data];
   }
-
 }

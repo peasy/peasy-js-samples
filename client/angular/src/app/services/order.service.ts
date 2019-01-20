@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Order, OrderItem } from '../contracts';
-import { BusinessService, Rule } from 'peasy-js';
+import { BusinessService, Rule, ICommand, Command } from 'peasy-js';
 import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
 import ordersDotCom from '../../../../businessLogic.js';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService extends BusinessService<Order, string> {
 
-  constructor(proxyFactory: DataProxyFactory) {
+  constructor(private proxyFactory: DataProxyFactory) {
     super(proxyFactory.orderDataProxy);
   }
 
@@ -17,5 +17,13 @@ export class OrderService extends BusinessService<Order, string> {
 
   hasPendingItems(orderItems: OrderItem[]) {
     return orderItems.some(i => i.status === 'PENDING');
+  }
+
+  public getByCustomerCommand(customerId: string): ICommand<Order[]> {
+    return new Command<Order[]>({
+      _onValidationSuccess: () => {
+        return this.proxyFactory.orderDataProxy.getByCustomer(customerId);
+      }
+    });
   }
 }
