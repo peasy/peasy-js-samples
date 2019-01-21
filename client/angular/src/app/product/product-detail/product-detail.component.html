@@ -1,24 +1,15 @@
 <h1>Manage Product</h1>
 
-<!-- <div *ngIf="viewModel.errors.length">
-  <ul class="text-danger">
-    <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-  </ul>
-</div> -->
-
-<!-- <div>
-  <label for="name" class="form-label">Name</label>
-  <input id="name" [(ngModel)]="viewModel.name" class="form-control" required>
-  <label [hidden]="viewModel.getErrorMessageFor('name') === null" class="alert alert-danger">{{viewModel.getErrorMessageFor('name')}}</label>
-</div> -->
 <div>
   <label for="name" class="form-label">Name</label>
   <input id="name" [ngClass]="{'is-invalid' : !viewModel.fieldValid('name')}" [(ngModel)]="viewModel.name" class="form-control" required>
+  <div [hidden]="viewModel.fieldValid('name')" class="alert alert-danger">{{viewModel.getErrorMessageFor('name')}}</div>
 </div>
 
 <div>
   <label for="price" class="form-label">Price</label>
   <input id="price" type="number" [ngClass]="{'is-invalid' : !viewModel.fieldValid('price')}" [(ngModel)]="viewModel.price" class="form-control">
+  <div [hidden]="viewModel.fieldValid('price')" class="alert alert-danger">{{viewModel.getErrorMessageFor('price')}}</div>
 </div>
 
 <div>
@@ -26,6 +17,7 @@
   <select id="categoryId" [ngClass]="{'is-invalid' : !viewModel.fieldValid('categoryId')}" [(ngModel)]="viewModel.categoryId" class="form-control">
     <option *ngFor="let category of viewModel.categories" value="{{category.id}}">{{category.name}}</option>
   </select>
+  <div [hidden]="viewModel.fieldValid('categoryId')" class="alert alert-danger">{{viewModel.getErrorMessageFor('categoryId')}}</div>
 </div>
 
 <div class="button-grouping">

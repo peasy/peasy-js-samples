@@ -25,7 +25,7 @@ export class ProductService extends BusinessService<Product, string> {
         .ifValidThenValidate(new FieldLengthRule('name', product.name, 50)),
       new FieldRequiredRule('price', product)
         .ifValidThenValidate(new FieldTypeRule('price', product.price, 'number')),
-      new FieldRequiredRule('categoryId', product),
+      new FieldRequiredRule('categoryId', product, 'category'),
     ]);
   }
 
@@ -40,7 +40,7 @@ export class ProductService extends BusinessService<Product, string> {
         .ifValidThenValidate(new FieldLengthRule('name', product.name, 50)),
       new FieldRequiredRule('price', product)
         .ifValidThenValidate(new FieldTypeRule('price', product.price, 'number')),
-      new FieldRequiredRule('categoryId', product),
+      new FieldRequiredRule('categoryId', product, 'category'),
     ]);
   }
 

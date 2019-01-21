@@ -35,7 +35,8 @@ export class CustomerService extends BusinessService<Customer, string> {
   _getRulesForUpdateCommand(customer: Customer, context: Object): Promise<IRule[]> {
     return Promise.resolve([
       new FieldRequiredRule('id', customer),
-      new FieldLengthRule('name', customer.name, 50)
+      new FieldRequiredRule('name', customer)
+        .ifValidThenValidate(new FieldLengthRule('name', customer.name, 50))
     ]);
   }
 

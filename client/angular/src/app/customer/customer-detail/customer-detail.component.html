@@ -1,15 +1,9 @@
 <h1>Manage Customer</h1>
 
-<div *ngIf="viewModel.errors.length">
-  <ul class="text-danger">
-    <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-  </ul>
-</div>
-
 <div>
   <label for="name" class="form-label">Name</label>
-  <input id="name" [(ngModel)]="viewModel.name" class="form-control">
-  <label>{{viewModel.getErrorMessageFor('name')}}</label>
+  <input id="name" [ngClass]="{'is-invalid' : !viewModel.fieldValid('name')}" [(ngModel)]="viewModel.name" class="form-control" required>
+  <div [hidden]="viewModel.fieldValid('name')" class="alert alert-danger">{{viewModel.getErrorMessageFor('name')}}</div>
 </div>
 
 <!-- <app-custtest></app-custtest>

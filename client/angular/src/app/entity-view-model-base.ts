@@ -10,7 +10,7 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     super();
   }
 
-  loadData(args: ViewModelArgs<T>): Promise<boolean> {
+  public loadData(args: ViewModelArgs<T>): Promise<boolean> {
     this._errors = [];
     this.CurrentEntity = args.entity || {} as T;
     if (!this.CurrentEntity.id && args.entityID) {
@@ -18,11 +18,11 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
     }
   }
 
-  get isNew(): boolean {
+  public get isNew(): boolean {
     return !this.CurrentEntity.id;
   }
 
-  get id(): string {
+  public get id(): string {
     return this.CurrentEntity.id;
   }
 
@@ -67,7 +67,9 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
   protected setValue(field: string, value: any): void {
     this.CurrentEntity[field] = value;
     this._isDirty = true;
-    this.validate();
+    if (this._errors.length) {
+      this.validate();
+    }
   }
 
   public async save(): Promise<boolean> {

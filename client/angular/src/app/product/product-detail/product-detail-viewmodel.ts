@@ -13,9 +13,8 @@ export class ProductDetailViewModel extends EntityViewModelBase<Product> {
   }
 
   async loadData(args: ViewModelArgs<Product>): Promise<any> {
-    await super.loadData(args);
+    super.loadData(args),
     this.categoryListVM.loadData();
-    this.validate();
   }
 
   get isBusy() {

@@ -64,9 +64,8 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
   }
 
   set quantity(value: number) {
-    this.CurrentEntity.quantity = value;
+    this.setValue('quantity', value);
     this.CurrentEntity.amount = this.amount;
-    this._isDirty = true;
   }
 
   get amount(): number {
@@ -92,7 +91,7 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
   set productId(value: string) {
     this._currentInventory = this.inventoryItemListVM.data.find(i => i.productId === value);
     this._currentProduct = this.productListVM.data.find(i => i.id === value);
-    this.CurrentEntity.productId = value;
+    this.setValue('productId', value);
     this.CurrentEntity.price = this._currentProduct.price;
     this.CurrentEntity.amount = this.amount;
   }

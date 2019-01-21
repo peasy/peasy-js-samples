@@ -36,8 +36,7 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   }
 
   public set customerId(value: string) {
-    this.CurrentEntity.customerId = value;
-    this._isDirty = true;
+    this.setValue('customerId', value);
   }
 
   public get customers(): Customer[] {

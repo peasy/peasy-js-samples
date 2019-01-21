@@ -5,7 +5,6 @@ import { CustomerDetailViewModel } from './customer-detail-viewmodel';
 import { Customer, ViewModelArgs } from '../../contracts';
 import { NotificationMessenger } from '../../notification-messenger';
 import { CustomerService } from '../../services/customer.service';
-import {Command } from 'peasy-js';
 
 @Component({
   selector: 'app-customer-detail',

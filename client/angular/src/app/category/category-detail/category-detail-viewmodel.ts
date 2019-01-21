@@ -15,7 +15,6 @@ export class CategoryDetailViewModel extends EntityViewModelBase<Category> {
   }
 
   set name(value: string) {
-    this.CurrentEntity.name = value;
-    this._isDirty = true;
+    this.setValue('name', value);
   }
 }

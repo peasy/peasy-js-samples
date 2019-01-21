@@ -28,8 +28,7 @@ export class InventoryDetailViewModel extends EntityViewModelBase<InventoryItem>
   }
 
   set quantityOnHand(amount: number) {
-    this.CurrentEntity.quantityOnHand = amount;
-    this._isDirty = true;
+    this.setValue('quantityOnHand', amount);
   }
 
   get name(): string {

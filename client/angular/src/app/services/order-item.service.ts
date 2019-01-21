@@ -8,6 +8,7 @@ import { FieldRequiredRule } from '../rules/fieldRequiredRule';
 import { OrderItemPriceValidityRule } from '../rules/orderItemPriceValidityRule';
 import { OrderItemAmountValidityRule } from '../rules/orderItemAmountValidityRule';
 import { ValidOrderItemStatusForUpdateRule } from '../rules/validOrderItemStatusForUpdateRule';
+import { convert } from '../../../../../business_logic/shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemService extends BusinessService<OrderItem, string> {
@@ -19,6 +20,9 @@ export class OrderItemService extends BusinessService<OrderItem, string> {
   protected _onInsertCommandInitialization(data: OrderItem, context: object): Promise<void> {
     stripAllFieldsFrom(data).except(['orderId', 'productId', 'quantity', 'amount', 'price']);
     data.status = 'PENDING';
+    convert(data, 'quantity').toFloat();
+    convert(data, 'amount').toFloat();
+    convert(data, 'price').toFloat();
     return Promise.resolve();
   }
 
@@ -29,7 +33,7 @@ export class OrderItemService extends BusinessService<OrderItem, string> {
         new FieldRequiredRule('quantity', item),
         new FieldRequiredRule('amount', item),
         new FieldRequiredRule('price', item),
-        new FieldRequiredRule('productId', item),
+        new FieldRequiredRule('productId', item, 'product'),
         new FieldRequiredRule('orderId', item)
       ])
       .thenGetRules(async () => {
@@ -44,6 +48,9 @@ export class OrderItemService extends BusinessService<OrderItem, string> {
 
   protected _onUpdateCommandInitialization(item: OrderItem, context: object): Promise<void> {
     stripAllFieldsFrom(item).except(['id', 'quantity', 'amount', 'price', 'productId', 'orderId']);
+    convert(item, 'quantity').toFloat();
+    convert(item, 'amount').toFloat();
+    convert(item, 'price').toFloat();
     return Promise.resolve();
   }
 
@@ -54,7 +61,8 @@ export class OrderItemService extends BusinessService<OrderItem, string> {
       Rule.ifAllValid([
         new FieldRequiredRule('quantity', item),
         new FieldRequiredRule('amount', item),
-        new FieldRequiredRule('price', item)
+        new FieldRequiredRule('price', item),
+        new FieldRequiredRule('productId', item, 'product'),
       ])
       .thenGetRules(async () => {
         const savedItem = await orderItemDataProxy.getById(item.id);
