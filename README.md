@@ -41,7 +41,7 @@ In this scenario, the client consumes [business services](https://github.com/pea
 
 In this scenario, the client consumes [business services](https://github.com/peasy/peasy-js/wiki/BusinessService) that are injected with [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy) that use HTTP to communicate with the Web API application.  In turn, the Web API application uses business services that are injected with data proxies that communicate with a MongoDB database.
 
-[![architecture](https://www.dropbox.com/s/lor4dm0o3kdanf5/FullArchitecture.svg?dl=0&raw=1)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-MongoDB)
+[![architecture](https://www.dropbox.com/s/lor4dm0o3kdanf5/FullArchitecture.png?dl=0&raw=1)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-MongoDB)
 
 ### Testing out the Web API
 
