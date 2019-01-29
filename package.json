@@ -30,7 +30,6 @@
     "jquery": "3.1.1",
     "lodash": "4.13.1",
     "mongodb": "2.2.19",
-    "peasy-js": "file:../peasy-js/peasy-js-2.0.0.tgz",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "react-redux": "5.0.2",
