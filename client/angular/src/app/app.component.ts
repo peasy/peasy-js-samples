@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '../../node_modules/@angular/router';
+import { Component, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { SocketManager } from './SocketManager';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,10 @@ import { Router } from '../../node_modules/@angular/router';
 })
 export class AppComponent {
 
-  constructor(private router: Router) {}
+  private socket;
+
+  constructor(private router: Router, private socketManager: SocketManager) {
+  }
 
   isActive(path) {
     return this.router.url.indexOf(path) > -1;

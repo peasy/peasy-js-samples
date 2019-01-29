@@ -3,7 +3,7 @@ var Rule = require('peasy-js').Rule;
 var CanDeleteProductRule = Rule.extend({
   params: ['productId', 'orderService'],
   functions: {
-    _onValidate: function(done) {
+    _onValidate: function(productId, orderService, done) {
       var self = this;
       this.orderService.getByProductCommand(this.productId).execute(function(err, result) {
         if (err) { return done(err); }

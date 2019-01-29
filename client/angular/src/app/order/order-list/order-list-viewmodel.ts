@@ -15,7 +15,7 @@ export class OrderListViewModel extends ListViewModelBase<Order> {
       super(service);
   }
 
-  async loadData(): Promise<boolean> {
+  public async loadData(): Promise<boolean> {
     const results = await Promise.all
     ([
       super.loadData(),
@@ -25,15 +25,15 @@ export class OrderListViewModel extends ListViewModelBase<Order> {
     return results.every(r => r === true);
   }
 
-  getCustomerNameFor(customerId: string): string {
+  public getCustomerNameFor(customerId: string): string {
     const customers = this.customersVM.data;
-    if (customers) {
+    if (customers.length > 0) {
       return customers.find(c => c.id === customerId).name;
     }
     return null;
   }
 
-  getStatusFor(orderId: string): string {
+  public getStatusFor(orderId: string): string {
     const allOrderItems = this.orderItemsVM.data;
     if (allOrderItems) {
       const orderItems = allOrderItems.filter(i => i.orderId === orderId);
@@ -42,7 +42,7 @@ export class OrderListViewModel extends ListViewModelBase<Order> {
     return null;
   }
 
-  getTotalFor(orderId: string): number {
+  public getTotalFor(orderId: string): number {
     const allOrderItems = this.orderItemsVM.data;
     if (allOrderItems) {
       return allOrderItems.filter(i => i.orderId === orderId)

@@ -4,11 +4,11 @@ var DeleteProductCommand = require('../commands/deleteProductCommand');
 
 class CreateProductClientCommand extends CreateProductCommand {
   constructor(product, productDataProxy, inventoryItemService) {
-    super(product, productDataProxy, inventoryItemService);
+    super(product, productDataProxy, inventoryItemService, null);
   }
 
-  _onValidationSuccess(context, done) {
-    this.productDataProxy.insert(this.product, function(err, result) {
+  _onValidationSuccess(product, productDataProxy, inventoryItemService, eventPublisher, context, done) {
+    this.productDataProxy.insert(this.product, function (err, result) {
       if (err) { return done(err); }
       done(null, result);
     });
@@ -16,12 +16,12 @@ class CreateProductClientCommand extends CreateProductCommand {
 }
 
 class DeleteProductClientCommand extends DeleteProductCommand {
-  constructor(productId, dataProxy, orderService, inventoryItemService) {
-    super(productId, dataProxy, orderService, inventoryItemService);
+  constructor(productId, productDataProxy, orderService, inventoryItemService) {
+    super(productId, productDataProxy, orderService, inventoryItemService, null);
   }
 
-  _onValidationSuccess(context, done) {
-    this.productDataProxy.destroy(this.productId, function(err, result) {
+  _onValidationSuccess(productId, productDataProxy, orderService, inventoryItemService, eventPublisher, context, done) {
+    productDataProxy.destroy(productId, function (err, result) {
       if (err) { return done(err); }
       done(null, result);
     });
@@ -36,11 +36,11 @@ class ClientProductService extends ProductService {
   insertCommand(product) {
     return new CreateProductClientCommand(product, this.dataProxy, this.inventoryItemService);
   }
-  
+
   destroyCommand(productId) {
     return new DeleteProductClientCommand(productId, this.dataProxy, this.orderService, this.inventoryItemService);
   }
-} 
+}
 
 // ES5 Implementation
 // var ClientCreateProductCommand = function(product, productDataProxy, inventoryItemService) {

@@ -4,11 +4,13 @@ import { Location } from '@angular/common';
 import { CustomerDetailViewModel } from './customer-detail-viewmodel';
 import { Customer, ViewModelArgs } from '../../contracts';
 import { NotificationMessenger } from '../../notification-messenger';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
-  styleUrls: ['./customer-detail.component.css']
+  styleUrls: ['./customer-detail.component.css'],
+  // providers: [CustomerService, CustomerDetailViewModel]
 })
 export class CustomerDetailComponent implements OnInit {
 
@@ -16,7 +18,8 @@ export class CustomerDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     public viewModel: CustomerDetailViewModel,
-    private notificationMessenger: NotificationMessenger) { }
+    private notificationMessenger: NotificationMessenger) {
+  }
 
   public async ngOnInit(): Promise<void> {
     let customerId = this.route.snapshot.params['id'];

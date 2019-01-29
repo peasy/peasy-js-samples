@@ -13,7 +13,7 @@ class ClientOrderItemService extends OrderItemService {
   shipCommand(orderItemId) {
     return new ShipCommand(orderItemId, this.dataProxy);
   }
-} 
+}
 
 class SubmitCommand extends Command {
   constructor(orderItemId, dataProxy) {

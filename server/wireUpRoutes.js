@@ -13,14 +13,34 @@ var OrderItemService = require('../business_logic/services/orderItemService');
 //IN-MEMORY DATA PROXIES
 var proxyFactory = require('../data_proxies/in-memory/inMemoryDataProxyFactory');
 
-var inventoryItemService = new InventoryItemService(proxyFactory.inventoryItemDataProxy);
-var orderItemService = new OrderItemService(proxyFactory.orderItemDataProxy, proxyFactory.productDataProxy, inventoryItemService);
-var orderService = new OrderService(proxyFactory.orderDataProxy, orderItemService);
-var productService = new ProductService(proxyFactory.productDataProxy, orderService, inventoryItemService);
-var customerService = new CustomerService(proxyFactory.customerDataProxy, orderService);
-var categoryService = new CategoryService(proxyFactory.categoryDataProxy, productService);
+class EventAggregator {
 
-var wireUpRoutes = function(app) {
+  constructor(io, route) {
+    this.io = io;
+    this.route = route;
+  }
+
+  publish(e) {
+    e.route = this.route;
+    this.io.emit('serverchange', e);
+  }
+}
+
+var wireUpRoutes = function(app, io) {
+
+  var inventoryItemService =
+    new InventoryItemService(proxyFactory.inventoryItemDataProxy, new EventAggregator(io, 'inventoryItems'));
+  var orderItemService =
+    new OrderItemService(proxyFactory.orderItemDataProxy, proxyFactory.productDataProxy, inventoryItemService, new EventAggregator(io, 'orderItems'));
+  var orderService =
+    new OrderService(proxyFactory.orderDataProxy, orderItemService, new EventAggregator(io, 'orders'));
+  var productService =
+    new ProductService(proxyFactory.productDataProxy, orderService, inventoryItemService, new EventAggregator(io, 'products'));
+  var customerService =
+    new CustomerService(proxyFactory.customerDataProxy, orderService, new EventAggregator(io, 'customers'));
+  var categoryService =
+    new CategoryService(proxyFactory.categoryDataProxy, productService, new EventAggregator(io, 'categories'));
+
   // ROUTES AND CONTROLLERS
   routeHelper.createController('/customers', app, customerService);
 

@@ -1,4 +1,4 @@
-import { ServiceBase } from './services/service-base';
+import { IDataProxy } from 'peasy-js';
 
 export interface Entity {
   id: string;
@@ -52,7 +52,6 @@ export interface ExecutionResult<T> {
 }
 
 export interface ViewModelArgs<T> {
-  // service: ServiceBase<T>;
   entity?: T;
   entityID: string;
 }
@@ -61,4 +60,40 @@ export interface INotificationMessenger {
   info(message: string): void;
   warning(message: string): void;
   error(message: string): void;
+}
+
+export interface IDataProxy<T extends Entity> {
+  getAll(): Promise<T[]>;
+  getById(id: string): Promise<T>;
+  insert(data: T): Promise<T>;
+  update(data: T):  Promise<T>;
+  destroy(id: string): Promise<void>;
+}
+
+export interface ICategoryDataProxy extends IDataProxy<Category, string> {
+}
+
+export interface ICustomerDataProxy extends IDataProxy<Customer, string> {
+}
+
+export interface IInventoryDataProxy extends IDataProxy<InventoryItem, string> {
+  getByProduct(productId: string): Promise<InventoryItem>;
+}
+
+export interface IProductDataProxy extends IDataProxy<Product, string> {
+  getByCategory(categoryId: string): Promise<Product[]>;
+}
+
+export interface IOrderDataProxy extends IDataProxy<Order, string> {
+  getByCustomer(customerId: string): Promise<Order[]>;
+}
+
+export interface IOrderItemDataProxy extends IDataProxy<OrderItem, string> {
+  getByOrder(orderId: string): Promise<OrderItem[]>;
+  submit(itemId: string): Promise<OrderItem>;
+  ship(itemId: string): Promise<OrderItem>;
+}
+
+export interface ISubscription {
+  unsubscribe();
 }

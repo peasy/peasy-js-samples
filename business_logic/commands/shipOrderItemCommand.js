@@ -2,19 +2,18 @@ var Command = require('peasy-js').Command;
 var CanShipOrderItemRule = require('../rules/canShipOrderItemRule');
 
 var ShipOrderItemCommand = Command.extend({
-  params: ['orderItemId', 'orderItemDataProxy', 'inventoryItemService'],
+  params: ['orderItemId', 'orderItemDataProxy', 'inventoryItemService', 'eventPublisher'],
   functions: {
-    _getRules: function(context, done) {
-      this.orderItemDataProxy.getById(this.orderItemId, function(err, orderItem) {
+    _getRules: function(orderItemId, orderItemDataProxy, inventoryItemService, eventPublisher, context, done) {
+      orderItemDataProxy.getById(orderItemId, function(err, orderItem) {
         if (err) { return done(err); }
         context.currentOrderItem = orderItem;
         done(null, new CanShipOrderItemRule(orderItem));
       });
     },
-    _onValidationSuccess: function(context, done) {
+    _onValidationSuccess: function(orderItemId, orderItemDataProxy, inventoryItemService, eventPublisher, context, done) {
       var currentOrderItem = context.currentOrderItem;
-      var inventoryItemService = this.inventoryItemService;
-      var orderItemDataProxy = this.orderItemDataProxy;
+      eventPublisher = eventPublisher || { publish: () => {} };
 
       inventoryItemService.getByProductCommand(currentOrderItem.productId).execute(function(err, result) {
         if (err) { return done(err); }
@@ -37,6 +36,10 @@ var ShipOrderItemCommand = Command.extend({
       function saveOrderItem(item, done) {
         orderItemDataProxy.update(item, function(err, orderItem) {
           if (err) { return done(err); }
+          eventPublisher.publish({
+            type: 'update',
+            data: orderItem
+          });
           done(null, orderItem);
         });
       }

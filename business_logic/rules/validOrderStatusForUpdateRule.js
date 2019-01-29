@@ -3,7 +3,7 @@ var Rule = require('peasy-js').Rule;
 var ValidOrderStatusForUpdateRule = Rule.extend({
   params: ['orderId', 'orderItemService'],
   functions: {
-    _onValidate: function(done) {
+    _onValidate: function(orderId, orderItemService, done) {
       var self = this;
       self.orderItemService.getByOrderCommand(self.orderId).execute(function(err, result) {
         if (err) { return done(err); }

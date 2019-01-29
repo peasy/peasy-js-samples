@@ -1,19 +1,13 @@
 <h1>Manage Inventory Item</h1>
 
-<div *ngIf="viewModel.errors.length">
-  <ul class="text-danger">
-    <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-  </ul>
-</div>
-
 <div>
   <label class="form-label">Name</label> {{viewModel.name}}
 </div>
 
 <div>
   <label for="quantityOnHand" class="form-label">Quantity</label>
-  <input id="quantityOnHand" [(ngModel)]="viewModel.quantityOnHand" class="form-control">
-  <label>{{viewModel.getErrorMessageFor('quantityOnHand')}}</label>
+  <input id="quantityOnHand" type="number" [(ngModel)]="viewModel.quantityOnHand" class="form-control">
+  <div [hidden]="viewModel.fieldValid('quantityOnHand')" class="alert alert-danger">{{viewModel.getErrorMessageFor('quantityOnHand')}}</div>
 </div>
 
 <div class="button-grouping">

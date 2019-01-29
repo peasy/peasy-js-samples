@@ -19,6 +19,8 @@ import { OrderItemDetailComponent } from './order-item/order-item-detail/order-i
 import { OrderItemListComponent } from './order-item/order-item-list/order-item-list.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CusttestComponent } from './customer/custtest/custtest.component';
+import { StoreManager } from './stores/store-manager';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     InventoryDetailComponent,
     InventoryListComponent,
     OrderItemDetailComponent,
-    OrderItemListComponent
+    OrderItemListComponent,
+    CusttestComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [StoreManager],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

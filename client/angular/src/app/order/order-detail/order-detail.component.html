@@ -1,10 +1,5 @@
 <h1>Manage Order</h1>
   <!-- <label *ngIf="viewModel.isBusy">Loading ....</label> -->
-<div *ngIf="viewModel.errors.length">
-  <ul class="text-danger">
-    <li *ngFor="let error of viewModel.errors">{{error.message || error}}</li>
-  </ul>
-</div>
 
 <div>
   <label for="id" class="form-label">Id:</label> {{ viewModel.id }}
@@ -15,7 +10,7 @@
   <select id="customerId" [(ngModel)]="viewModel.customerId" class="form-control">
     <option *ngFor="let customer of viewModel.customers" value="{{customer.id}}">{{customer.name}}</option>
   </select>
-  <label>{{viewModel.getErrorMessageFor('customerId')}}</label>
+  <div [hidden]="viewModel.fieldValid('customerId')" class="alert alert-danger">{{viewModel.getErrorMessageFor('customerId')}}</div>
 </div>
 
 <div *ngIf="!viewModel.isNew">

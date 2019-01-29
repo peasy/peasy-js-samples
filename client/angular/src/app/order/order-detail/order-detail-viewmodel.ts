@@ -4,7 +4,6 @@ import { CustomerListViewModel } from '../../customer/customer-list/customer-lis
 import { OrderItemListViewModel } from '../../order-item/order-item-list/order-item-list-viewmodel';
 import { Injectable } from '@angular/core';
 import { OrderService } from '../../services/order.service';
-import { OrderItemService } from '../../services/order-item.service';
 
 @Injectable({ providedIn: 'root' })
 export class OrderDetailViewModel extends EntityViewModelBase<Order> {
@@ -12,31 +11,35 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
   constructor(
     protected service: OrderService,
     private customersVM: CustomerListViewModel,
-    public orderItemsVM: OrderItemListViewModel,
-    private orderItemService: OrderItemService) {
+    public orderItemsVM: OrderItemListViewModel) {
       super(service);
   }
 
-  get isBusy() {
+  public onOrderItemChanged(orderItem: OrderItem) {
+    if (this.id === orderItem.orderId) {
+      this.orderItemsVM.loadDataFor(this.id);
+    }
+  }
+
+  public get isBusy() {
     return super['isBusy'] || this.customersVM.isBusy || this.orderItemsVM.isBusy;
   }
 
-  loadData(args: ViewModelArgs<Order>): any {
+  public loadData(args: ViewModelArgs<Order>): any {
     super.loadData(args);
     this.customersVM.loadData();
     this.orderItemsVM.loadDataFor(args.entityID);
   }
 
-  get customerId(): string {
+  public get customerId(): string {
     return this.CurrentEntity.customerId || '';
   }
 
-  set customerId(value: string) {
-    this.CurrentEntity.customerId = value;
-    this._isDirty = true;
+  public set customerId(value: string) {
+    this.setValue('customerId', value);
   }
 
-  get customers(): Customer[] {
+  public get customers(): Customer[] {
     const defaultItem = { name: 'Select Customer ...', id: '' } as Customer;
     if (this.customersVM.data) {
       return [defaultItem, ...this.customersVM.data];
@@ -44,22 +47,25 @@ export class OrderDetailViewModel extends EntityViewModelBase<Order> {
     return [defaultItem];
   }
 
-  get orderItems(): OrderItem[] {
+  public get orderItems(): OrderItem[] {
     return this.orderItemsVM.data;
   }
 
-  get orderTotal(): number {
+  public get orderTotal(): number {
     if (this.orderItems && this.orderItems.length) {
       return this.orderItems.map(i => i.amount).reduce((a = 0, b) => a + b);
     }
     return 0;
   }
 
-  get canSubmit(): boolean {
-    return this.orderItemService.anySubmittable(this.orderItems);
+  public get canSubmit(): boolean {
+    if (this.orderItemsVM.items && this.orderItemsVM.items.length) {
+      return this.orderItemsVM.items.some(vm => vm.canSubmit);
+    }
+    return false;
   }
 
-  async submitOrder() {
+  public async submitOrder() {
     if (this.canSubmit) {
       this.orderItemsVM.submitAllSubmittable();
     }

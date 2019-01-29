@@ -9,8 +9,7 @@ import { OrderItemViewModel } from '../order-item-viewmodel';
 export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
 
   constructor(
-    protected service: OrderItemService,
-    private productsVM: ProductListViewModel) {
+    protected service: OrderItemService, private productsVM: ProductListViewModel) {
       super(service);
   }
 
@@ -25,7 +24,7 @@ export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
   public async loadDataFor(orderId: string): Promise<boolean> {
     const results = await Promise.all
     ([
-      super.handle(() => this.service.getByOrder(orderId)),
+      super.handle(() => this.service.getByOrderCommand(orderId)),
       this.productsVM.loadData()
     ]);
     this.items = this.data.map(i => new OrderItemViewModel(this.service, this.productsVM.data, i));
@@ -41,9 +40,8 @@ export class OrderItemListViewModel extends ListViewModelBase<OrderItem> {
   }
 
   public async submitAllSubmittable(): Promise<boolean> {
-    const submittableItems = this.data.filter(i => this.service.canSubmit(i));
-    const vms = submittableItems.map(i => this.items.find(vm => vm.id === i.id));
-    const results = await Promise.all(vms.map(vm => vm.submit()));
+    const submittableItems = this.items.filter(vm => vm.canSubmit);
+    const results = await Promise.all(submittableItems.map(vm => vm.submit()));
     return results.every(result => result === true);
   }
 }

@@ -1,34 +1,27 @@
 var BusinessService = require('peasy-js').BusinessService;
 var FieldRequiredRule = require('../rules/fieldRequiredRule');
-var FieldLengthRule = require('../rules/fieldLengthRule');
-var FieldTypeRule = require('../rules/fieldTypeRule');
 var utils = require('../shared/utils');
-var convert = utils.convert;
 var stripAllFieldsFrom = utils.stripAllFieldsFrom;
 var BaseService = require('../services/baseService');
 var ValidOrderStatusForUpdateRule = require('../rules/validOrderStatusForUpdateRule');
 var DeleteOrderCommand = require('../commands/deleteOrderCommand');
 
 var OrderService = BusinessService.extendService(BaseService, {
-  params: ['dataProxy', 'orderItemService'],
+  params: ['dataProxy', 'orderItemService', 'eventPublisher'],
   functions: {
-    _onInsertCommandInitialization: function(context, done) {
-      var order = this.data;
+    _onInsertCommandInitialization: function(order, context, done) {
       stripAllFieldsFrom(order).except(['customerId']);
       order.orderDate = new Date();
       done();
     },
-    _getRulesForInsertCommand: function(context, done) {
-      var order = this.data;
+    _getRulesForInsertCommand: function(order, context, done) {
       done(null, new FieldRequiredRule("customerId", order));
     },
-    _onUpdateCommandInitialization: function(context, done) {
-      var order = this.data;
+    _onUpdateCommandInitialization: function(order, context, done) {
       stripAllFieldsFrom(order).except(['id', 'customerId']);
       done();
     },
-    _getRulesForUpdateCommand: function(context, done) {
-      var order = this.data;
+    _getRulesForUpdateCommand: function(order, context, done) {
       done(null, new ValidOrderStatusForUpdateRule(order.id, this.orderItemService));
     }
   }
@@ -36,13 +29,13 @@ var OrderService = BusinessService.extendService(BaseService, {
   name: 'getByCustomerCommand',
   params: ['customerId'],
   functions: {
-    _getRules: function(context, done) {
+    _getRules: function(customerId, context, done) {
       done(null, [
-        new FieldRequiredRule('customerId', { customerId: this.customerId })
+        new FieldRequiredRule('customerId', { customerId: customerId })
       ]);
     },
-    _onValidationSuccess: function(context, done) {
-      this.dataProxy.getByCustomer(this.customerId, function(err, result) {
+    _onValidationSuccess: function(customerId, context, done) {
+      this.dataProxy.getByCustomer(customerId, function(err, result) {
         done(null, result);
       });
     }
@@ -51,13 +44,13 @@ var OrderService = BusinessService.extendService(BaseService, {
   name: 'getByProductCommand',
   params: ['productId'],
   functions: {
-    _getRules: function(context, done) {
+    _getRules: function(productId, context, done) {
       done(null, [
-        new FieldRequiredRule('productId', { productId: this.productId })
+        new FieldRequiredRule('productId', { productId: productId })
       ]);
     },
-    _onValidationSuccess: function(context, done) {
-      this.dataProxy.getByProduct(this.productId, function(err, result) {
+    _onValidationSuccess: function(productId, context, done) {
+      this.dataProxy.getByProduct(productId, function(err, result) {
         done(null, result);
       });
     }
@@ -65,7 +58,7 @@ var OrderService = BusinessService.extendService(BaseService, {
 }).service;
 
 OrderService.prototype.destroyCommand = function(orderId) {
-  return new DeleteOrderCommand(orderId, this.dataProxy, this.orderItemService);
+  return new DeleteOrderCommand(orderId, this.dataProxy, this.orderItemService, this.eventPublisher);
 };
 
 OrderService.prototype.hasPendingItems = function(orderId, orderItems) {

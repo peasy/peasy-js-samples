@@ -1,38 +1,44 @@
 import { Entity, ViewModelArgs } from './contracts';
-import { ServiceBase } from './services/service-base';
 import { ViewModelBase } from './view-model-base';
+import { BusinessService, ICommand } from 'peasy-js';
 
 export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
 
   protected CurrentEntity: T;
 
-  constructor(protected service: ServiceBase<T>) {
+  constructor(protected service: BusinessService<T, string>) {
     super();
   }
 
-  loadData(args: ViewModelArgs<T>): Promise<boolean> {
+  public loadData(args: ViewModelArgs<T>): Promise<boolean> {
     this._errors = [];
     this.CurrentEntity = args.entity || {} as T;
     if (!this.CurrentEntity.id && args.entityID) {
-      return this.handle(() => this.service.getById(args.entityID));
+      return this.handle(this.service.getByIdCommand(args.entityID));
     }
   }
 
-  get isNew(): boolean {
+  public get isNew(): boolean {
     return !this.CurrentEntity.id;
   }
 
-  get id(): string {
+  public get id(): string {
     return this.CurrentEntity.id;
   }
 
-  protected async handle(command): Promise<boolean> {
+  public fieldValid(fieldName: string): boolean {
+    return this.getErrorMessageFor(fieldName) === null;
+  }
+
+  protected async handle(command: ICommand<T>): Promise<boolean> {
     let success = true;
     this.loadStarted();
     try  {
-      const result = await command();
-      if (!result) {
-        console.warn('the result in handle() was null.  are you sure you have a return statement in your command function?');
+      const result = await command.execute();
+      this.loadCompleted();
+      if (!result.success) {
+        this._errors = result.errors;
+        return;
       }
       this.CurrentEntity = result.value;
       this._isDirty = false;
@@ -44,18 +50,33 @@ export class EntityViewModelBase<T extends Entity> extends ViewModelBase {
         this._errors.push(e);
       }
     }
-    this.loadCompleted();
     return success;
+  }
+
+  protected async validate() {
+    this._errors = await this.saveCommand.getErrors();
+  }
+
+  protected get saveCommand(): ICommand<T> {
+    if (this.isNew) {
+      return this.service.insertCommand(this.CurrentEntity);
+    }
+    return this.service.updateCommand(this.CurrentEntity);
+  }
+
+  protected setValue(field: string, value: any): void {
+    this.CurrentEntity[field] = value;
+    this._isDirty = true;
+    if (this._errors.length) {
+      this.validate();
+    }
   }
 
   public async save(): Promise<boolean> {
     if (this.isDirty) {
       this._errors = [];
-      if (this.isNew) {
-        return await this.handle(() => this.service.insert(this.CurrentEntity));
-      } else {
-        return await this.handle(() => this.service.update(this.CurrentEntity));
-      }
+      return await this.handle(this.saveCommand);
     }
   }
+
 }

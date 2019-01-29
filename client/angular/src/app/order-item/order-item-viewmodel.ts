@@ -28,17 +28,17 @@ export class OrderItemViewModel extends EntityViewModelBase<OrderItem> {
 
   public submit(): Promise<boolean> {
     if (this.canSubmit) {
-      return this.handle(() => {
-        return this.orderItemService.submit(this.CurrentEntity.id);
-      });
+      return this.handle(
+        this.orderItemService.submitCommand(this.CurrentEntity.id)
+      );
     }
   }
 
   public ship(): Promise<boolean> {
     if (this.canShip) {
-      return this.handle(() => {
-        return this.orderItemService.ship(this.CurrentEntity.id);
-      });
+      return this.handle(
+        this.orderItemService.shipCommand(this.CurrentEntity.id)
+      );
     }
   }
 

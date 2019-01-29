@@ -3,7 +3,7 @@ var Rule = require('peasy-js').Rule;
 var FieldRequiredRule = Rule.extend({
   params: ['field', 'data'],
   functions: {
-    _onValidate: function(done) {
+    _onValidate: function(field, data, done) {
       this.data = this.data || {};
       if (!this.data[this.field]) {
         this.association = this.field;

@@ -4,9 +4,9 @@ var OrderItemPriceValidityRule = Rule.extend({
   association: "price",
   params: ['orderItem', 'product'],
   functions: {
-    _onValidate: function(done) {
-      if (this.orderItem.price !== this.product.price) {
-        this._invalidate(`The price for ${this.product.name} no longer reflects the current price in our system`);
+    _onValidate: function(orderItem, product, done) {
+      if (orderItem.price !== product.price) {
+        this._invalidate(`The price for ${product.name} no longer reflects the current price in our system`);
       }
       done();
     }

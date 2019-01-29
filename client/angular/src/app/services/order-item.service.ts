@@ -1,25 +1,108 @@
 import { Injectable } from '@angular/core';
-import { OrderItem, ExecutionResult } from '../contracts';
+import { OrderItem } from '../contracts';
+import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
+import { BusinessService, Command, IRule, Rule } from 'peasy-js';
+import { stripAllFieldsFrom } from '../../../../../business_logic/shared/utils';
 import ordersDotCom from '../../../../businessLogic.js';
-import { ServiceBase } from './service-base';
+import { FieldRequiredRule } from '../rules/fieldRequiredRule';
+import { OrderItemPriceValidityRule } from '../rules/orderItemPriceValidityRule';
+import { OrderItemAmountValidityRule } from '../rules/orderItemAmountValidityRule';
+import { ValidOrderItemStatusForUpdateRule } from '../rules/validOrderItemStatusForUpdateRule';
+import { convert } from '../../../../../business_logic/shared/utils';
 
 @Injectable({ providedIn: 'root' })
-export class OrderItemService extends ServiceBase<OrderItem> {
+export class OrderItemService extends BusinessService<OrderItem, string> {
 
-  constructor() {
-    super(ordersDotCom.services.orderItemService);
+  constructor(protected proxyFactory: DataProxyFactory) {
+    super(proxyFactory.orderItemDataProxy);
   }
 
-  public getByOrder(orderId: string): Promise<ExecutionResult<OrderItem[]>> {
-    return super.handle(ordersDotCom.services.orderItemService.getByOrderCommand(orderId));
+  protected _onInsertCommandInitialization(data: OrderItem, context: object): Promise<void> {
+    stripAllFieldsFrom(data).except(['orderId', 'productId', 'quantity', 'amount', 'price']);
+    data.status = 'PENDING';
+    convert(data, 'quantity').toFloat();
+    convert(data, 'amount').toFloat();
+    convert(data, 'price').toFloat();
+    return Promise.resolve();
   }
 
-  public submit(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
-    return super.handle(ordersDotCom.services.orderItemService.submitCommand(orderItemId));
+  protected _getRulesForInsertCommand(item: OrderItem, context: object): Promise<IRule[]> {
+    const productDataProxy = this.proxyFactory.productDataProxy;
+    return Promise.resolve([
+      Rule.ifAllValid([
+        new FieldRequiredRule('quantity', item),
+        new FieldRequiredRule('amount', item),
+        new FieldRequiredRule('price', item),
+        new FieldRequiredRule('productId', item, 'product'),
+        new FieldRequiredRule('orderId', item)
+      ])
+      .thenGetRules(async () => {
+        const product = await productDataProxy.getById(item.productId);
+        return [
+          new OrderItemPriceValidityRule(item, product),
+          new OrderItemAmountValidityRule(item, product)
+        ];
+      })
+    ]);
   }
 
-  public ship(orderItemId: string): Promise<ExecutionResult<OrderItem>> {
-    return super.handle(ordersDotCom.services.orderItemService.shipCommand(orderItemId));
+  protected _onUpdateCommandInitialization(item: OrderItem, context: object): Promise<void> {
+    stripAllFieldsFrom(item).except(['id', 'quantity', 'amount', 'price', 'productId', 'orderId']);
+    convert(item, 'quantity').toFloat();
+    convert(item, 'amount').toFloat();
+    convert(item, 'price').toFloat();
+    return Promise.resolve();
+  }
+
+  protected async _getRulesForUpdateCommand(item: OrderItem, context: object): Promise<IRule[]> {
+    const productDataProxy = this.proxyFactory.productDataProxy;
+    const orderItemDataProxy = this.dataProxy;
+    return Promise.resolve([
+      Rule.ifAllValid([
+        new FieldRequiredRule('quantity', item),
+        new FieldRequiredRule('amount', item),
+        new FieldRequiredRule('price', item),
+        new FieldRequiredRule('productId', item, 'product'),
+      ])
+      .thenGetRules(async () => {
+        const savedItem = await orderItemDataProxy.getById(item.id);
+        const product = await productDataProxy.getById(item.productId);
+        return [
+          new ValidOrderItemStatusForUpdateRule(savedItem)
+            .ifValidThenValidate([
+              new OrderItemPriceValidityRule(item, product),
+              new OrderItemAmountValidityRule(item, product)
+            ])
+        ];
+      })
+    ]);
+  }
+
+  public getByOrderCommand(orderId: string): Command<OrderItem[]> {
+    const service = this;
+    return new Command<OrderItem[]>({
+      _onValidationSuccess: function() {
+        return service.proxyFactory.orderItemDataProxy.getByOrder(orderId);
+      }
+    });
+  }
+
+  public submitCommand(orderItemId: string): Command<OrderItem> {
+    const service = this;
+    return new Command<OrderItem>({
+      _onValidationSuccess: function() {
+        return service.proxyFactory.orderItemDataProxy.submit(orderItemId);
+      }
+    });
+  }
+
+  public shipCommand(orderItemId: string): Command<OrderItem> {
+    const service = this;
+    return new Command<OrderItem>({
+      _onValidationSuccess: function() {
+        return service.proxyFactory.orderItemDataProxy.ship(orderItemId);
+      }
+    });
   }
 
   public canDelete(item: OrderItem): boolean {
@@ -35,6 +118,7 @@ export class OrderItemService extends ServiceBase<OrderItem> {
   }
 
   public anySubmittable(orderItems: OrderItem[]): boolean {
+    orderItems = orderItems || [];
     return orderItems.some(i => i.status === 'PENDING');
   }
 

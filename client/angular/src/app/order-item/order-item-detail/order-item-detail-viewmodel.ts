@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { OrderItemService } from '../../services/order-item.service';
 import { ProductListViewModel } from '../../product/product-list/product-list-viewmodel';
 import { InventoryListViewModel } from '../../inventory/inventory-list/inventory-list-viewmodel';
+import { InventoryEventAggregator } from '../../event-aggregators/inventory-event-aggregator';
 
 @Injectable({ providedIn: 'root' })
 export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
@@ -14,11 +15,15 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
   private _currentInventory: InventoryItem;
 
   constructor(
-    orderItemService: OrderItemService,
+    protected orderItemService: OrderItemService,
     private productListVM: ProductListViewModel,
     private categoryListVM: CategoryListViewModel,
-    private inventoryItemListVM: InventoryListViewModel) {
-    super(orderItemService);
+    private inventoryItemListVM: InventoryListViewModel,
+    private inventoryEventAggregator: InventoryEventAggregator) {
+      super(orderItemService);
+      inventoryEventAggregator.update.subscribe((item) => {
+        this._currentInventory = item;
+      });
   }
 
   async loadData(args: ViewModelArgs<OrderItem>): Promise<boolean> {
@@ -59,9 +64,8 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
   }
 
   set quantity(value: number) {
-    this.CurrentEntity.quantity = value;
+    this.setValue('quantity', value);
     this.CurrentEntity.amount = this.amount;
-    this._isDirty = true;
   }
 
   get amount(): number {
@@ -87,7 +91,7 @@ export class OrderItemDetailViewModel extends EntityViewModelBase<OrderItem> {
   set productId(value: string) {
     this._currentInventory = this.inventoryItemListVM.data.find(i => i.productId === value);
     this._currentProduct = this.productListVM.data.find(i => i.id === value);
-    this.CurrentEntity.productId = value;
+    this.setValue('productId', value);
     this.CurrentEntity.price = this._currentProduct.price;
     this.CurrentEntity.amount = this.amount;
   }
