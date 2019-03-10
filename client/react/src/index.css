@@ -1,0 +1,31 @@
+.main-content {
+  padding: 10px;
+}
+
+.normalfont {
+  font-weight: normal;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.button-grouping button {
+  margin-right: 5px;
+  margin-top: 20px;
+}
+
+.button-grouping input[type=button] {
+  margin-right: 5px;
+  margin-top: 20px;
+}
+
+.small-button {
+  font-size: 75%;
+  padding: .25em .4em;
+}
+
+.field-error {
+  padding-left: 5px;
+  font-style: italic;
+}

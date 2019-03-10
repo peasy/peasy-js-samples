@@ -84,7 +84,7 @@ var OrderItemService = BusinessService.extendService(BaseService, {
     },
     _getRulesForDestroyCommand: function(id, context, done) {
       var orderItemDataProxy = this.dataProxy;
-      orderItemDataProxy.getById(is.id, function(err, result) {
+      orderItemDataProxy.getById(id, function(err, result) {
         if (err) { return done(err); }
         var savedItem = result;
         done(null, new ValidOrderItemStatusForDeleteRule(savedItem));

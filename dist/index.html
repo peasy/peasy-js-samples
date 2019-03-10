@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    orders.com
+  </title>
+  <link data-require="bootstrap@*" data-semver="4.1.3" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+  <script data-require="bootstrap@*" data-semver="4.1.3" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+      </div>
+    </div>
+  </nav>
+  <div class="jumbotron">
+    <div class="container">
+      <img src="img/peasy.png" align="center" style="width: 30%;height: 30%;display:block;margin:30px auto" alt="peasy" />
+      <h2>
+        orders.com
+      </h2>
+      <p>This sample application is a ficticious order entry / inventory management system. All efforts were made to
+        keep these applications as simple as possible to focus on how a middle tier can be written with peasy-js and
+        consumed by multiple clients (client and server).</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h2><img src="img/react.png" style="width: 30%;height: 30%"></img></h2>
+        <p>This application was developed with peasy-js and reactjs.
+          It can be configured to consume in-memory data proxies or to communicate with
+          the web api via http data proxies.</p>
+      </div>
+      <div class="col-md-3">
+        <h2><img src="img/angular.png" style="width: 25%;height: 25%;background: darkgray;padding: 5px"></img></h2>
+        <p>This application was developed with peasy-js and angular.
+          It can be configured to consume in-memory data proxies or to communicate with
+          the web api via http data proxies.</p>
+      </div>
+      <div class="col-md-3">
+        <h2>
+          <img src="img/node.png" style="width: 30%;height: 30%"></img>
+          <img src="img/express.png" style="padding-top: 10px;width: 20%;height: 20%"></img>
+          <img src="img/mongo.png" style="width: 30%;height: 30%"></img>
+        </h2>
+        <p>This web api application was developed with peasy-js, express, mongodb, and nodejs.
+          It consumes the business logic written with peasy-js. The react & angular sample applications
+          are configured to communicate with this api by default.
+        </p>
+      </div>
+      <div class="col-md-3">
+        <h2><img src="img/plain.png" style="width: 20%;height: 20%"></img></h2>
+        <p>This is a super simple demo that shows how a plain javascript app might consume your business logic with
+          peasy-js</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <p><a class="btn btn-primary btn-sm center-block" href="http://localhost:3000/react" role="button">Let's go!</a></p>
+      </div>
+      <div class="col-md-3">
+        <p><a class="btn btn-primary btn-sm center-block" href="http://localhost:3000/angular" role="button">Let's go!</a></p>
+      </div>
+      <div class="col-md-3">
+        <p><a class="btn btn-primary btn-sm center-block" href="https://github.com/peasy/peasy-js-samples/wiki/API-Walkthrough"
+            role="button">Let's go!</a></p>
+      </div>
+      <div class="col-md-3">
+        <p><a class="btn btn-primary btn-sm center-block" href="https://github.com/peasy/peasy-js/wiki/Browser-sample"
+            role="button">Let's go!</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

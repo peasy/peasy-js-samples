@@ -3,7 +3,6 @@ import { Product, ViewModelArgs, Category } from '../../contracts';
 import { CategoryListViewModel } from '../../category/category-list/category-list-viewmodel';
 import { ProductService } from '../../services/product.service';
 import { Injectable } from '@angular/core';
-import { _getComponentHostLElementNode } from '@angular/core/src/render3/instructions';
 
 @Injectable({ providedIn: 'root' })
 export class ProductDetailViewModel extends EntityViewModelBase<Product> {

@@ -3,7 +3,6 @@ import { OrderItem } from '../contracts';
 import { DataProxyFactory } from '../data-proxies/data-proxy-factory';
 import { BusinessService, Command, IRule, Rule } from 'peasy-js';
 import { stripAllFieldsFrom } from '../../../../../business_logic/shared/utils';
-import ordersDotCom from '../../../../businessLogic.js';
 import { FieldRequiredRule } from '../rules/fieldRequiredRule';
 import { OrderItemPriceValidityRule } from '../rules/orderItemPriceValidityRule';
 import { OrderItemAmountValidityRule } from '../rules/orderItemAmountValidityRule';
@@ -81,7 +80,7 @@ export class OrderItemService extends BusinessService<OrderItem, string> {
   public getByOrderCommand(orderId: string): Command<OrderItem[]> {
     const service = this;
     return new Command<OrderItem[]>({
-      _onValidationSuccess: function() {
+      _onValidationSuccess() {
         return service.proxyFactory.orderItemDataProxy.getByOrder(orderId);
       }
     });
@@ -90,7 +89,7 @@ export class OrderItemService extends BusinessService<OrderItem, string> {
   public submitCommand(orderItemId: string): Command<OrderItem> {
     const service = this;
     return new Command<OrderItem>({
-      _onValidationSuccess: function() {
+      _onValidationSuccess() {
         return service.proxyFactory.orderItemDataProxy.submit(orderItemId);
       }
     });
@@ -99,14 +98,14 @@ export class OrderItemService extends BusinessService<OrderItem, string> {
   public shipCommand(orderItemId: string): Command<OrderItem> {
     const service = this;
     return new Command<OrderItem>({
-      _onValidationSuccess: function() {
+      _onValidationSuccess() {
         return service.proxyFactory.orderItemDataProxy.ship(orderItemId);
       }
     });
   }
 
   public canDelete(item: OrderItem): boolean {
-    return ordersDotCom.services.orderItemService.canDelete(item);
+  return item.status !== 'SHIPPED';
   }
 
   public canSubmit(item: OrderItem): boolean {
@@ -114,7 +113,7 @@ export class OrderItemService extends BusinessService<OrderItem, string> {
   }
 
   public canShip(item: OrderItem): boolean {
-    return ordersDotCom.services.orderItemService.canShip(item);
+  return item.status === 'SUBMITTED' || item.status === 'BACKORDERED';
   }
 
   public anySubmittable(orderItems: OrderItem[]): boolean {

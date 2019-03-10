@@ -1,9 +1,11 @@
-var path = require('path');
+// const path = require('path');
+const peasyConfig = require('peasy-js').Configuration;
 
 var applySettings = function(app) {
-  app.set('x-powered-by', false);
-  app.set('views', path.join(__dirname, 'views'));
-  app.set('view engine', 'ejs');
+	peasyConfig.autoPromiseWrap = true;
+  // app.set('x-powered-by', false);
+  // app.set('views', path.join(__dirname, 'views'));
+  // app.set('view engine', 'ejs');
 };
 
 module.exports = applySettings;
