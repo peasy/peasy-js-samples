@@ -1,7 +1,5 @@
 ![peasy](https://www.dropbox.com/s/2yajr2x9yevvzbm/peasy3.png?dl=0&raw=1)
 
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-
 ### Showcases a middle tier built with peasy-js.
 
 A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by [react](https://facebook.github.io/react/) , [angular](), and [nodejs](https://nodejs.org/en/) can be found here.  You can clone the repo (```git clone https://github.com/peasy/peasy-js-samples.git```) or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
@@ -21,9 +19,11 @@ From a command line, navigate to the peasy-js-samples directory and run:
 1. ``` npm run install_dependencies_and_build_projects ```
 2. ``` npm run server ```
 
-![samples](https://www.dropbox.com/s/85knat70l0f6pc0/peasy-samples.gif?dl=0&raw=1)
+![samples](https://www.dropbox.com/s/ki7gnyn579ngger/peasy-js-samples.gif?dl=0&raw=1)
 
-By default, the client (react) application is configured to use http implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxyy) that communicate with the Web API.  In turn, the Web API ic configured to use in-memory data proxies. However, there are a few configuration possibilities.  The [configurations](https://github.com/peasy/peasy-js-samples#configurations) section provides details on setting up many potential configurations.
+By default, the client (react and angular) applications are configured to use http implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy).  These data proxies communicate with the http endpoints hosted in node.
+
+  In turn, the http endpoints are configured to use in-memory data proxies. However, there are a few configuration possibilities.  The [configurations](https://github.com/peasy/peasy-js-samples#configurations) section provides details on setting up many potential configurations.
 
 ### Configurations
 
@@ -37,7 +37,7 @@ In this scenario, the client consumes [business services](https://github.com/pea
 
 In this scenario, the client consumes [business services](https://github.com/peasy/peasy-js/wiki/BusinessService) that are injected with [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy) that use HTTP to communicate with the Web API application.  In turn, the Web API application uses business services that are injected with data proxies that communicate with in-memory data stores.
 
-[![archlessmongo](https://www.dropbox.com/s/l7wl0698mrba4kx/FullArchitectureLessMongo.svg?dl=0&raw=1)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-In-Memory)
+[![archlessmongo](abc.svg)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-In-Memory)
 
 #### Client &#8594; Web API &#8594; MongoDB
 
