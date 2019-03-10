@@ -25,3 +25,7 @@
   padding-left: 5px;
   font-style: italic;
 }
+
+#toast-container > div {
+  opacity:1;
+}
