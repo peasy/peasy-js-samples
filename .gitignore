@@ -1,6 +1,9 @@
-node_modules/
+node_modules
+client/angular/node_modules
+client/react/node_modules
+dist/angular
+dist/react
 .DS_Store
 npm-debug.log
 lib/
 .vscode/
-package-lock.json
