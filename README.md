@@ -2,9 +2,14 @@
 
 ### Showcases a middle tier built with peasy-js.
 
-A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by [react](https://facebook.github.io/react/) , [angular](), and [nodejs](https://nodejs.org/en/) can be found here.  You can clone the repo (```git clone https://github.com/peasy/peasy-js-samples.git```) or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
+A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by [react](https://facebook.github.io/react/), [angular](https://angular.io), and [nodejs](https://nodejs.org/en/) can be found here.
 
-The sample application is a ficticious order entry / inventory management system.  All efforts were made to keep this application as simple as possible to focus on how a middle tier can be written with peasy-js and consumed by multiple clients (client and server).
+This sample application is a ficticious order entry / inventory management system.  All efforts were made to keep this application as simple as possible to focus on how a middle tier can be written with peasy-js and consumed by multiple clients (client and server).
+
+### Where can I get it?
+
+- [Download the latest release](https://github.com/peasy/peasy-js-samples/archive/master.zip)
+- Clone the repo: ```git clone https://github.com/peasy/peasy-js-samples.git```
 
 ### Requirements
 
