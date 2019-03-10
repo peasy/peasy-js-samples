@@ -12,8 +12,8 @@ import OrderActions from './actions/orderActions';
 import OrderItemActions from './actions/orderItemActions';
 import ProductActions from './actions/productActions';
 import InventoryItemActions from './actions/inventoryItemActions';
-// import '../../node_modules/toastr/build/toastr.min.css';
 import Header from './components/common/Header';
+import '../node_modules/toastr/build/toastr.min.css';
 import './index.css';
 
 const store = configureStore();
