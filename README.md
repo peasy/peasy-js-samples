@@ -2,9 +2,7 @@
 
 ### Showcases business logic built with peasy-js.
 
-This sample application is a ficticious order entry / inventory management system.  All efforts were made to keep this application as simple as possible, with a focus on how business logic can be written with peasy-js and consumed by multiple clients (client and server).
-
-This application showcases consuming business logic by [react](https://facebook.github.io/react/), [angular](https://angular.io), and [nodejs](https://nodejs.org/en/).
+This sample application is a ficticious order entry / inventory management system.  All efforts were made to keep this application as simple as possible, with a focus on how business logic can be written with peasy-js and consumed by multiple clients ([react](https://facebook.github.io/react/), [angular](https://angular.io), and [nodejs](https://nodejs.org/en/)).
 
 ### Where can I get it?
 
