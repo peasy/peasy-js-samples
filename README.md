@@ -1,8 +1,10 @@
 ![peasy](https://www.dropbox.com/s/2yajr2x9yevvzbm/peasy3.png?dl=0&raw=1)
 
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
 ### Showcases a middle tier built with peasy-js.
 
-A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by [react](https://facebook.github.io/react/) and [nodejs](https://nodejs.org/en/) can be found here.  You can clone the repo (```git clone https://github.com/peasy/peasy-js-samples.git```) or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
+A full implementation of a middle tier built using the [peasy-js framework](https://github.com/peasy/peasy-js) and consumed by [react](https://facebook.github.io/react/) , [angular](), and [nodejs](https://nodejs.org/en/) can be found here.  You can clone the repo (```git clone https://github.com/peasy/peasy-js-samples.git```) or download the entire solution as a [zip](https://github.com/peasy/peasy-js-samples/archive/master.zip).
 
 The sample application is a ficticious order entry / inventory management system.  All efforts were made to keep this application as simple as possible to focus on how a middle tier can be written with peasy-js and consumed by multiple clients (client and server).
 
@@ -16,8 +18,8 @@ The sample application is a ficticious order entry / inventory management system
 
 From a command line, navigate to the peasy-js-samples directory and run:
 
-1. ``` npm install ```
-2. ``` npm run start ```
+1. ``` npm run install_dependencies_and_build_projects ```
+2. ``` npm run server ```
 
 ![samples](https://www.dropbox.com/s/85knat70l0f6pc0/peasy-samples.gif?dl=0&raw=1)
 
