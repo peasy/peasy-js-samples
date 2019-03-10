@@ -29,21 +29,21 @@ By default, the client (react and angular) applications are configured to use ht
 
 #### Client &#8594; In-Memory
 
-In this scenario, the client consumes [business services](https://github.com/peasy/peasy-js/wiki/BusinessService) that are injected with [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy) that communicate with in-memory data stores.  
+In this scenario, the client consumes [business services](https://github.com/peasy/peasy-js/wiki/BusinessService) that are injected with [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy) that communicate with in-memory data stores.
 
-[![archlessnode](https://www.dropbox.com/s/ifzuwhse8thvn7p/FullArchitectureLessNode%20%281%29.svg?dl=0&raw=1)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-In-Memory)
+[![archlessnode](FullArchitectureLessNode.svg)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-In-Memory)
 
 #### Client &#8594; Web API &#8594; In-Memory (Default configuration)
 
 In this scenario, the client consumes [business services](https://github.com/peasy/peasy-js/wiki/BusinessService) that are injected with [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy) that use HTTP to communicate with the Web API application.  In turn, the Web API application uses business services that are injected with data proxies that communicate with in-memory data stores.
 
-[![archlessmongo](abc.svg)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-In-Memory)
+[![archlessmongo](FullArchitectureLessMongo.svg)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-In-Memory)
 
 #### Client &#8594; Web API &#8594; MongoDB
 
 In this scenario, the client consumes [business services](https://github.com/peasy/peasy-js/wiki/BusinessService) that are injected with [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy) that use HTTP to communicate with the Web API application.  In turn, the Web API application uses business services that are injected with data proxies that communicate with a MongoDB database.
 
-[![architecture](https://www.dropbox.com/s/j0c8x7zxyg4n0gd/FullArchitecture.png?dl=0&raw=1)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-MongoDB)
+[![architecture](FullArchitecture.svg)](https://github.com/peasy/peasy-js-samples/wiki/Configuring-Client-%E2%86%92-Web-API-%E2%86%92-MongoDB)
 
 ### Testing out the Web API
 
@@ -59,14 +59,6 @@ With the application up and running you can navigate to the following urls:
 ### Web API Walkthrough
 
 [This walkthrough](https://github.com/peasy/peasy-js-samples/wiki/API-Walkthrough) covers creating a customer, category, product, and placing an order on behalf of the new customer.  It also covers submitting and shipping an order to see how it affects inventory.
-
-### Running the unit tests
-
-[peasy-js](https://github.com/peasy/peasy-js) was designed with unit testing in mind, and as a result, each actor in the application has corresponding unit tests, located in the [*/spec*](https://github.com/peasy/peasy-js-samples/tree/master/spec) directory.
-
-To run the tests, navigate to the */spec* directory from a command line and run the following command:
-
-``` jasmine ```
 
 ### Like what you see?
 
