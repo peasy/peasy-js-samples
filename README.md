@@ -19,7 +19,7 @@ From a command line, navigate to the peasy-js-samples directory and run:
 1. ``` npm run install_dependencies_and_build_projects ```
 2. ``` npm run server ```
 
-![samples](https://www.dropbox.com/s/ki7gnyn579ngger/peasy-js-samples.gif?dl=0&raw=1)
+![samples](screenflow.gif)
 
 By default, the client (react and angular) applications are configured to use http implementations of the [data proxies](https://github.com/peasy/peasy-js/wiki/Data-Proxy).  These data proxies communicate with the http endpoints hosted in node.
 
