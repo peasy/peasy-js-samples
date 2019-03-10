@@ -13,12 +13,10 @@ export class StoreManager {
     private orderItemEventAggregator: OrderItemEventAggregator,
     private inventoryStore: InventoryStore,
     private inventoryAggregator: InventoryEventAggregator) {
-      console.log('MADE IT store manager!!!!');
       // orderItemEventAggregator.update.subscribe(this.onOrderItemChanged);
     }
 
     private onOrderItemChanged(orderItem: OrderItem): void {
       // delete associated item in inventory store
-      console.log('MADE IT!!!!', orderItem);
     }
 }

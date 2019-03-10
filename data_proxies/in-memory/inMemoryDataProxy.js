@@ -5,7 +5,6 @@ var InMemoryDataProxy = function(data) {
 };
 
 InMemoryDataProxy.prototype.getById = function(id, done) {
-  console.log("ID", id);
   var data = this._findBy(id);
   if (data) {
     data = Object.assign({}, data);

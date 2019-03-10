@@ -105,8 +105,6 @@ function addDeleteRouteHandler(app, route, commandFactory) {
     if (!req.params.id) return res.status(NOT_FOUND).end();
     var command = commandFactory(req);
     command.execute((err, result) => {
-			console.log('RSULT',result);
-			console.log('ERRR', err);
       if (result.success) {
         res.status(NO_CONTENT).end();
       } else {

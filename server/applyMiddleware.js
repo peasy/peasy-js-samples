@@ -1,18 +1,9 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors')
-// var webpack = require('webpack');
-// var config = require('../webpack.config.dev');
-// var compiler = webpack(config);
 
 const applyMiddleware = function(app) {
-  // MIDDLEWARE
-  // app.use(require('webpack-dev-middleware')(compiler, {
-  //   noInfo: true,
-  //   publicPath: config.output.publicPath
-  // }));
 
-  // app.use(require('webpack-hot-middleware')(compiler));
   app.use(lowerCaseQueryParams);
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({

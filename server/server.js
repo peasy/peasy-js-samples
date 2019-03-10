@@ -17,18 +17,6 @@ applySettings(app);
 applyMiddleware(app);
 wireUpRoutes(app, io);
 
-// app.get('/', function(req, res, next) {
-// 	res.sendFile(path.join(__dirname, './dist/index.html'));
-// });
-
-// app.get('/angular', function(req, res, next) {
-// 	res.sendFile(path.join(__dirname, './dist/angular/index.html'));
-// });
-
-// app.get('/react', function(req, res, next) {
-// 	res.sendFile(path.join(__dirname, './dist/react/index.html'));
-// });
-
 http.listen(port, () => {
    console.log(`Listening on: http://localhost:${port}`);
 });
